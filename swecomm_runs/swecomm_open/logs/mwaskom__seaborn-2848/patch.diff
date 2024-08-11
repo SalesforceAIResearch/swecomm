@@ -1,0 +1,79 @@
+diff --git a/seaborn/axisgrid.py b/seaborn/axisgrid.py
+index 8526f44b..9aa650d7 100644
+--- a/seaborn/axisgrid.py
++++ b/seaborn/axisgrid.py
+@@ -1132,6 +1132,11 @@ class PairGrid(Grid):
+     Several different common plots can be generated in a single line using
+     :func:`pairplot`. Use :class:`PairGrid` when you need more flexibility.
+ 
++    The `hue` parameter can be passed either during the initialization of
++    PairGrid or directly to the `map` function. When passed to `map`, it
++    allows for more flexibility in creating plots with different hue variables
++    for each subplot.
++
+     See the :ref:`tutorial <grid_tutorial>` for more information.
+ 
+     """
+@@ -1326,11 +1331,33 @@ class PairGrid(Grid):
+             Must take x, y arrays as positional arguments and draw onto the
+             "currently active" matplotlib Axes. Also needs to accept kwargs
+             called ``color`` and  ``label``.
++        **kwargs : key, value pairings
++            Other keyword arguments are passed to the plotting function.
++            This can include a 'hue' parameter, which can be a pandas Series
++            or numpy array to be used for color-encoding the data points.
++
++        Returns
++        -------
++        self : PairGrid instance
++            Returns self for easy method chaining.
++
++        Notes
++        -----
++        The 'hue' parameter can be passed directly to the mapping function,
++        allowing for color-encoding of the data points without setting it
++        during PairGrid initialization. This is useful when you want to use
++        different hue variables for different layers of the plot.
+ 
+         """
+         row_indices, col_indices = np.indices(self.axes.shape)
+         indices = zip(row_indices.flat, col_indices.flat)
+-        self._map_bivariate(func, indices, **kwargs)
++
++        # Check if hue is passed as a keyword argument
++        if 'hue' in kwargs and isinstance(kwargs['hue'], (pd.Series, np.ndarray)):
++            hue = kwargs.pop('hue')
++            self._map_bivariate(func, indices, hue=hue, **kwargs)
++        else:
++            self._map_bivariate(func, indices, **kwargs)
+ 
+         return self
+ 
+@@ -1528,7 +1555,14 @@ class PairGrid(Grid):
+             ax = self.axes[i, j]
+             if ax is None:  # i.e. we are in corner mode
+                 continue
++            if "hue" in kws and isinstance(kws["hue"], (pd.Series, np.ndarray)):
++                hue = kws["hue"]
++                kws["hue"] = self.hue_vals
++            else:
++                hue = None
+             self._plot_bivariate(x_var, y_var, ax, func, **kws)
++            if hue is not None:
++                kws["hue"] = hue
+         self._add_axis_labels()
+ 
+         if "hue" in signature(func).parameters:
+@@ -1569,6 +1603,12 @@ class PairGrid(Grid):
+             kwargs.update({
+                 "hue": hue, "hue_order": self._hue_order, "palette": self._orig_palette,
+             })
++        elif kwargs["hue"] is not None:
++            if isinstance(kwargs["hue"], pd.Series):
++                hue = kwargs["hue"]
++                kwargs["hue"] = hue.reindex(data.index)
++            elif isinstance(kwargs["hue"], (np.ndarray, list)):
++                kwargs["hue"] = pd.Series(kwargs["hue"], index=data.index)
+         func(x=x, y=y, **kwargs)
+ 
+         self._update_legend_data(ax)

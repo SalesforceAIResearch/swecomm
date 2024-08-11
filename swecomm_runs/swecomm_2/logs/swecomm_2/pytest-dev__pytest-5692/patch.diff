@@ -1,0 +1,32 @@
+
+diff --git a/src/_pytest/junitxml.py b/src/_pytest/junitxml.py
+index 15c630b1d..90af9a107 100644
+--- a/src/_pytest/junitxml.py
++++ b/src/_pytest/junitxml.py
+@@ -19,7 +19,8 @@ import py
+ import pytest
+ from _pytest import nodes
+ from _pytest.config import filename_arg
+-
++import socket
++from datetime import datetime
+ 
+ class Junit(py.xml.Namespace):
+     pass
+@@ -656,7 +657,6 @@ class LogXML:
+             - self.cnt_double_fail_tests
+         )
+         logfile.write('<?xml version="1.0" encoding="utf-8"?>')
+-
+         suite_node = Junit.testsuite(
+             self._get_global_properties_node(),
+             [x.to_xml() for x in self.node_reporters_ordered],
+@@ -666,6 +666,8 @@ class LogXML:
+             skipped=self.stats["skipped"],
+             tests=numtests,
+             time="%.3f" % suite_time_delta,
++            timestamp=datetime.now().isoformat(),
++            hostname=socket.gethostname(),
+         )
+         logfile.write(Junit.testsuites([suite_node]).unicode(indent=0))
+         logfile.close()

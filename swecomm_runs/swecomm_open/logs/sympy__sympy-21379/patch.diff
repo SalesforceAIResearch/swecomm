@@ -1,0 +1,23 @@
+diff --git a/sympy/functions/elementary/hyperbolic.py b/sympy/functions/elementary/hyperbolic.py
+index 860989f7c1..b083819662 100644
+--- a/sympy/functions/elementary/hyperbolic.py
++++ b/sympy/functions/elementary/hyperbolic.py
+@@ -106,7 +106,7 @@ def inverse(self, argindex=1):
+ 
+     @classmethod
+     def eval(cls, arg):
+-        from sympy import sin
++        from sympy import sin, Piecewise
+ 
+         arg = sympify(arg)
+ 
+@@ -156,6 +156,9 @@ def eval(cls, arg):
+                 x = arg.args[0]
+                 return 1/(sqrt(x - 1) * sqrt(x + 1))
+ 
++            if arg.func == Piecewise:
++                return Piecewise(*[(cls(e), c) for e, c in arg.args])
++
+     @staticmethod
+     @cacheit
+     def taylor_term(n, x, *previous_terms):

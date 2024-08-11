@@ -1,0 +1,98 @@
+2024-07-30 17:13:13,718 - INFO - Intermediate patch for sympy__sympy-13031 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:13:14,203 - INFO - >>>>> Applied Patch:
+Checking patch sympy/matrices/common.py...
+Applied patch sympy/matrices/common.py cleanly.
+
+2024-07-30 17:13:18,447 - INFO - Git diff before:
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 7ef51bc847..627b67e38b 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -378,6 +378,11 @@ def hstack(cls, *args):
+             return cls._new()
+ 
+         kls = type(args[0])
++
++        if any(arg.rows == 0 for arg in args):
++            total_cols = sum(arg.cols for arg in args)
++            return kls.zeros(0, total_cols)
++
+         return reduce(kls.row_join, args)
+ 
+     def reshape(self, rows, cols):
+@@ -475,9 +480,13 @@ def row_join(self, other):
+         row
+         col_join
+         """
++        # Special case: both matrices have zero rows
++        if self.rows == 0 and other.rows == 0:
++            return self._new(0, self.cols + other.cols, [])
++
+         # A null matrix can always be stacked (see  #10770)
+-        if self.cols == 0 and self.rows != other.rows:
+-            return self._new(other.rows, 0, []).row_join(other)
++        if self.cols == 0:
++            return self._new(self.rows, 0, []).row_join(other)
+ 
+         if self.rows != other.rows:
+             raise ShapeError(
+@@ -601,6 +610,12 @@ def vstack(cls, *args):
+             return cls._new()
+ 
+         kls = type(args[0])
++
++        # Check if any input matrix has zero columns
++        if any(arg.cols == 0 for arg in args):
++            total_rows = sum(arg.rows for arg in args)
++            return kls.zeros(total_rows, 0)
++
+         return reduce(kls.col_join, args)
+2024-07-30 17:13:18,447 - INFO - Eval script for sympy__sympy-13031 written to /eval.sh
+2024-07-30 17:13:48,823 - INFO - Test runtime: 30.38 seconds
+2024-07-30 17:13:49,119 - INFO - Git diff after:
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 7ef51bc847..627b67e38b 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -378,6 +378,11 @@ def hstack(cls, *args):
+             return cls._new()
+ 
+         kls = type(args[0])
++
++        if any(arg.rows == 0 for arg in args):
++            total_cols = sum(arg.cols for arg in args)
++            return kls.zeros(0, total_cols)
++
+         return reduce(kls.row_join, args)
+ 
+     def reshape(self, rows, cols):
+@@ -475,9 +480,13 @@ def row_join(self, other):
+         row
+         col_join
+         """
++        # Special case: both matrices have zero rows
++        if self.rows == 0 and other.rows == 0:
++            return self._new(0, self.cols + other.cols, [])
++
+         # A null matrix can always be stacked (see  #10770)
+-        if self.cols == 0 and self.rows != other.rows:
+-            return self._new(other.rows, 0, []).row_join(other)
++        if self.cols == 0:
++            return self._new(self.rows, 0, []).row_join(other)
+ 
+         if self.rows != other.rows:
+             raise ShapeError(
+@@ -601,6 +610,12 @@ def vstack(cls, *args):
+             return cls._new()
+ 
+         kls = type(args[0])
++
++        # Check if any input matrix has zero columns
++        if any(arg.cols == 0 for arg in args):
++            total_rows = sum(arg.rows for arg in args)
++            return kls.zeros(total_rows, 0)
++
+         return reduce(kls.col_join, args)
+2024-07-30 17:13:49,119 - INFO - Grading answer for sympy__sympy-13031...
+2024-07-30 17:13:49,121 - INFO - report: {'sympy__sympy-13031': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_sparse_matrix'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_transpose', 'test_trace', 'test_CL_RL', 'test_add', 'test_errors', 'test_len', 'test_sparse_zeros_sparse_eye', 'test_copyin', 'test_sparse_solve'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-13031: resolved: True

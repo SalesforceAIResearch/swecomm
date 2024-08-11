@@ -1,0 +1,25 @@
+diff --git a/requests/exceptions.py b/requests/exceptions.py
+index 89135a80..0e2a54d9 100644
+--- a/requests/exceptions.py
++++ b/requests/exceptions.py
+@@ -91,9 +91,20 @@ class ContentDecodingError(RequestException, BaseHTTPError):
+     """Failed to decode response content"""
+ 
+ 
++from .packages.urllib3.exceptions import DecodeError as Urllib3DecodeError, TimeoutError as Urllib3TimeoutError
++
++
+ class StreamConsumedError(RequestException, TypeError):
+     """The content for this response was already consumed"""
+ 
+ 
+ class RetryError(RequestException):
+     """Custom retries logic failed"""
++
++
++class DecodeError(RequestException, Urllib3DecodeError):
++    """Failed to decode response content"""
++
++
++class TimeoutError(RequestException, Urllib3TimeoutError):
++    """The request timed out"""

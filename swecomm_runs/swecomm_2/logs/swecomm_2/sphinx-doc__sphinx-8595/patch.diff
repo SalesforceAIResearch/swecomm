@@ -1,0 +1,30 @@
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -1074,16 +1074,18 @@
+     def get_object_members(self, want_all: bool) -> Tuple[bool, ObjectMembers]:
+         members = self.get_module_members()
+         if want_all:
+-            if not self.__all__:
+-                # for implicit module members, check __module__ to avoid
+-                # documenting imported objects
++            if self.__all__ is not None:
++                if not self.__all__:
++                    # Empty __all__ should result in no members
++                    return False, []
++                else:
++                    for member in members.values():
++                        if member.__name__ not in self.__all__:
++                            member.skipped = True
++                    return False, list(members.values())
++            else:
++                # __all__ is None, fallback to checking __module__
+                 return True, list(members.values())
+-            else:
+-                for member in members.values():
+-                    if member.__name__ not in self.__all__:
+-                        member.skipped = True
+-
+-                return False, list(members.values())
+         else:
+             memberlist = self.options.members or []
+             ret = []

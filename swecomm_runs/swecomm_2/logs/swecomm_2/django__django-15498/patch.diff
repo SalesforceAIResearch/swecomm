@@ -1,0 +1,14 @@
+--- a/django/utils/http.py
++++ b/django/utils/http.py
+@@ -109,7 +109,10 @@
+     one is still in widespread use.
+ 
+     Return an integer expressed in seconds since the epoch, in UTC.
+-    """
++    If the input is an empty string, return None.
++    """
++    if not date:
++        return None
+     # email.utils.parsedate() does the job for RFC1123 dates; unfortunately
+     # RFC7231 makes it mandatory to support RFC850 dates too. So we roll
+     # our own RFC-compliant parsing.

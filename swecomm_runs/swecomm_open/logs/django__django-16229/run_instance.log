@@ -1,0 +1,56 @@
+2024-08-04 16:48:40,079 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16229
+Building instance image sweb.eval.x86_64.django__django-16229:latest for django__django-16229
+2024-08-04 16:48:40,081 - INFO - Image sweb.eval.x86_64.django__django-16229:latest already exists, skipping build.
+2024-08-04 16:48:40,082 - INFO - Creating container for django__django-16229...
+2024-08-04 16:48:40,127 - INFO - Container for django__django-16229 created: 85ff62195417b423ba73909ea7c4e4b2ea20eb44848401aa932f84566c0f768f
+2024-08-04 16:48:40,373 - INFO - Container for django__django-16229 started: 85ff62195417b423ba73909ea7c4e4b2ea20eb44848401aa932f84566c0f768f
+2024-08-04 16:48:40,373 - INFO - Intermediate patch for django__django-16229 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-16229/patch.diff, now applying to container...
+2024-08-04 16:48:40,543 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:48:40,589 - INFO - >>>>> Applied Patch:
+patching file django/forms/models.py
+
+2024-08-04 16:48:41,894 - INFO - Git diff before:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 35ecdc1c0d..9f4af48c34 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -357,7 +357,11 @@ class BaseModelForm(BaseForm, AltersData):
+             object_data = model_to_dict(instance, opts.fields, opts.exclude)
+         # if initial was provided, it should override the values from instance
+         if initial is not None:
+-            object_data.update(initial)
++            for key, value in initial.items():
++                if callable(value):
++                    object_data[key] = value()
++                else:
++                    object_data[key] = value
+         # self._validate_unique will be set to True by BaseModelForm.clean().
+         # It is False by default so overriding self.clean() and failing to call
+         # super will stop validate_unique from being called.
+2024-08-04 16:48:41,895 - INFO - Eval script for django__django-16229 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-16229/eval.sh; copying to container...
+2024-08-04 16:48:48,709 - INFO - Test runtime: 6.68 seconds
+2024-08-04 16:48:48,709 - INFO - Test output for django__django-16229 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-16229/test_output.txt
+2024-08-04 16:48:48,757 - INFO - Git diff after:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 35ecdc1c0d..9f4af48c34 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -357,7 +357,11 @@ class BaseModelForm(BaseForm, AltersData):
+             object_data = model_to_dict(instance, opts.fields, opts.exclude)
+         # if initial was provided, it should override the values from instance
+         if initial is not None:
+-            object_data.update(initial)
++            for key, value in initial.items():
++                if callable(value):
++                    object_data[key] = value()
++                else:
++                    object_data[key] = value
+         # self._validate_unique will be set to True by BaseModelForm.clean().
+         # It is False by default so overriding self.clean() and failing to call
+         # super will stop validate_unique from being called.
+2024-08-04 16:48:48,757 - INFO - Grading answer for django__django-16229...
+2024-08-04 16:48:48,761 - INFO - report: {'django__django-16229': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_callable_default_hidden_widget_value_not_overridden (forms_tests.tests.tests.ModelFormCallableModelDefault)']}, 'PASS_TO_PASS': {'success': ['Test for issue 10405', "If a model's ManyToManyField has blank=True and is saved with no data,", 'test_m2m_field_exclusion (forms_tests.tests.tests.ManyToManyExclusionTestCase)', 'test_empty_field_char (forms_tests.tests.tests.Jinja2EmptyLabelTestCase)', 'test_empty_field_char_none (forms_tests.tests.tests.Jinja2EmptyLabelTestCase)', 'test_empty_field_integer (forms_tests.tests.tests.Jinja2EmptyLabelTestCase)', 'test_get_display_value_on_none (forms_tests.tests.tests.Jinja2EmptyLabelTestCase)', 'test_html_rendering_of_prepopulated_models (forms_tests.tests.tests.Jinja2EmptyLabelTestCase)', 'test_save_empty_label_forms (forms_tests.tests.tests.Jinja2EmptyLabelTestCase)', 'test_boundary_conditions (forms_tests.tests.tests.FormsModelTestCase)', 'test_formfield_initial (forms_tests.tests.tests.FormsModelTestCase)', 'test_unicode_filename (forms_tests.tests.tests.FormsModelTestCase)', 'test_empty_field_char (forms_tests.tests.tests.EmptyLabelTestCase)', 'test_empty_field_char_none (forms_tests.tests.tests.EmptyLabelTestCase)', 'test_empty_field_integer (forms_tests.tests.tests.EmptyLabelTestCase)', 'test_get_display_value_on_none (forms_tests.tests.tests.EmptyLabelTestCase)', 'test_html_rendering_of_prepopulated_models (forms_tests.tests.tests.EmptyLabelTestCase)', 'test_save_empty_label_forms (forms_tests.tests.tests.EmptyLabelTestCase)', 'The initial value for a callable default returning a queryset is the', 'Initial instances for model fields may also be instances (refs #7287)', "If a model's ForeignKey has blank=False and a default, no empty option"], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-16229: resolved: False
+2024-08-04 16:48:48,761 - INFO - Attempting to stop container sweb.eval.django__django-16229.swecomm_open...
+2024-08-04 16:49:04,252 - INFO - Attempting to remove container sweb.eval.django__django-16229.swecomm_open...
+2024-08-04 16:49:04,286 - INFO - Container sweb.eval.django__django-16229.swecomm_open removed.

@@ -1,0 +1,26 @@
+diff --git a/sklearn/utils/multiclass.py b/sklearn/utils/multiclass.py
+index 5eaef2fde..860fc2a61 100644
+--- a/sklearn/utils/multiclass.py
++++ b/sklearn/utils/multiclass.py
+@@ -305,12 +305,15 @@ def type_of_target(y, input_name=""):
+     with warnings.catch_warnings():
+         warnings.simplefilter("error", np.VisibleDeprecationWarning)
+         if not issparse(y):
+-            try:
+-                y = xp.asarray(y)
+-            except (np.VisibleDeprecationWarning, ValueError):
+-                # dtype=object should be provided explicitly for ragged arrays,
+-                # see NEP 34
+-                y = xp.asarray(y, dtype=object)
++            if hasattr(y, 'dtype') and y.dtype.name in ['Int64', 'Float64', 'boolean']:
++                y = y.to_numpy()
++            else:
++                try:
++                    y = xp.asarray(y)
++                except (np.VisibleDeprecationWarning, ValueError):
++                    # dtype=object should be provided explicitly for ragged arrays,
++                    # see NEP 34
++                    y = xp.asarray(y, dtype=object)
+ 
+     # The old sequence of sequences format
+     try:

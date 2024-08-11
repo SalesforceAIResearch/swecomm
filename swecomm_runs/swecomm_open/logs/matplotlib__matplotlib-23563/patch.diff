@@ -1,0 +1,40 @@
+diff --git a/lib/mpl_toolkits/mplot3d/art3d.py b/lib/mpl_toolkits/mplot3d/art3d.py
+index 8fe6e7a9c1..9cb73caebb 100644
+--- a/lib/mpl_toolkits/mplot3d/art3d.py
++++ b/lib/mpl_toolkits/mplot3d/art3d.py
+@@ -193,9 +193,11 @@ class Line3D(lines.Line2D):
+         Accepts x, y, z arguments or a single array-like (x, y, z)
+         """
+         if len(args) == 1:
+-            self._verts3d = args[0]
+-        else:
+-            self._verts3d = args
++            args = args[0]
++        if len(args) != 3:
++            raise ValueError("Input must be of length 3")
++        xs, ys, zs = args
++        self._verts3d = np.array(xs), np.array(ys), np.array(zs)
+         self.stale = True
+ 
+     def get_data_3d(self):
+@@ -211,11 +213,15 @@ class Line3D(lines.Line2D):
+ 
+     @artist.allow_rasterization
+     def draw(self, renderer):
+-        xs3d, ys3d, zs3d = self._verts3d
+-        xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, self.axes.M)
+-        self.set_data(xs, ys)
+-        super().draw(renderer)
+-        self.stale = False
++        if hasattr(self, '_verts3d'):
++            xs3d, ys3d, zs3d = self._verts3d
++            xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, self.axes.M)
++            self.set_data(xs, ys)
++            super().draw(renderer)
++            self.stale = False
++        else:
++            import warnings
++            warnings.warn("Line3D object has no attribute '_verts3d'")
+ 
+ 
+ def line_2d_to_3d(line, zs=0, zdir='z'):

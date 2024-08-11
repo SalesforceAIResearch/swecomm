@@ -1,0 +1,40 @@
+2024-07-30 17:13:48,189 - INFO - Intermediate patch for django__django-10924 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:13:48,443 - INFO - >>>>> Applied Patch:
+Checking patch django/forms/fields.py...
+Applied patch django/forms/fields.py cleanly.
+
+2024-07-30 17:14:00,547 - INFO - Git diff before:
+diff --git a/django/forms/fields.py b/django/forms/fields.py
+index a977256525..53038c318e 100644
+--- a/django/forms/fields.py
++++ b/django/forms/fields.py
+@@ -1082,6 +1082,9 @@ class FilePathField(ChoiceField):
+         self.allow_files, self.allow_folders = allow_files, allow_folders
+         super().__init__(choices=(), **kwargs)
+ 
++        if callable(self.path):
++            self.path = self.path()
++
+         if self.required:
+             self.choices = []
+         else:
+2024-07-30 17:14:00,547 - INFO - Eval script for django__django-10924 written to /eval.sh
+2024-07-30 17:14:56,035 - INFO - Test runtime: 55.49 seconds
+2024-07-30 17:14:56,348 - INFO - Git diff after:
+diff --git a/django/forms/fields.py b/django/forms/fields.py
+index a977256525..53038c318e 100644
+--- a/django/forms/fields.py
++++ b/django/forms/fields.py
+@@ -1082,6 +1082,9 @@ class FilePathField(ChoiceField):
+         self.allow_files, self.allow_folders = allow_files, allow_folders
+         super().__init__(choices=(), **kwargs)
+ 
++        if callable(self.path):
++            self.path = self.path()
++
+         if self.required:
+             self.choices = []
+         else:
+2024-07-30 17:14:56,348 - INFO - Grading answer for django__django-10924...
+2024-07-30 17:14:56,358 - INFO - report: {'django__django-10924': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_callable_path (model_fields.test_filepathfield.FilePathFieldTests)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_path (model_fields.test_filepathfield.FilePathFieldTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-10924: resolved: True

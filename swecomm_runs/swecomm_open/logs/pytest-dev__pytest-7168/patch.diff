@@ -1,0 +1,20 @@
+diff --git a/src/_pytest/reports.py b/src/_pytest/reports.py
+index 8459c1cb9..5809f0517 100644
+--- a/src/_pytest/reports.py
++++ b/src/_pytest/reports.py
+@@ -263,9 +263,12 @@ class TestReport(BaseReport):
+         self.__dict__.update(extra)
+ 
+     def __repr__(self):
+-        return "<{} {!r} when={!r} outcome={!r}>".format(
+-            self.__class__.__name__, self.nodeid, self.when, self.outcome
+-        )
++        try:
++            return "<{} {!r} when={!r} outcome={!r}>".format(
++                self.__class__.__name__, self.nodeid, self.when, self.outcome
++            )
++        except Exception as e:
++            return "<{} repr() failed: {}>".format(self.__class__.__name__, str(e))
+ 
+     @classmethod
+     def from_item_and_call(cls, item, call) -> "TestReport":

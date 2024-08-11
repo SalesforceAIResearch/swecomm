@@ -1,0 +1,29 @@
+
+diff --git a/seaborn/_stats/regression.py b/seaborn/_stats/regression.py
+index 7b7ddc8d..dbd9924f 100644
+--- a/seaborn/_stats/regression.py
++++ b/seaborn/_stats/regression.py
+@@ -20,17 +20,17 @@ class PolyFit(Stat):
+     gridsize: int = 100
+ 
+     def _fit_predict(self, data):
+-
+-        x = data["x"]
+-        y = data["y"]
+-        if x.nunique() <= self.order:
+-            # TODO warn?
++        x = data["x"].dropna()
++        y = data["y"].dropna()
++        valid_indices = x.index.intersection(y.index)
++        x = x.loc[valid_indices]
++        y = y.loc[valid_indices]
++        if len(x) <= self.order:
+             xx = yy = []
+         else:
+             p = np.polyfit(x, y, self.order)
+             xx = np.linspace(x.min(), x.max(), self.gridsize)
+             yy = np.polyval(p, xx)
+-
+         return pd.DataFrame(dict(x=xx, y=yy))
+ 
+     # TODO we should have a way of identifying the method that will be applied

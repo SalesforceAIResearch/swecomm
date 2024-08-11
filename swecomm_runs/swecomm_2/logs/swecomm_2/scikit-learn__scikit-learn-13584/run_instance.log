@@ -1,0 +1,68 @@
+2024-08-04 17:27:38,858 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-13584
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-13584:latest for scikit-learn__scikit-learn-13584
+2024-08-04 17:27:38,861 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-13584:latest already exists, skipping build.
+2024-08-04 17:27:38,861 - INFO - Creating container for scikit-learn__scikit-learn-13584...
+2024-08-04 17:27:38,891 - INFO - Container for scikit-learn__scikit-learn-13584 created: 6aece9d67a84edd7220ffc4eea9c4fb273fef32ae7687a62f669a6caacd0f60a
+2024-08-04 17:27:39,222 - INFO - Container for scikit-learn__scikit-learn-13584 started: 6aece9d67a84edd7220ffc4eea9c4fb273fef32ae7687a62f669a6caacd0f60a
+2024-08-04 17:27:39,223 - INFO - Intermediate patch for scikit-learn__scikit-learn-13584 written to logs/run_evaluation/swecomm_2/swecomm_2/scikit-learn__scikit-learn-13584/patch.diff, now applying to container...
+2024-08-04 17:27:39,399 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:27:39,443 - INFO - >>>>> Applied Patch:
+patching file sklearn/utils/_pprint.py
+
+2024-08-04 17:27:40,291 - INFO - Git diff before:
+diff --git a/sklearn/utils/_pprint.py b/sklearn/utils/_pprint.py
+index b8686dba5..8f4373343 100644
+--- a/sklearn/utils/_pprint.py
++++ b/sklearn/utils/_pprint.py
+@@ -66,6 +66,7 @@ BaseEstimator.__repr__ for pretty-printing estimators"""
+ from inspect import signature
+ import pprint
+ from collections import OrderedDict
++import numpy as np
+ 
+ from ..base import BaseEstimator
+ from .._config import get_config
+@@ -97,7 +98,11 @@ def _changed_params(estimator):
+     for k, v in params.items():
+         if (v != init_params[k] and
+                 not (is_scalar_nan(init_params[k]) and is_scalar_nan(v))):
+-            filtered_params[k] = v
++            if isinstance(v, np.ndarray) and isinstance(init_params[k], np.ndarray):
++                if not np.array_equal(v, init_params[k]):
++                    filtered_params[k] = v
++            elif not isinstance(v, np.ndarray):
++                filtered_params[k] = v
+     return filtered_params
+2024-08-04 17:27:40,291 - INFO - Eval script for scikit-learn__scikit-learn-13584 written to logs/run_evaluation/swecomm_2/swecomm_2/scikit-learn__scikit-learn-13584/eval.sh; copying to container...
+2024-08-04 17:27:44,339 - INFO - Test runtime: 3.92 seconds
+2024-08-04 17:27:44,340 - INFO - Test output for scikit-learn__scikit-learn-13584 written to logs/run_evaluation/swecomm_2/swecomm_2/scikit-learn__scikit-learn-13584/test_output.txt
+2024-08-04 17:27:44,387 - INFO - Git diff after:
+diff --git a/sklearn/utils/_pprint.py b/sklearn/utils/_pprint.py
+index b8686dba5..8f4373343 100644
+--- a/sklearn/utils/_pprint.py
++++ b/sklearn/utils/_pprint.py
+@@ -66,6 +66,7 @@ BaseEstimator.__repr__ for pretty-printing estimators"""
+ from inspect import signature
+ import pprint
+ from collections import OrderedDict
++import numpy as np
+ 
+ from ..base import BaseEstimator
+ from .._config import get_config
+@@ -97,7 +98,11 @@ def _changed_params(estimator):
+     for k, v in params.items():
+         if (v != init_params[k] and
+                 not (is_scalar_nan(init_params[k]) and is_scalar_nan(v))):
+-            filtered_params[k] = v
++            if isinstance(v, np.ndarray) and isinstance(init_params[k], np.ndarray):
++                if not np.array_equal(v, init_params[k]):
++                    filtered_params[k] = v
++            elif not isinstance(v, np.ndarray):
++                filtered_params[k] = v
+     return filtered_params
+2024-08-04 17:27:44,387 - INFO - Grading answer for scikit-learn__scikit-learn-13584...
+2024-08-04 17:27:44,395 - INFO - report: {'scikit-learn__scikit-learn-13584': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['sklearn/utils/tests/test_pprint.py::test_changed_only', 'sklearn/utils/tests/test_pprint.py::test_pipeline', 'sklearn/utils/tests/test_pprint.py::test_deeply_nested', 'sklearn/utils/tests/test_pprint.py::test_gridsearch', 'sklearn/utils/tests/test_pprint.py::test_gridsearch_pipeline', 'sklearn/utils/tests/test_pprint.py::test_n_max_elements_to_show']}, 'PASS_TO_PASS': {'success': ['sklearn/utils/tests/test_pprint.py::test_basic', 'sklearn/utils/tests/test_pprint.py::test_length_constraint', 'sklearn/utils/tests/test_pprint.py::test_builtin_prettyprinter'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for scikit-learn__scikit-learn-13584: resolved: False
+2024-08-04 17:27:44,395 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-13584.swecomm_2...
+2024-08-04 17:27:59,778 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-13584.swecomm_2...
+2024-08-04 17:27:59,800 - INFO - Container sweb.eval.scikit-learn__scikit-learn-13584.swecomm_2 removed.

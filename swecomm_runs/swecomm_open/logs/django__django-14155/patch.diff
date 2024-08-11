@@ -1,0 +1,38 @@
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 9b00e24509..788ecbcb7c 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -31,7 +31,14 @@ from .utils import get_callable
+ 
+ class ResolverMatch:
+     def __init__(self, func, args, kwargs, url_name=None, app_names=None, namespaces=None, route=None, tried=None):
+-        self.func = func
++        if isinstance(func, functools.partial):
++            self.func = func.func
++            self.partial_args = func.args
++            self.partial_kwargs = func.keywords
++        else:
++            self.func = func
++            self.partial_args = ()
++            self.partial_kwargs = {}
+         self.args = args
+         self.kwargs = kwargs
+         self.url_name = url_name
+@@ -59,10 +66,16 @@ class ResolverMatch:
+         return (self.func, self.args, self.kwargs)[index]
+ 
+     def __repr__(self):
+-        return "ResolverMatch(func=%s, args=%s, kwargs=%s, url_name=%s, app_names=%s, namespaces=%s, route=%s)" % (
++        repr_str = "ResolverMatch(func=%s, args=%s, kwargs=%s, url_name=%s, app_names=%s, namespaces=%s, route=%s" % (
+             self._func_path, self.args, self.kwargs, self.url_name,
+             self.app_names, self.namespaces, self.route,
+         )
++        if self.partial_args:
++            repr_str += ", partial_args=%s" % (self.partial_args,)
++        if self.partial_kwargs:
++            repr_str += ", partial_kwargs=%s" % (self.partial_kwargs,)
++        repr_str += ")"
++        return repr_str
+ 
+ 
+ def get_resolver(urlconf=None):

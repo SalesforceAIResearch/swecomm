@@ -1,0 +1,36 @@
+diff --git a/sympy/core/expr.py b/sympy/core/expr.py
+index 5f6b429dfd..0c99ea998b 100644
+--- a/sympy/core/expr.py
++++ b/sympy/core/expr.py
+@@ -3853,6 +3853,7 @@ def _eval_derivative_matrix_lines(self, x):
+ 
+ 
+ class AtomicExpr(Atom, Expr):
++    __slots__ = ()
+     """
+     A parent class for object which are both atoms and Exprs.
+ 
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index 70e6953559..6b5a51b25c 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -180,6 +180,7 @@ def numbered_string_incr(s, start=0):
+ _uniquely_named_symbol = uniquely_named_symbol
+ 
+ class Symbol(AtomicExpr, Boolean):
++    __slots__ = ('name',)
+     """
+     Assumptions:
+        commutative = True
+diff --git a/sympy/logic/boolalg.py b/sympy/logic/boolalg.py
+index c01628fe58..62a531b728 100644
+--- a/sympy/logic/boolalg.py
++++ b/sympy/logic/boolalg.py
+@@ -61,6 +61,7 @@ def as_Boolean(e):
+ 
+ @sympify_method_args
+ class Boolean(Basic):
++    __slots__ = ()
+     """A boolean object is an object for which logic operations make sense."""
+ 
+     __slots__ = ()

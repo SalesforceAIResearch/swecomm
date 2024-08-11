@@ -1,0 +1,36 @@
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index c2623f099f..ca4f7b38a0 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -13,6 +13,7 @@ from collections import namedtuple
+ from django.core.exceptions import FieldError
+ from django.db.models.constants import LOOKUP_SEP
+ from django.utils import tree
++from django.utils.hashable import make_hashable
+ 
+ # PathInfo is used when converting lookups (fk__somecol). The contents
+ # describe the relation in Model terms (model Options and Fields for both
+@@ -38,7 +39,9 @@ class Q(tree.Node):
+     conditional = True
+ 
+     def __init__(self, *args, _connector=None, _negated=False, **kwargs):
+-        super().__init__(children=[*args, *sorted(kwargs.items())], connector=_connector, negated=_negated)
++        hashable_args = tuple(make_hashable(arg) for arg in args)
++        hashable_kwargs = tuple((k, make_hashable(v)) for k, v in sorted(kwargs.items()))
++        super().__init__(children=[*hashable_args, *hashable_kwargs], connector=_connector, negated=_negated)
+ 
+     def _combine(self, other, conn):
+         if not isinstance(other, Q):
+diff --git a/django/utils/tree.py b/django/utils/tree.py
+index 302cd37d5f..fbf1879acf 100644
+--- a/django/utils/tree.py
++++ b/django/utils/tree.py
+@@ -73,7 +73,7 @@ class Node:
+         )
+ 
+     def __hash__(self):
+-        return hash((self.__class__, self.connector, self.negated, *make_hashable(self.children)))
++        return hash((self.__class__, self.connector, self.negated, *map(make_hashable, self.children)))
+ 
+     def add(self, data, conn_type, squash=True):
+         """

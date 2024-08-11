@@ -1,0 +1,18 @@
+diff --git a/django/db/models/fields/related_descriptors.py b/django/db/models/fields/related_descriptors.py
+index 872a4c98dc..0645694137 100644
+--- a/django/db/models/fields/related_descriptors.py
++++ b/django/db/models/fields/related_descriptors.py
+@@ -254,7 +254,12 @@ class ForwardManyToOneDescriptor:
+         # Set the values of the related field.
+         else:
+             for lh_field, rh_field in self.field.related_fields:
+-                setattr(instance, lh_field.attname, getattr(value, rh_field.attname))
++                rh_val = getattr(value, rh_field.attname)
++                if rh_val != getattr(value, rh_field.name):
++                    # If the primary key has been modified, and differs from
++                    # the raw field value, use the primary key's value instead.
++                    rh_val = getattr(value, rh_field.name)
++                setattr(instance, lh_field.attname, rh_val)
+ 
+         # Set the related instance cache used by __get__ to avoid an SQL query
+         # when accessing the attribute we just set.

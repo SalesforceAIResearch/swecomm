@@ -1,0 +1,25 @@
+diff --git a/lib/matplotlib/axis.py b/lib/matplotlib/axis.py
+index af0815d41d..806ddfa526 100644
+--- a/lib/matplotlib/axis.py
++++ b/lib/matplotlib/axis.py
+@@ -2011,8 +2011,9 @@ class Axis(martist.Artist):
+         minor : bool, default: False
+             If ``False``, set the major ticks; if ``True``, the minor ticks.
+         **kwargs
+-            `.Text` properties for the labels. These take effect only if you
+-            pass *labels*. In other cases, please use `~.Axes.tick_params`.
++            `.Text` properties for the labels. These are always validated,
++            but only take effect if you pass *labels*. In other cases,
++            please use `~.Axes.tick_params`.
+ 
+         Notes
+         -----
+@@ -2021,6 +2022,8 @@ class Axis(martist.Artist):
+         other limits, you should set the limits explicitly after setting the
+         ticks.
+         """
++        if kwargs:
++            mtext.Text().update(kwargs)  # Validate kwargs
+         result = self._set_tick_locations(ticks, minor=minor)
+         if labels is not None:
+             self.set_ticklabels(labels, minor=minor, **kwargs)

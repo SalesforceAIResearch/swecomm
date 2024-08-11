@@ -1,0 +1,31 @@
+--- a/django/forms/utils.py
++++ b/django/forms/utils.py
+@@ -81,13 +81,16 @@
+     """
+     A collection of errors that knows how to display itself in various formats.
+     """
+-    def __init__(self, initlist=None, error_class=None):
++    def __init__(self, initlist=None, error_class=None, form_type=None):
+         super().__init__(initlist)
+ 
+         if error_class is None:
+             self.error_class = 'errorlist'
+         else:
+             self.error_class = 'errorlist {}'.format(error_class)
++        
++        if form_type == 'nonform':
++            self.error_class += ' nonform'
+ 
+     def as_data(self):
+         return ValidationError(self.data).error_list
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -295,7 +295,7 @@
+         """
+         if self._non_form_errors is None:
+             self.full_clean()
+-        return self._non_form_errors
++        return ErrorList(self._non_form_errors, form_type='nonform') if self._non_form_errors else self._non_form_errors
+ 
+     @property
+     def errors(self):

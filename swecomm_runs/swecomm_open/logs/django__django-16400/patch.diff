@@ -1,0 +1,43 @@
+diff --git a/django/contrib/auth/management/__init__.py b/django/contrib/auth/management/__init__.py
+index 0b5a982617..823ec56dba 100644
+--- a/django/contrib/auth/management/__init__.py
++++ b/django/contrib/auth/management/__init__.py
+@@ -100,7 +100,7 @@ def create_permissions(
+         for ct, (codename, name) in searched_perms
+         if (ct.pk, codename) not in all_perms
+     ]
+-    Permission.objects.using(using).bulk_create(perms)
++    Permission.objects.db_manager(using).bulk_create(perms)
+     if verbosity >= 2:
+         for perm in perms:
+             print("Adding permission '%s'" % perm)
+diff --git a/django/core/management/commands/migrate.py b/django/core/management/commands/migrate.py
+index 1541843066..a33120890b 100644
+--- a/django/core/management/commands/migrate.py
++++ b/django/core/management/commands/migrate.py
+@@ -5,6 +5,7 @@ from importlib import import_module
+ from django.apps import apps
+ from django.core.management.base import BaseCommand, CommandError, no_translations
+ from django.core.management.sql import emit_post_migrate_signal, emit_pre_migrate_signal
++from django.contrib.auth.management import create_permissions
+ from django.db import DEFAULT_DB_ALIAS, connections, router
+ from django.db.migrations.autodetector import MigrationAutodetector
+ from django.db.migrations.executor import MigrationExecutor
+@@ -380,6 +381,17 @@ class Command(BaseCommand):
+ 
+         # Send the post_migrate signal, so individual apps can do whatever they need
+         # to do at this point.
++        # Ensure permissions are created using the specified database
++        for app_config in apps.get_app_configs():
++            if app_config.models_module:
++                create_permissions(
++                    app_config,
++                    verbosity=self.verbosity,
++                    interactive=self.interactive,
++                    using=database,
++                    apps=post_migrate_apps,
++                )
++
+         emit_post_migrate_signal(
+             self.verbosity,
+             self.interactive,

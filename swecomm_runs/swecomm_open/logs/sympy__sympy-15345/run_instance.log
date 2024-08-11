@@ -1,0 +1,50 @@
+2024-08-04 16:55:59,615 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-15345
+Building instance image sweb.eval.x86_64.sympy__sympy-15345:latest for sympy__sympy-15345
+2024-08-04 16:55:59,616 - INFO - Image sweb.eval.x86_64.sympy__sympy-15345:latest already exists, skipping build.
+2024-08-04 16:55:59,616 - INFO - Creating container for sympy__sympy-15345...
+2024-08-04 16:55:59,654 - INFO - Container for sympy__sympy-15345 created: 5ea8032599213826b737467a70c3309c46a828111ac31963999bb2f9256d05d7
+2024-08-04 16:55:59,922 - INFO - Container for sympy__sympy-15345 started: 5ea8032599213826b737467a70c3309c46a828111ac31963999bb2f9256d05d7
+2024-08-04 16:55:59,922 - INFO - Intermediate patch for sympy__sympy-15345 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-15345/patch.diff, now applying to container...
+2024-08-04 16:56:00,105 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:56:00,148 - INFO - >>>>> Applied Patch:
+patching file sympy/printing/mathematica.py
+
+2024-08-04 16:56:00,793 - INFO - Git diff before:
+diff --git a/sympy/printing/mathematica.py b/sympy/printing/mathematica.py
+index ea7e3a2d94..f6a104f8dd 100644
+--- a/sympy/printing/mathematica.py
++++ b/sympy/printing/mathematica.py
+@@ -116,6 +116,9 @@ def _print_Derivative(self, expr):
+         dvars = [i[0] if i[1] == 1 else i for i in expr.variable_count]
+         return "Hold[D[" + ', '.join(self.doprint(a) for a in [dexpr] + dvars) + "]]"
+ 
++    def _print_Max(self, expr):
++        return "Max[" + ', '.join(self.doprint(a) for a in expr.args) + "]"
++
+ 
+ def mathematica_code(expr, **settings):
+     r"""Converts an expr to a string of the Wolfram Mathematica code
+2024-08-04 16:56:00,793 - INFO - Eval script for sympy__sympy-15345 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-15345/eval.sh; copying to container...
+2024-08-04 16:56:04,489 - INFO - Test runtime: 3.57 seconds
+2024-08-04 16:56:04,489 - INFO - Test output for sympy__sympy-15345 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-15345/test_output.txt
+2024-08-04 16:56:04,541 - INFO - Git diff after:
+diff --git a/sympy/printing/mathematica.py b/sympy/printing/mathematica.py
+index ea7e3a2d94..f6a104f8dd 100644
+--- a/sympy/printing/mathematica.py
++++ b/sympy/printing/mathematica.py
+@@ -116,6 +116,9 @@ def _print_Derivative(self, expr):
+         dvars = [i[0] if i[1] == 1 else i for i in expr.variable_count]
+         return "Hold[D[" + ', '.join(self.doprint(a) for a in [dexpr] + dvars) + "]]"
+ 
++    def _print_Max(self, expr):
++        return "Max[" + ', '.join(self.doprint(a) for a in expr.args) + "]"
++
+ 
+ def mathematica_code(expr, **settings):
+     r"""Converts an expr to a string of the Wolfram Mathematica code
+2024-08-04 16:56:04,541 - INFO - Grading answer for sympy__sympy-15345...
+2024-08-04 16:56:04,543 - INFO - report: {'sympy__sympy-15345': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_Function']}, 'PASS_TO_PASS': {'success': ['test_Integer', 'test_Rational', 'test_Pow', 'test_Mul', 'test_constants', 'test_containers', 'test_Integral', 'test_Derivative'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-15345: resolved: False
+2024-08-04 16:56:04,543 - INFO - Attempting to stop container sweb.eval.sympy__sympy-15345.swecomm_open...
+2024-08-04 16:56:19,818 - INFO - Attempting to remove container sweb.eval.sympy__sympy-15345.swecomm_open...
+2024-08-04 16:56:19,848 - INFO - Container sweb.eval.sympy__sympy-15345.swecomm_open removed.

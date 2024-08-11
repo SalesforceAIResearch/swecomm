@@ -1,0 +1,132 @@
+2024-07-30 17:14:29,955 - INFO - Intermediate patch for django__django-13448 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:14:30,276 - INFO - >>>>> Applied Patch:
+Checking patch django/db/backends/base/creation.py...
+Applied patch django/db/backends/base/creation.py cleanly.
+
+2024-07-30 17:14:44,154 - INFO - Git diff before:
+diff --git a/django/db/backends/base/creation.py b/django/db/backends/base/creation.py
+index 503f7f56fd..7620e0579c 100644
+--- a/django/db/backends/base/creation.py
++++ b/django/db/backends/base/creation.py
+@@ -58,7 +58,7 @@ class BaseDatabaseCreation:
+         settings.DATABASES[self.connection.alias]["NAME"] = test_database_name
+         self.connection.settings_dict["NAME"] = test_database_name
+ 
+-        if self.connection.settings_dict['TEST']['MIGRATE']:
++        if self.connection.settings_dict['TEST'].get('MIGRATE', True):
+             # We report migrate messages at one level lower than that
+             # requested. This ensures we don't get flooded with messages during
+             # testing (unless you really ask to be flooded).
+@@ -74,7 +74,7 @@ class BaseDatabaseCreation:
+         # and store it on the connection. This slightly horrific process is so people
+         # who are testing on databases without transactions or who are using
+         # a TransactionTestCase still get a clean database on every test run.
+-        if serialize:
++        if serialize and self.connection.settings_dict['TEST'].get('MIGRATE', True):
+             self.connection._test_serialized_contents = self.serialize_db_to_string()
+ 
+         call_command('createcachetable', database=self.connection.alias)
+@@ -97,6 +97,21 @@ class BaseDatabaseCreation:
+         Designed only for test runner usage; will not handle large
+         amounts of data.
+         """
++        # Check if migrations are disabled
++        if not self.connection.settings_dict['TEST'].get('MIGRATE', True):
++            return ''
++
++        def _table_exists(model):
++            """
++            Check if the table for the given model exists in the database.
++            """
++            with self.connection.cursor() as cursor:
++                cursor.execute(
++                    "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = %s",
++                    [model._meta.db_table]
++                )
++                return cursor.fetchone()[0] == 1
++
+         # Iteratively return every object for all models to serialize.
+         def get_objects():
+             from django.db.migrations.loader import MigrationLoader
+@@ -110,12 +125,14 @@ class BaseDatabaseCreation:
+                     for model in app_config.get_models():
+                         if (
+                             model._meta.can_migrate(self.connection) and
+-                            router.allow_migrate_model(self.connection.alias, model)
++                            router.allow_migrate_model(self.connection.alias, model) and
++                            _table_exists(model)
+                         ):
+                             queryset = model._default_manager.using(
+                                 self.connection.alias,
+                             ).order_by(model._meta.pk.name)
+                             yield from queryset.iterator()
++
+         # Serialize to a string
+         out = StringIO()
+         serializers.serialize("json", get_objects(), indent=None, stream=out)
+2024-07-30 17:14:44,154 - INFO - Eval script for django__django-13448 written to /eval.sh
+2024-07-30 17:15:33,606 - INFO - Test runtime: 49.45 seconds
+2024-07-30 17:15:34,141 - INFO - Git diff after:
+diff --git a/django/db/backends/base/creation.py b/django/db/backends/base/creation.py
+index 503f7f56fd..7620e0579c 100644
+--- a/django/db/backends/base/creation.py
++++ b/django/db/backends/base/creation.py
+@@ -58,7 +58,7 @@ class BaseDatabaseCreation:
+         settings.DATABASES[self.connection.alias]["NAME"] = test_database_name
+         self.connection.settings_dict["NAME"] = test_database_name
+ 
+-        if self.connection.settings_dict['TEST']['MIGRATE']:
++        if self.connection.settings_dict['TEST'].get('MIGRATE', True):
+             # We report migrate messages at one level lower than that
+             # requested. This ensures we don't get flooded with messages during
+             # testing (unless you really ask to be flooded).
+@@ -74,7 +74,7 @@ class BaseDatabaseCreation:
+         # and store it on the connection. This slightly horrific process is so people
+         # who are testing on databases without transactions or who are using
+         # a TransactionTestCase still get a clean database on every test run.
+-        if serialize:
++        if serialize and self.connection.settings_dict['TEST'].get('MIGRATE', True):
+             self.connection._test_serialized_contents = self.serialize_db_to_string()
+ 
+         call_command('createcachetable', database=self.connection.alias)
+@@ -97,6 +97,21 @@ class BaseDatabaseCreation:
+         Designed only for test runner usage; will not handle large
+         amounts of data.
+         """
++        # Check if migrations are disabled
++        if not self.connection.settings_dict['TEST'].get('MIGRATE', True):
++            return ''
++
++        def _table_exists(model):
++            """
++            Check if the table for the given model exists in the database.
++            """
++            with self.connection.cursor() as cursor:
++                cursor.execute(
++                    "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = %s",
++                    [model._meta.db_table]
++                )
++                return cursor.fetchone()[0] == 1
++
+         # Iteratively return every object for all models to serialize.
+         def get_objects():
+             from django.db.migrations.loader import MigrationLoader
+@@ -110,12 +125,14 @@ class BaseDatabaseCreation:
+                     for model in app_config.get_models():
+                         if (
+                             model._meta.can_migrate(self.connection) and
+-                            router.allow_migrate_model(self.connection.alias, model)
++                            router.allow_migrate_model(self.connection.alias, model) and
++                            _table_exists(model)
+                         ):
+                             queryset = model._default_manager.using(
+                                 self.connection.alias,
+                             ).order_by(model._meta.pk.name)
+                             yield from queryset.iterator()
++
+         # Serialize to a string
+         out = StringIO()
+         serializers.serialize("json", get_objects(), indent=None, stream=out)
+2024-07-30 17:15:34,141 - INFO - Grading answer for django__django-13448...
+2024-07-30 17:15:34,153 - INFO - report: {'django__django-13448': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_migrate_test_setting_false (backends.base.test_creation.TestDbCreationTests)']}, 'PASS_TO_PASS': {'success': [], 'failure': ['test_custom_test_name (backends.base.test_creation.TestDbSignatureTests)', 'test_custom_test_name_with_test_prefix (backends.base.test_creation.TestDbSignatureTests)', 'test_default_name (backends.base.test_creation.TestDbSignatureTests)', 'test_migrate_test_setting_true (backends.base.test_creation.TestDbCreationTests)', 'test_circular_reference (backends.base.test_creation.TestDeserializeDbFromString)', 'test_circular_reference_with_natural_key (backends.base.test_creation.TestDeserializeDbFromString)', 'test_self_reference (backends.base.test_creation.TestDeserializeDbFromString)']}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-13448: resolved: False

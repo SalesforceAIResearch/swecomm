@@ -1,0 +1,15 @@
+diff --git a/sympy/tensor/array/ndim_array.py b/sympy/tensor/array/ndim_array.py
+index 6490a655a4..37e9307afc 100644
+--- a/sympy/tensor/array/ndim_array.py
++++ b/sympy/tensor/array/ndim_array.py
+@@ -190,6 +190,10 @@ def _setter_iterable_check(self, value):
+ 
+     @classmethod
+     def _scan_iterable_shape(cls, iterable):
++        # Check if the iterable is empty
++        if not iterable:
++            # Return an empty list and an empty tuple to represent the shape
++            return [], ()
+         def f(pointer):
+             if not isinstance(pointer, Iterable):
+                 return [pointer], ()

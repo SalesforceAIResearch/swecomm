@@ -1,0 +1,20 @@
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index 8376b487..5cca590e 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -3907,7 +3907,14 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+             dataset.
+         """
+         merge_result = dataset_update_method(self, other)
+-        return self._replace(inplace=True, **merge_result._asdict())
++        updated = self._replace(inplace=True, **merge_result._asdict())
++
++        # Preserve chunking for DataArrays
++        for var_name, var in updated.variables.items():
++            if var_name in self.variables and hasattr(self.variables[var_name], 'chunks'):
++                updated.variables[var_name] = var.chunk(self.variables[var_name].chunks)
++
++        return updated
+ 
+     def merge(
+         self,

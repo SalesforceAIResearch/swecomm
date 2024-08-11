@@ -1,0 +1,25 @@
+diff --git a/sklearn/pipeline.py b/sklearn/pipeline.py
+index 7eaf9a46f..439e9e7a2 100644
+--- a/sklearn/pipeline.py
++++ b/sklearn/pipeline.py
+@@ -219,6 +219,20 @@ class Pipeline(_BaseComposition):
+             return self.named_steps[ind]
+         return est
+ 
++    def __len__(self):
++        """
++        Returns the total number of steps in the pipeline.
++
++        This includes all transformers and the final estimator.
++
++        Returns
++        -------
++        length : int
++            The total number of steps in the pipeline.
++        """
++        return len(self.steps)
++
++
+     @property
+     def _estimator_type(self):
+         return self.steps[-1][1]._estimator_type

@@ -1,0 +1,52 @@
+diff --git a/django/contrib/staticfiles/storage.py b/django/contrib/staticfiles/storage.py
+index ba3b62620d..5361c8e397 100644
+--- a/django/contrib/staticfiles/storage.py
++++ b/django/contrib/staticfiles/storage.py
+@@ -40,6 +40,14 @@ class StaticFilesStorage(FileSystemStorage):
+                                        "setting to a filesystem path.")
+         return super().path(name)
+ 
++    def url(self, name):
++        url = super().url(name)
++        from django.urls import get_script_prefix
++        script_prefix = get_script_prefix()
++        if script_prefix and url.startswith('/'):
++            url = script_prefix.rstrip('/') + url
++        return url
++
+ 
+ class HashedFilesMixin:
+     default_template = """url("%s")"""
+diff --git a/django/core/files/storage.py b/django/core/files/storage.py
+index 4c27fce605..757991ea53 100644
+--- a/django/core/files/storage.py
++++ b/django/core/files/storage.py
+@@ -332,7 +332,13 @@ class FileSystemStorage(Storage):
+         url = filepath_to_uri(name)
+         if url is not None:
+             url = url.lstrip('/')
+-        return urljoin(self.base_url, url)
++        full_url = urljoin(self.base_url, url)
++        from django.http import HttpRequest
++        from django.urls import get_script_prefix
++        script_prefix = get_script_prefix()
++        if script_prefix:
++            return urljoin(script_prefix, full_url)
++        return full_url
+ 
+     def _datetime_from_timestamp(self, ts):
+         """
+diff --git a/django/templatetags/static.py b/django/templatetags/static.py
+index 39712aaba0..0dc4193612 100644
+--- a/django/templatetags/static.py
++++ b/django/templatetags/static.py
+@@ -106,6 +106,9 @@ class StaticNode(template.Node):
+         url = self.url(context)
+         if context.autoescape:
+             url = conditional_escape(url)
++        request = context.get('request')
++        if request and 'SCRIPT_NAME' in request.META:
++            url = urljoin(request.META['SCRIPT_NAME'], url)
+         if self.varname is None:
+             return url
+         context[self.varname] = url

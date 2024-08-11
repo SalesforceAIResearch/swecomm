@@ -1,0 +1,30 @@
+2024-08-04 16:56:01,773 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-15346
+Building instance image sweb.eval.x86_64.sympy__sympy-15346:latest for sympy__sympy-15346
+2024-08-04 16:56:01,775 - INFO - Image sweb.eval.x86_64.sympy__sympy-15346:latest already exists, skipping build.
+2024-08-04 16:56:01,775 - INFO - Creating container for sympy__sympy-15346...
+2024-08-04 16:56:01,807 - INFO - Container for sympy__sympy-15346 created: a20c690671083f74e6f7cfd6619578468ee6fd7b9d08cc25128b451c3a12e6f3
+2024-08-04 16:56:02,081 - INFO - Container for sympy__sympy-15346 started: a20c690671083f74e6f7cfd6619578468ee6fd7b9d08cc25128b451c3a12e6f3
+2024-08-04 16:56:02,081 - INFO - Intermediate patch for sympy__sympy-15346 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-15346/patch.diff, now applying to container...
+2024-08-04 16:56:02,268 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:56:02,324 - INFO - >>>>> Patch Apply Failed:
+patching file sympy/simplify/trigsimp.py
+Hunk #2 FAILED at 294.
+Hunk #3 FAILED at 394.
+Hunk #6 FAILED at 1179.
+3 out of 6 hunks FAILED -- saving rejects to file sympy/simplify/trigsimp.py.rej
+
+2024-08-04 16:56:02,325 - INFO - Traceback (most recent call last):
+  File "/home/ec2-user/SWE-bench/swebench/harness/run_evaluation.py", line 134, in run_instance
+    raise EvaluationError(
+EvaluationError: Evaluation error for sympy__sympy-15346: >>>>> Patch Apply Failed:
+patching file sympy/simplify/trigsimp.py
+Hunk #2 FAILED at 294.
+Hunk #3 FAILED at 394.
+Hunk #6 FAILED at 1179.
+3 out of 6 hunks FAILED -- saving rejects to file sympy/simplify/trigsimp.py.rej
+
+Check (logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-15346/run_instance.log) for more information.
+
+2024-08-04 16:56:02,325 - INFO - Attempting to stop container sweb.eval.sympy__sympy-15346.swecomm_open...
+2024-08-04 16:56:17,686 - INFO - Attempting to remove container sweb.eval.sympy__sympy-15346.swecomm_open...
+2024-08-04 16:56:17,700 - INFO - Container sweb.eval.sympy__sympy-15346.swecomm_open removed.

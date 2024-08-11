@@ -1,0 +1,48 @@
+diff --git a/lib/matplotlib/colorbar.py b/lib/matplotlib/colorbar.py
+index d3d53e3d98..8fb20c006a 100644
+--- a/lib/matplotlib/colorbar.py
++++ b/lib/matplotlib/colorbar.py
+@@ -511,13 +511,43 @@ class Colorbar:
+             self.norm = mappable.norm
+             self._reset_locator_formatter_scale()
+ 
++        self._process_values()
+         self._draw_all()
+         if isinstance(self.mappable, contour.ContourSet):
+             CS = self.mappable
+             if not CS.filled:
+                 self.add_lines(CS)
++        self.ax.draw_artist(self.ax)
+         self.stale = True
+ 
++    def update_bruteforce(self, mappable):
++        """
++        Update colorbar after the associated mappable's norm has changed.
++        
++        This method handles the case where vmin and vmax are equal, which can
++        cause a ZeroDivisionError in the existing update methods.
++        """
++        self.mappable = mappable
++        self.set_alpha(mappable.get_alpha())
++        self.cmap = mappable.cmap
++        self.norm = mappable.norm
++
++        if self.norm.vmin == self.norm.vmax:
++            # Handle the case where vmin and vmax are equal
++            self.norm.vmin = self.norm.vmin - 1e-8
++            self.norm.vmax = self.norm.vmax + 1e-8
++
++        self._reset_locator_formatter_scale()
++        self._process_values()
++        self._draw_all()
++
++        if isinstance(self.mappable, contour.ContourSet):
++            CS = self.mappable
++            if not CS.filled:
++                self.add_lines(CS)
++
++        self.ax.draw_artist(self.ax)
++        self.stale = True
+     @_api.deprecated("3.6", alternative="fig.draw_without_rendering()")
+     def draw_all(self):
+         """

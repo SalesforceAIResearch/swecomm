@@ -1,0 +1,30 @@
+diff --git a/django/core/handlers/exception.py b/django/core/handlers/exception.py
+index 66443ce560..2d111458ac 100644
+--- a/django/core/handlers/exception.py
++++ b/django/core/handlers/exception.py
+@@ -86,14 +86,17 @@ def response_for_exception(request, exc):
+         raise
+ 
+     else:
+-        signals.got_request_exception.send(sender=None, request=request)
+-        response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
+-        log_response(
+-            '%s: %s', response.reason_phrase, request.path,
+-            response=response,
+-            request=request,
+-            exc_info=sys.exc_info(),
+-        )
++        if settings.DEBUG and isinstance(exc, Http404):
++            response = debug.technical_404_response(request, exc)
++        else:
++            signals.got_request_exception.send(sender=None, request=request)
++            response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
++            log_response(
++                '%s: %s', response.reason_phrase, request.path,
++                response=response,
++                request=request,
++                exc_info=sys.exc_info(),
++            )
+ 
+     # Force a TemplateResponse to be rendered.
+     if not getattr(response, 'is_rendered', True) and callable(getattr(response, 'render', None)):

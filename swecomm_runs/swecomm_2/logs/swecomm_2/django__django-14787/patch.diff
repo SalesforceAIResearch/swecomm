@@ -1,0 +1,16 @@
+diff --git a/django/utils/decorators.py b/django/utils/decorators.py
+index 5c9a5d01c7..048c53aea2 100644
+--- a/django/utils/decorators.py
++++ b/django/utils/decorators.py
+@@ -32,6 +32,11 @@ def _multi_decorate(decorators, method):
+     else:
+         decorators = [decorators]
+ 
++    # Check if method is a functools.partial instance
++    if isinstance(method, partial):
++        # Use update_wrapper to copy necessary attributes from the original function
++        # to the partial object to preserve them after decoration
++        update_wrapper(method, method.func)
+     def _wrapper(self, *args, **kwargs):
+         # bound_method has the signature that 'decorator' expects i.e. no
+         # 'self' argument, but it's a closure over self so it can call

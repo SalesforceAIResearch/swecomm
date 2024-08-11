@@ -1,0 +1,63 @@
+2024-08-04 17:28:59,994 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-22005
+Building instance image sweb.eval.x86_64.sympy__sympy-22005:latest for sympy__sympy-22005
+2024-08-04 17:28:59,997 - INFO - Image sweb.eval.x86_64.sympy__sympy-22005:latest already exists, skipping build.
+2024-08-04 17:28:59,997 - INFO - Creating container for sympy__sympy-22005...
+2024-08-04 17:29:00,049 - INFO - Container for sympy__sympy-22005 created: e6b614788fa65cb44323e841f8a376f0edb7d00b4ca09f01cd1208010f462d84
+2024-08-04 17:29:00,382 - INFO - Container for sympy__sympy-22005 started: e6b614788fa65cb44323e841f8a376f0edb7d00b4ca09f01cd1208010f462d84
+2024-08-04 17:29:00,382 - INFO - Intermediate patch for sympy__sympy-22005 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-22005/patch.diff, now applying to container...
+2024-08-04 17:29:00,571 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:29:00,617 - INFO - >>>>> Applied Patch:
+patching file sympy/solvers/tests/test_polysys.py
+patching file sympy/solvers/polysys.py
+
+2024-08-04 17:29:01,478 - INFO - Git diff before:
+diff --git a/sympy/solvers/polysys.py b/sympy/solvers/polysys.py
+index b9809fd4e9..674322d4eb 100644
+--- a/sympy/solvers/polysys.py
++++ b/sympy/solvers/polysys.py
+@@ -240,7 +240,7 @@ def _solve_reduced_system(system, gens, entry=False):
+ 
+         univariate = list(filter(_is_univariate, basis))
+ 
+-        if len(univariate) == 1:
++        if len(univariate) == 1 and len(gens) == 1:
+             f = univariate.pop()
+         else:
+             raise NotImplementedError(filldedent('''
+diff --git a/sympy/solvers/tests/test_polysys.py b/sympy/solvers/tests/test_polysys.py
+index 58419f8762..6c7577793b 100644
+--- a/sympy/solvers/tests/test_polysys.py
++++ b/sympy/solvers/tests/test_polysys.py
+@@ -48,6 +48,8 @@ def test_solve_poly_system():
+     raises(NotImplementedError, lambda: solve_poly_system(
+         [z, -2*x*y**2 + x + y**2*z, y**2*(-z - 4) + 2]))
+     raises(PolynomialError, lambda: solve_poly_system([1/x], x))
++    raises(NotImplementedError, lambda: solve_poly_system([x - 1], x, y))
++    raises(NotImplementedError, lambda: solve_poly_system([y - 1], x, y))
+ 
+ 
+ def test_solve_biquadratic():
+2024-08-04 17:29:01,478 - INFO - Eval script for sympy__sympy-22005 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-22005/eval.sh; copying to container...
+2024-08-04 17:29:08,234 - INFO - Test runtime: 6.63 seconds
+2024-08-04 17:29:08,234 - INFO - Test output for sympy__sympy-22005 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-22005/test_output.txt
+2024-08-04 17:29:08,286 - INFO - Git diff after:
+diff --git a/sympy/solvers/polysys.py b/sympy/solvers/polysys.py
+index b9809fd4e9..674322d4eb 100644
+--- a/sympy/solvers/polysys.py
++++ b/sympy/solvers/polysys.py
+@@ -240,7 +240,7 @@ def _solve_reduced_system(system, gens, entry=False):
+ 
+         univariate = list(filter(_is_univariate, basis))
+ 
+-        if len(univariate) == 1:
++        if len(univariate) == 1 and len(gens) == 1:
+             f = univariate.pop()
+         else:
+             raise NotImplementedError(filldedent('''
+2024-08-04 17:29:08,286 - INFO - Git diff changed after running eval script
+2024-08-04 17:29:08,286 - INFO - Grading answer for sympy__sympy-22005...
+2024-08-04 17:29:08,288 - INFO - report: {'sympy__sympy-22005': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_solve_poly_system']}, 'PASS_TO_PASS': {'success': ['test_solve_biquadratic', 'test_solve_triangulated'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-22005: resolved: False
+2024-08-04 17:29:08,288 - INFO - Attempting to stop container sweb.eval.sympy__sympy-22005.swecomm_2...
+2024-08-04 17:29:23,581 - INFO - Attempting to remove container sweb.eval.sympy__sympy-22005.swecomm_2...
+2024-08-04 17:29:23,608 - INFO - Container sweb.eval.sympy__sympy-22005.swecomm_2 removed.

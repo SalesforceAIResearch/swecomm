@@ -1,0 +1,38 @@
+2024-07-30 17:13:43,902 - INFO - Intermediate patch for django__django-15202 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:13:44,105 - INFO - >>>>> Applied Patch:
+Checking patch django/core/validators.py...
+Applied patch django/core/validators.py cleanly.
+
+2024-07-30 17:13:57,412 - INFO - Git diff before:
+diff --git a/django/core/validators.py b/django/core/validators.py
+index 72fbe15551..2399a5c99f 100644
+--- a/django/core/validators.py
++++ b/django/core/validators.py
+@@ -110,7 +110,7 @@ class URLValidator(RegexValidator):
+         # Then check full URL
+         try:
+             super().__call__(value)
+-        except ValidationError as e:
++        except (ValidationError, ValueError) as e:
+             # Trivial case failed. Try for possible IDN domain
+             if value:
+                 try:
+2024-07-30 17:13:57,412 - INFO - Eval script for django__django-15202 written to /eval.sh
+2024-07-30 17:14:51,880 - INFO - Test runtime: 54.47 seconds
+2024-07-30 17:14:52,275 - INFO - Git diff after:
+diff --git a/django/core/validators.py b/django/core/validators.py
+index 72fbe15551..2399a5c99f 100644
+--- a/django/core/validators.py
++++ b/django/core/validators.py
+@@ -110,7 +110,7 @@ class URLValidator(RegexValidator):
+         # Then check full URL
+         try:
+             super().__call__(value)
+-        except ValidationError as e:
++        except (ValidationError, ValueError) as e:
+             # Trivial case failed. Try for possible IDN domain
+             if value:
+                 try:
+2024-07-30 17:14:52,275 - INFO - Grading answer for django__django-15202...
+2024-07-30 17:14:52,292 - INFO - report: {'django__django-15202': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_urlfield_clean_invalid (forms_tests.field_tests.test_urlfield.URLFieldTest)', 'test_urlfield_clean_not_required (forms_tests.field_tests.test_urlfield.URLFieldTest)']}, 'PASS_TO_PASS': {'success': ['test_urlfield_clean (forms_tests.field_tests.test_urlfield.URLFieldTest)', 'test_urlfield_clean_required (forms_tests.field_tests.test_urlfield.URLFieldTest)', 'test_urlfield_strip_on_none_value (forms_tests.field_tests.test_urlfield.URLFieldTest)', 'test_urlfield_unable_to_set_strip_kwarg (forms_tests.field_tests.test_urlfield.URLFieldTest)', 'test_urlfield_widget (forms_tests.field_tests.test_urlfield.URLFieldTest)', 'test_urlfield_widget_max_min_length (forms_tests.field_tests.test_urlfield.URLFieldTest)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-15202: resolved: False

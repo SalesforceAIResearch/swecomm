@@ -1,0 +1,30 @@
+diff --git a/sympy/matrices/expressions/blockmatrix.py b/sympy/matrices/expressions/blockmatrix.py
+index 11aebbc59f..5e30ffe5cf 100644
+--- a/sympy/matrices/expressions/blockmatrix.py
++++ b/sympy/matrices/expressions/blockmatrix.py
+@@ -244,7 +244,10 @@ def _entry(self, i, j, **kwargs):
+                 break
+             else:
+                 j -= numcols
+-        return self.blocks[row_block, col_block][i, j]
++        block = self.blocks
++        if isinstance(block, Matrix):
++            return block[i, j]
++        return block[row_block, col_block][i, j]
+ 
+     @property
+     def is_Identity(self):
+@@ -298,9 +301,11 @@ def diag(self):
+     def blocks(self):
+         from sympy.matrices.immutable import ImmutableDenseMatrix
+         mats = self.args
++        if len(mats) == 1:
++            return mats[0]
+         data = [[mats[i] if i == j else ZeroMatrix(mats[i].rows, mats[j].cols)
+-                        for j in range(len(mats))]
+-                        for i in range(len(mats))]
++                 for j in range(len(mats))]
++                for i in range(len(mats))]
+         return ImmutableDenseMatrix(data)
+ 
+     @property

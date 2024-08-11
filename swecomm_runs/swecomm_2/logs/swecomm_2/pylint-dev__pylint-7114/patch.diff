@@ -1,0 +1,26 @@
+--- a/pylint/lint/expand_modules.py
++++ b/pylint/lint/expand_modules.py
+@@ -91,7 +91,12 @@
+             except ImportError:
+                 modname = os.path.splitext(basename)[0]
+             if os.path.isdir(something):
+-                filepath = os.path.join(something, "__init__.py")
++                # Check if there's a file with the same name as the directory
++                same_name_file = os.path.join(something, f"{basename}.py")
++                if os.path.isfile(same_name_file):
++                    filepath = same_name_file
++                else:
++                    filepath = os.path.join(something, "__init__.py")
+             else:
+                 filepath = something
+         else:
+@@ -135,7 +140,8 @@
+             not (modname.endswith(".__init__") or modname == "__init__")
+             and os.path.basename(filepath) == "__init__.py"
+         )
+-        if has_init or is_namespace or is_directory:
++        has_same_name_file = os.path.isfile(os.path.join(os.path.dirname(filepath), f"{basename}.py"))
++        if has_init or is_namespace or (is_directory and not has_same_name_file):
+             for subfilepath in modutils.get_module_files(
+                 os.path.dirname(filepath), ignore_list, list_all=is_namespace
+             ):

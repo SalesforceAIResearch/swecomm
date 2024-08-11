@@ -1,0 +1,17 @@
+diff --git a/sympy/physics/units/util.py b/sympy/physics/units/util.py
+index b03ed4cd88..45be553478 100644
+--- a/sympy/physics/units/util.py
++++ b/sympy/physics/units/util.py
+@@ -101,6 +101,12 @@ def get_total_scale_factor(expr):
+             return unit_system.get_quantity_scale_factor(expr)
+         return expr
+ 
++    expr_dim = unit_system.get_dimensional_expr(expr)
++    target_dim = unit_system.get_dimensional_expr(Mul(*target_units))
++
++    if expr_dim != target_dim:
++        return expr
++
+     depmat = _get_conversion_matrix_for_expr(expr, target_units, unit_system)
+     if depmat is None:
+         return expr

@@ -1,0 +1,180 @@
+2024-08-04 16:50:20,155 - INFO - Environment image sweb.env.x86_64.a0efca7a0fe6719dbf65c2:latest found for mwaskom__seaborn-2848
+Building instance image sweb.eval.x86_64.mwaskom__seaborn-2848:latest for mwaskom__seaborn-2848
+2024-08-04 16:50:20,158 - INFO - Image sweb.eval.x86_64.mwaskom__seaborn-2848:latest already exists, skipping build.
+2024-08-04 16:50:20,158 - INFO - Creating container for mwaskom__seaborn-2848...
+2024-08-04 16:50:20,212 - INFO - Container for mwaskom__seaborn-2848 created: b00d314ecefd9972a6ed9e000e89f83dea7ed191882eacd4d7bc846d99783971
+2024-08-04 16:50:20,818 - INFO - Container for mwaskom__seaborn-2848 started: b00d314ecefd9972a6ed9e000e89f83dea7ed191882eacd4d7bc846d99783971
+2024-08-04 16:50:20,818 - INFO - Intermediate patch for mwaskom__seaborn-2848 written to logs/run_evaluation/swecomm_open/swecomm_open/mwaskom__seaborn-2848/patch.diff, now applying to container...
+2024-08-04 16:50:21,242 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:50:21,346 - INFO - >>>>> Applied Patch:
+patching file seaborn/axisgrid.py
+
+2024-08-04 16:50:21,626 - INFO - Git diff before:
+diff --git a/seaborn/axisgrid.py b/seaborn/axisgrid.py
+index 8526f44b..9aa650d7 100644
+--- a/seaborn/axisgrid.py
++++ b/seaborn/axisgrid.py
+@@ -1132,6 +1132,11 @@ class PairGrid(Grid):
+     Several different common plots can be generated in a single line using
+     :func:`pairplot`. Use :class:`PairGrid` when you need more flexibility.
+ 
++    The `hue` parameter can be passed either during the initialization of
++    PairGrid or directly to the `map` function. When passed to `map`, it
++    allows for more flexibility in creating plots with different hue variables
++    for each subplot.
++
+     See the :ref:`tutorial <grid_tutorial>` for more information.
+ 
+     """
+@@ -1326,11 +1331,33 @@ class PairGrid(Grid):
+             Must take x, y arrays as positional arguments and draw onto the
+             "currently active" matplotlib Axes. Also needs to accept kwargs
+             called ``color`` and  ``label``.
++        **kwargs : key, value pairings
++            Other keyword arguments are passed to the plotting function.
++            This can include a 'hue' parameter, which can be a pandas Series
++            or numpy array to be used for color-encoding the data points.
++
++        Returns
++        -------
++        self : PairGrid instance
++            Returns self for easy method chaining.
++
++        Notes
++        -----
++        The 'hue' parameter can be passed directly to the mapping function,
++        allowing for color-encoding of the data points without setting it
++        during PairGrid initialization. This is useful when you want to use
++        different hue variables for different layers of the plot.
+ 
+         """
+         row_indices, col_indices = np.indices(self.axes.shape)
+         indices = zip(row_indices.flat, col_indices.flat)
+-        self._map_bivariate(func, indices, **kwargs)
++
++        # Check if hue is passed as a keyword argument
++        if 'hue' in kwargs and isinstance(kwargs['hue'], (pd.Series, np.ndarray)):
++            hue = kwargs.pop('hue')
++            self._map_bivariate(func, indices, hue=hue, **kwargs)
++        else:
++            self._map_bivariate(func, indices, **kwargs)
+ 
+         return self
+ 
+@@ -1528,7 +1555,14 @@ class PairGrid(Grid):
+             ax = self.axes[i, j]
+             if ax is None:  # i.e. we are in corner mode
+                 continue
++            if "hue" in kws and isinstance(kws["hue"], (pd.Series, np.ndarray)):
++                hue = kws["hue"]
++                kws["hue"] = self.hue_vals
++            else:
++                hue = None
+             self._plot_bivariate(x_var, y_var, ax, func, **kws)
++            if hue is not None:
++                kws["hue"] = hue
+         self._add_axis_labels()
+ 
+         if "hue" in signature(func).parameters:
+@@ -1569,6 +1603,12 @@ class PairGrid(Grid):
+             kwargs.update({
+                 "hue": hue, "hue_order": self._hue_order, "palette": self._orig_palette,
+             })
++        elif kwargs["hue"] is not None:
++            if isinstance(kwargs["hue"], pd.Series):
++                hue = kwargs["hue"]
++                kwargs["hue"] = hue.reindex(data.index)
++            elif isinstance(kwargs["hue"], (np.ndarray, list)):
++                kwargs["hue"] = pd.Series(kwargs["hue"], index=data.index)
+         func(x=x, y=y, **kwargs)
+ 
+         self._update_legend_data(ax)
+2024-08-04 16:50:21,626 - INFO - Eval script for mwaskom__seaborn-2848 written to logs/run_evaluation/swecomm_open/swecomm_open/mwaskom__seaborn-2848/eval.sh; copying to container...
+2024-08-04 16:51:06,674 - INFO - Test runtime: 44.72 seconds
+2024-08-04 16:51:06,674 - INFO - Test output for mwaskom__seaborn-2848 written to logs/run_evaluation/swecomm_open/swecomm_open/mwaskom__seaborn-2848/test_output.txt
+2024-08-04 16:51:06,744 - INFO - Git diff after:
+diff --git a/seaborn/axisgrid.py b/seaborn/axisgrid.py
+index 8526f44b..9aa650d7 100644
+--- a/seaborn/axisgrid.py
++++ b/seaborn/axisgrid.py
+@@ -1132,6 +1132,11 @@ class PairGrid(Grid):
+     Several different common plots can be generated in a single line using
+     :func:`pairplot`. Use :class:`PairGrid` when you need more flexibility.
+ 
++    The `hue` parameter can be passed either during the initialization of
++    PairGrid or directly to the `map` function. When passed to `map`, it
++    allows for more flexibility in creating plots with different hue variables
++    for each subplot.
++
+     See the :ref:`tutorial <grid_tutorial>` for more information.
+ 
+     """
+@@ -1326,11 +1331,33 @@ class PairGrid(Grid):
+             Must take x, y arrays as positional arguments and draw onto the
+             "currently active" matplotlib Axes. Also needs to accept kwargs
+             called ``color`` and  ``label``.
++        **kwargs : key, value pairings
++            Other keyword arguments are passed to the plotting function.
++            This can include a 'hue' parameter, which can be a pandas Series
++            or numpy array to be used for color-encoding the data points.
++
++        Returns
++        -------
++        self : PairGrid instance
++            Returns self for easy method chaining.
++
++        Notes
++        -----
++        The 'hue' parameter can be passed directly to the mapping function,
++        allowing for color-encoding of the data points without setting it
++        during PairGrid initialization. This is useful when you want to use
++        different hue variables for different layers of the plot.
+ 
+         """
+         row_indices, col_indices = np.indices(self.axes.shape)
+         indices = zip(row_indices.flat, col_indices.flat)
+-        self._map_bivariate(func, indices, **kwargs)
++
++        # Check if hue is passed as a keyword argument
++        if 'hue' in kwargs and isinstance(kwargs['hue'], (pd.Series, np.ndarray)):
++            hue = kwargs.pop('hue')
++            self._map_bivariate(func, indices, hue=hue, **kwargs)
++        else:
++            self._map_bivariate(func, indices, **kwargs)
+ 
+         return self
+ 
+@@ -1528,7 +1555,14 @@ class PairGrid(Grid):
+             ax = self.axes[i, j]
+             if ax is None:  # i.e. we are in corner mode
+                 continue
++            if "hue" in kws and isinstance(kws["hue"], (pd.Series, np.ndarray)):
++                hue = kws["hue"]
++                kws["hue"] = self.hue_vals
++            else:
++                hue = None
+             self._plot_bivariate(x_var, y_var, ax, func, **kws)
++            if hue is not None:
++                kws["hue"] = hue
+         self._add_axis_labels()
+ 
+         if "hue" in signature(func).parameters:
+@@ -1569,6 +1603,12 @@ class PairGrid(Grid):
+             kwargs.update({
+                 "hue": hue, "hue_order": self._hue_order, "palette": self._orig_palette,
+             })
++        elif kwargs["hue"] is not None:
++            if isinstance(kwargs["hue"], pd.Series):
++                hue = kwargs["hue"]
++                kwargs["hue"] = hue.reindex(data.index)
++            elif isinstance(kwargs["hue"], (np.ndarray, list)):
++                kwargs["hue"] = pd.Series(kwargs["hue"], index=data.index)
+         func(x=x, y=y, **kwargs)
+ 
+         self._update_legend_data(ax)
+2024-08-04 16:51:06,744 - INFO - Grading answer for mwaskom__seaborn-2848...
+2024-08-04 16:51:06,747 - INFO - report: {'mwaskom__seaborn-2848': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['tests/test_relational.py::TestScatterPlotter::test_hue_order']}, 'PASS_TO_PASS': {'success': ['tests/test_relational.py::TestRelationalPlotter::test_wide_df_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_df_with_nonnumeric_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_array_variables', 'tests/test_relational.py::TestRelationalPlotter::test_flat_array_variables', 'tests/test_relational.py::TestRelationalPlotter::test_flat_list_variables', 'tests/test_relational.py::TestRelationalPlotter::test_flat_series_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_list_of_series_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_list_of_arrays_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_list_of_list_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_dict_of_series_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_dict_of_arrays_variables', 'tests/test_relational.py::TestRelationalPlotter::test_wide_dict_of_lists_variables', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_complex', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_vectors[series]', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_vectors[numpy]', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_vectors[list]', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_wide', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_hues', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_sizes', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_styles', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_stringy_numerics', 'tests/test_relational.py::TestRelationalPlotter::test_relplot_data', 'tests/test_relational.py::TestRelationalPlotter::test_facet_variable_collision', 'tests/test_relational.py::TestRelationalPlotter::test_ax_kwarg_removal', 'tests/test_relational.py::TestLinePlotter::test_legend_data', 'tests/test_relational.py::TestLinePlotter::test_plot', 'tests/test_relational.py::TestLinePlotter::test_axis_labels', 'tests/test_relational.py::TestScatterPlotter::test_color', 'tests/test_relational.py::TestScatterPlotter::test_legend_data', 'tests/test_relational.py::TestScatterPlotter::test_plot', 'tests/test_relational.py::TestScatterPlotter::test_axis_labels', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_axes', 'tests/test_relational.py::TestScatterPlotter::test_literal_attribute_vectors', 'tests/test_relational.py::TestScatterPlotter::test_supplied_color_array', 'tests/test_relational.py::TestScatterPlotter::test_linewidths', 'tests/test_relational.py::TestScatterPlotter::test_size_norm_extrapolation', 'tests/test_relational.py::TestScatterPlotter::test_datetime_scale', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics0]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics1]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics2]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics3]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics4]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics5]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics6]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics7]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics8]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics9]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics10]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_vs_relplot[long_semantics11]', 'tests/test_relational.py::TestScatterPlotter::test_scatterplot_smoke'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for mwaskom__seaborn-2848: resolved: False
+2024-08-04 16:51:06,747 - INFO - Attempting to stop container sweb.eval.mwaskom__seaborn-2848.swecomm_open...
+2024-08-04 16:51:22,295 - INFO - Attempting to remove container sweb.eval.mwaskom__seaborn-2848.swecomm_open...
+2024-08-04 16:51:22,313 - INFO - Container sweb.eval.mwaskom__seaborn-2848.swecomm_open removed.

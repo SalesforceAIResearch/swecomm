@@ -1,0 +1,90 @@
+2024-08-04 17:24:04,056 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13660
+Building instance image sweb.eval.x86_64.django__django-13660:latest for django__django-13660
+2024-08-04 17:24:04,058 - INFO - Image sweb.eval.x86_64.django__django-13660:latest already exists, skipping build.
+2024-08-04 17:24:04,058 - INFO - Creating container for django__django-13660...
+2024-08-04 17:24:04,099 - INFO - Container for django__django-13660 created: 0c1cfc8b0bd237d79601fdde06fa02ec7e621e4cf91d3092bb6237b4b551dee1
+2024-08-04 17:24:04,400 - INFO - Container for django__django-13660 started: 0c1cfc8b0bd237d79601fdde06fa02ec7e621e4cf91d3092bb6237b4b551dee1
+2024-08-04 17:24:04,401 - INFO - Intermediate patch for django__django-13660 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-13660/patch.diff, now applying to container...
+2024-08-04 17:24:04,589 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:24:04,628 - INFO - >>>>> Applied Patch:
+patching file django/core/management/commands/shell.py
+
+2024-08-04 17:24:06,760 - INFO - Git diff before:
+diff --git a/django/core/management/commands/shell.py b/django/core/management/commands/shell.py
+index 2b306a579e..88f982fcd4 100644
+--- a/django/core/management/commands/shell.py
++++ b/django/core/management/commands/shell.py
+@@ -1,4 +1,5 @@
+ import os
++import django
+ import select
+ import sys
+ import traceback
+@@ -84,13 +85,21 @@ class Command(BaseCommand):
+     def handle(self, **options):
+         # Execute the command and exit.
+         if options['command']:
+-            exec(options['command'])
++            minimal_globals = {
++                'django': django,
++                '__name__': '__main__',
++            }
++            exec(options['command'], minimal_globals)
+             return
+ 
+         # Execute stdin if it has anything to read and exit.
+         # Not supported on Windows due to select.select() limitations.
+         if sys.platform != 'win32' and not sys.stdin.isatty() and select.select([sys.stdin], [], [], 0)[0]:
+-            exec(sys.stdin.read())
++            minimal_globals = {
++                'django': django,
++                '__name__': '__main__',
++            }
++            exec(sys.stdin.read(), minimal_globals)
+             return
+ 
+         available_shells = [options['interface']] if options['interface'] else self.shells
+2024-08-04 17:24:06,760 - INFO - Eval script for django__django-13660 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-13660/eval.sh; copying to container...
+2024-08-04 17:24:13,372 - INFO - Test runtime: 6.45 seconds
+2024-08-04 17:24:13,372 - INFO - Test output for django__django-13660 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-13660/test_output.txt
+2024-08-04 17:24:13,423 - INFO - Git diff after:
+diff --git a/django/core/management/commands/shell.py b/django/core/management/commands/shell.py
+index 2b306a579e..88f982fcd4 100644
+--- a/django/core/management/commands/shell.py
++++ b/django/core/management/commands/shell.py
+@@ -1,4 +1,5 @@
+ import os
++import django
+ import select
+ import sys
+ import traceback
+@@ -84,13 +85,21 @@ class Command(BaseCommand):
+     def handle(self, **options):
+         # Execute the command and exit.
+         if options['command']:
+-            exec(options['command'])
++            minimal_globals = {
++                'django': django,
++                '__name__': '__main__',
++            }
++            exec(options['command'], minimal_globals)
+             return
+ 
+         # Execute stdin if it has anything to read and exit.
+         # Not supported on Windows due to select.select() limitations.
+         if sys.platform != 'win32' and not sys.stdin.isatty() and select.select([sys.stdin], [], [], 0)[0]:
+-            exec(sys.stdin.read())
++            minimal_globals = {
++                'django': django,
++                '__name__': '__main__',
++            }
++            exec(sys.stdin.read(), minimal_globals)
+             return
+ 
+         available_shells = [options['interface']] if options['interface'] else self.shells
+2024-08-04 17:24:13,423 - INFO - Grading answer for django__django-13660...
+2024-08-04 17:24:13,426 - INFO - report: {'django__django-13660': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_command_option_inline_function_call (shell.tests.ShellCommandTestCase)', 'test_stdin_read_inline_function_call (shell.tests.ShellCommandTestCase)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_command_option (shell.tests.ShellCommandTestCase)', 'test_command_option_globals (shell.tests.ShellCommandTestCase)', 'test_shell_with_bpython_not_installed (shell.tests.ShellCommandTestCase)', 'test_shell_with_ipython_not_installed (shell.tests.ShellCommandTestCase)', 'test_stdin_read (shell.tests.ShellCommandTestCase)', 'test_stdin_read_globals (shell.tests.ShellCommandTestCase)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-13660: resolved: True
+2024-08-04 17:24:13,426 - INFO - Attempting to stop container sweb.eval.django__django-13660.swecomm_2...
+2024-08-04 17:24:29,083 - INFO - Attempting to remove container sweb.eval.django__django-13660.swecomm_2...
+2024-08-04 17:24:29,114 - INFO - Container sweb.eval.django__django-13660.swecomm_2 removed.

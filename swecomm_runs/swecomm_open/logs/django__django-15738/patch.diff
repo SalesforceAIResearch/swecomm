@@ -1,0 +1,111 @@
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index 03f0f11507..8b7d2ae5cd 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1240,6 +1240,43 @@ class BaseDatabaseSchemaEditor:
+ 
+     def _alter_many_to_many(self, model, old_field, new_field, strict):
+         """Alter M2Ms to repoint their to= endpoints."""
++        # Check if we're changing from ForeignKey to ManyToManyField
++        if not old_field.many_to_many and new_field.many_to_many:
++            # Remove the unique constraint if it exists
++            self._delete_unique_constraint(model, [old_field.column])
++            # Create the new through table
++            self.create_model(new_field.remote_field.through)
++            # Create the "id" field
++            self.execute(self.sql_create_column % {
++                "table": self.quote_name(model._meta.db_table),
++                "column": self.quote_name(new_field.m2m_column_name()),
++                "definition": "integer NOT NULL",
++            })
++            # Create the M2M relationship now
++            self.execute(self.sql_create_column % {
++                "table": self.quote_name(model._meta.db_table),
++                "column": self.quote_name(new_field.m2m_reverse_name()),
++                "definition": "integer NOT NULL",
++            })
++            # Add the foreign key constraints
++            self.execute(self.sql_create_fk % {
++                "table": self.quote_name(model._meta.db_table),
++                "name": self._create_fk_name(model, new_field.m2m_column_name(), new_field.m2m_reverse_name()),
++                "column": self.quote_name(new_field.m2m_column_name()),
++                "to_table": self.quote_name(new_field.remote_field.model._meta.db_table),
++                "to_column": self.quote_name("id"),
++                "deferrable": "",
++            })
++            self.execute(self.sql_create_fk % {
++                "table": self.quote_name(model._meta.db_table),
++                "name": self._create_fk_name(model, new_field.m2m_reverse_name(), new_field.m2m_column_name()),
++                "column": self.quote_name(new_field.m2m_reverse_name()),
++                "to_table": self.quote_name(new_field.model._meta.db_table),
++                "to_column": self.quote_name("id"),
++                "deferrable": "",
++            })
++            return
++
+         # Rename the through table
+         if (
+             old_field.remote_field.through._meta.db_table
+@@ -1744,3 +1781,15 @@ class BaseDatabaseSchemaEditor:
+             "param_types": ",".join(param_types),
+         }
+         self.execute(sql)
++
++    def _delete_unique_constraint(self, model, fields, name):
++        table = model._meta.db_table
++        self.execute(self.sql_delete_constraint % {
++            "table": self.quote_name(table),
++            "name": self.quote_name(name),
++        })
++
++    def _create_fk_name(self, model, field, suffix):
++        table_name = model._meta.db_table
++        column_names = [field.column]
++        return self._create_index_name(model, column_names, suffix=suffix)
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 5f41053283..955fb3b9c5 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -1179,8 +1179,9 @@ class MigrationAutodetector:
+             if old_field_dec != new_field_dec and old_field_name == field_name:
+                 both_m2m = old_field.many_to_many and new_field.many_to_many
+                 neither_m2m = not old_field.many_to_many and not new_field.many_to_many
+-                if both_m2m or neither_m2m:
+-                    # Either both fields are m2m or neither is
++                fk_to_m2m = isinstance(old_field, models.ForeignKey) and isinstance(new_field, models.ManyToManyField)
++                if both_m2m or neither_m2m or fk_to_m2m:
++                    # Either both fields are m2m, neither is, or it's a ForeignKey to ManyToManyField change
+                     preserve_default = True
+                     if (
+                         old_field.null
+@@ -1197,16 +1198,20 @@ class MigrationAutodetector:
+                             preserve_default = False
+                     else:
+                         field = new_field
+-                    self.add_operation(
+-                        app_label,
+-                        operations.AlterField(
+-                            model_name=model_name,
+-                            name=field_name,
+-                            field=field,
+-                            preserve_default=preserve_default,
+-                        ),
+-                        dependencies=dependencies,
+-                    )
++                    if fk_to_m2m:
++                        self._generate_removed_field(app_label, model_name, field_name)
++                        self._generate_added_field(app_label, model_name, field_name)
++                    else:
++                        self.add_operation(
++                            app_label,
++                            operations.AlterField(
++                                model_name=model_name,
++                                name=field_name,
++                                field=field,
++                                preserve_default=preserve_default,
++                            ),
++                            dependencies=dependencies,
++                        )
+                 else:
+                     # We cannot alter between m2m and concrete fields
+                     self._generate_removed_field(app_label, model_name, field_name)

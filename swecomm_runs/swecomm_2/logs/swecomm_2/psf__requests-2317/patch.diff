@@ -1,0 +1,25 @@
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -425,7 +425,7 @@
+             If Tuple, ('cert', 'key') pair.
+         """
+ 
+-        method = builtin_str(method)
++        method = builtin_str(method) if isinstance(method, bytes) else method
+ 
+         # Create the Request.
+         req = Request(
+--- a/requests/compat.py
++++ b/requests/compat.py
+@@ -108,7 +108,10 @@
+     from io import StringIO
+     from collections import OrderedDict
+ 
+-    builtin_str = str
++    def builtin_str(x):
++        if isinstance(x, bytes):
++            return x.decode('utf-8')
++        return str(x)
+     str = str
+     bytes = bytes
+     basestring = (str, bytes)

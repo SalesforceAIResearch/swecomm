@@ -1,0 +1,46 @@
+2024-08-04 16:55:52,948 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-14396
+Building instance image sweb.eval.x86_64.sympy__sympy-14396:latest for sympy__sympy-14396
+2024-08-04 16:55:52,949 - INFO - Image sweb.eval.x86_64.sympy__sympy-14396:latest already exists, skipping build.
+2024-08-04 16:55:52,949 - INFO - Creating container for sympy__sympy-14396...
+2024-08-04 16:55:52,974 - INFO - Container for sympy__sympy-14396 created: 7cc9bac97ef30d4693cc1a057eaaa0d0369b3fe6abefd183f6fbeaec2a947e1a
+2024-08-04 16:55:53,240 - INFO - Container for sympy__sympy-14396 started: 7cc9bac97ef30d4693cc1a057eaaa0d0369b3fe6abefd183f6fbeaec2a947e1a
+2024-08-04 16:55:53,240 - INFO - Intermediate patch for sympy__sympy-14396 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-14396/patch.diff, now applying to container...
+2024-08-04 16:55:53,391 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:55:53,429 - INFO - >>>>> Applied Patch:
+patching file sympy/polys/polyoptions.py
+
+2024-08-04 16:55:54,102 - INFO - Git diff before:
+diff --git a/sympy/polys/polyoptions.py b/sympy/polys/polyoptions.py
+index 6e504a3057..1a77e48145 100644
+--- a/sympy/polys/polyoptions.py
++++ b/sympy/polys/polyoptions.py
+@@ -405,7 +405,7 @@ class Domain(with_metaclass(OptionType, Option)):
+     _re_realfield = re.compile(r"^(R|RR)(_(\d+))?$")
+     _re_complexfield = re.compile(r"^(C|CC)(_(\d+))?$")
+     _re_finitefield = re.compile(r"^(FF|GF)\((\d+)\)$")
+-    _re_polynomial = re.compile(r"^(Z|ZZ|Q|QQ)\[(.+)\]$")
++    _re_polynomial = re.compile(r"^(Z|ZZ|Q|QQ|R|RR)\[(.+)\]$")
+     _re_fraction = re.compile(r"^(Z|ZZ|Q|QQ)\((.+)\)$")
+     _re_algebraic = re.compile(r"^(Q|QQ)\<(.+)\>$")
+2024-08-04 16:55:54,103 - INFO - Eval script for sympy__sympy-14396 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-14396/eval.sh; copying to container...
+2024-08-04 16:55:57,361 - INFO - Test runtime: 3.15 seconds
+2024-08-04 16:55:57,361 - INFO - Test output for sympy__sympy-14396 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-14396/test_output.txt
+2024-08-04 16:55:57,414 - INFO - Git diff after:
+diff --git a/sympy/polys/polyoptions.py b/sympy/polys/polyoptions.py
+index 6e504a3057..1a77e48145 100644
+--- a/sympy/polys/polyoptions.py
++++ b/sympy/polys/polyoptions.py
+@@ -405,7 +405,7 @@ class Domain(with_metaclass(OptionType, Option)):
+     _re_realfield = re.compile(r"^(R|RR)(_(\d+))?$")
+     _re_complexfield = re.compile(r"^(C|CC)(_(\d+))?$")
+     _re_finitefield = re.compile(r"^(FF|GF)\((\d+)\)$")
+-    _re_polynomial = re.compile(r"^(Z|ZZ|Q|QQ)\[(.+)\]$")
++    _re_polynomial = re.compile(r"^(Z|ZZ|Q|QQ|R|RR)\[(.+)\]$")
+     _re_fraction = re.compile(r"^(Z|ZZ|Q|QQ)\((.+)\)$")
+     _re_algebraic = re.compile(r"^(Q|QQ)\<(.+)\>$")
+2024-08-04 16:55:57,414 - INFO - Grading answer for sympy__sympy-14396...
+2024-08-04 16:55:57,416 - INFO - report: {'sympy__sympy-14396': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_Domain_preprocess']}, 'PASS_TO_PASS': {'success': ['test_Options_clone', 'test_Expand_preprocess', 'test_Expand_postprocess', 'test_Gens_preprocess', 'test_Gens_postprocess', 'test_Wrt_preprocess', 'test_Wrt_postprocess', 'test_Sort_preprocess', 'test_Sort_postprocess', 'test_Order_preprocess', 'test_Order_postprocess', 'test_Field_preprocess', 'test_Field_postprocess', 'test_Greedy_preprocess', 'test_Greedy_postprocess', 'test_Domain_postprocess', 'test_Split_preprocess', 'test_Split_postprocess', 'test_Gaussian_preprocess', 'test_Gaussian_postprocess', 'test_Extension_preprocess', 'test_Extension_postprocess', 'test_Modulus_preprocess', 'test_Modulus_postprocess', 'test_Symmetric_preprocess', 'test_Symmetric_postprocess', 'test_Strict_preprocess', 'test_Strict_postprocess', 'test_Auto_preprocess', 'test_Auto_postprocess', 'test_Frac_preprocess', 'test_Frac_postprocess', 'test_Formal_preprocess', 'test_Formal_postprocess', 'test_Polys_preprocess', 'test_Polys_postprocess', 'test_Include_preprocess', 'test_Include_postprocess', 'test_All_preprocess', 'test_All_postprocess', 'test_Gen_postprocess', 'test_Symbols_preprocess', 'test_Symbols_postprocess', 'test_Method_preprocess'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-14396: resolved: False
+2024-08-04 16:55:57,417 - INFO - Attempting to stop container sweb.eval.sympy__sympy-14396.swecomm_open...
+2024-08-04 16:56:12,710 - INFO - Attempting to remove container sweb.eval.sympy__sympy-14396.swecomm_open...
+2024-08-04 16:56:12,735 - INFO - Container sweb.eval.sympy__sympy-14396.swecomm_open removed.

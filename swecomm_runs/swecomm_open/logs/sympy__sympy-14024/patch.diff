@@ -1,0 +1,18 @@
+diff --git a/sympy/core/power.py b/sympy/core/power.py
+index 02ec6480cb..dc926950d0 100644
+--- a/sympy/core/power.py
++++ b/sympy/core/power.py
+@@ -286,6 +286,13 @@ def __new__(cls, b, e, evaluate=None):
+                 obj = b._eval_power(e)
+                 if obj is not None:
+                     return obj
++
++                # Handle case where base is negative and exponent is rational
++                if b.is_negative and e.is_rational and not e.is_integer:
++                    from sympy import I, re, im, exp, log, polar_lift
++                    r, theta = polar_lift(-b).as_polar()
++                    return exp(e * (log(r) + I * (theta + 2 * S.Pi * im(e))))
++
+         obj = Expr.__new__(cls, b, e)
+         obj = cls._exec_constructor_postprocessors(obj)
+         if not isinstance(obj, Pow):

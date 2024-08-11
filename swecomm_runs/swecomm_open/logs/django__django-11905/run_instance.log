@@ -1,0 +1,131 @@
+2024-08-04 16:45:57,133 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-11905
+Building instance image sweb.eval.x86_64.django__django-11905:latest for django__django-11905
+2024-08-04 16:45:57,137 - INFO - Image sweb.eval.x86_64.django__django-11905:latest already exists, skipping build.
+2024-08-04 16:45:57,137 - INFO - Creating container for django__django-11905...
+2024-08-04 16:45:57,178 - INFO - Container for django__django-11905 created: 52be3fa0a135f79070f00ca1be9cec1384ce7b671f906891fc425560906d14f7
+2024-08-04 16:45:58,023 - INFO - Container for django__django-11905 started: 52be3fa0a135f79070f00ca1be9cec1384ce7b671f906891fc425560906d14f7
+2024-08-04 16:45:58,023 - INFO - Intermediate patch for django__django-11905 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-11905/patch.diff, now applying to container...
+2024-08-04 16:45:58,189 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:45:58,239 - INFO - >>>>> Applied Patch:
+patching file django/db/models/.backup.lookups.py
+patching file django/db/models/lookups.py
+patching file docs/ref/models/.backup.querysets.txt
+patching file docs/ref/models/querysets.txt
+patching file tests/lookup/.backup.test_lookups.py
+patching file tests/lookup/test_lookups.py
+
+2024-08-04 16:45:59,884 - INFO - Git diff before:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 9344979c56..6f0f0819fe 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -462,6 +462,11 @@ class IsNull(BuiltinLookup):
+     lookup_name = 'isnull'
+     prepare_rhs = False
+ 
++    def get_prep_lookup(self):
++        if not isinstance(self.rhs, bool):
++            raise ValueError("The __isnull lookup requires a boolean value.")
++        return self.rhs
++
+     def as_sql(self, compiler, connection):
+         sql, params = compiler.compile(self.lhs)
+         if self.rhs:
+diff --git a/docs/ref/models/querysets.txt b/docs/ref/models/querysets.txt
+index 219245576a..0c64eb891e 100644
+--- a/docs/ref/models/querysets.txt
++++ b/docs/ref/models/querysets.txt
+@@ -3275,6 +3275,9 @@ Example::
+ 
+     Entry.objects.filter(pub_date__isnull=True)
+ 
++    Note that the `__isnull` lookup only accepts boolean values (True or False).
++    Using non-boolean values will raise a ValueError.
++
+ SQL equivalent:
+ 
+ .. code-block:: sql
+diff --git a/tests/lookup/test_lookups.py b/tests/lookup/test_lookups.py
+index 9b2d90fdd9..ad7a96d675 100644
+--- a/tests/lookup/test_lookups.py
++++ b/tests/lookup/test_lookups.py
+@@ -15,3 +15,17 @@ class YearLookupTests(SimpleTestCase):
+         msg = 'subclasses of YearLookup must provide a get_bound_params() method'
+         with self.assertRaisesMessage(NotImplementedError, msg):
+             look_up.get_bound_params(datetime(2010, 1, 1, 0, 0, 0), datetime(2010, 1, 1, 23, 59, 59))
++
++from django.db.models.lookups import IsNull
++from django.db.models import F
++
++class IsNullLookupTests(SimpleTestCase):
++    def test_isnull_lookup_with_non_boolean_value(self):
++        with self.assertRaisesMessage(ValueError, "The __isnull lookup requires a boolean value."):
++            IsNull(lhs=F('field'), rhs='not a boolean')
++
++    def test_isnull_lookup_with_boolean_value(self):
++        look_up_true = IsNull(lhs=F('field'), rhs=True)
++        look_up_false = IsNull(lhs=F('field'), rhs=False)
++        self.assertTrue(look_up_true.rhs)
++        self.assertFalse(look_up_false.rhs)
+2024-08-04 16:45:59,885 - INFO - Eval script for django__django-11905 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-11905/eval.sh; copying to container...
+2024-08-04 16:46:07,294 - INFO - Test runtime: 7.28 seconds
+2024-08-04 16:46:07,294 - INFO - Test output for django__django-11905 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-11905/test_output.txt
+2024-08-04 16:46:07,381 - INFO - Git diff after:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 9344979c56..6f0f0819fe 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -462,6 +462,11 @@ class IsNull(BuiltinLookup):
+     lookup_name = 'isnull'
+     prepare_rhs = False
+ 
++    def get_prep_lookup(self):
++        if not isinstance(self.rhs, bool):
++            raise ValueError("The __isnull lookup requires a boolean value.")
++        return self.rhs
++
+     def as_sql(self, compiler, connection):
+         sql, params = compiler.compile(self.lhs)
+         if self.rhs:
+diff --git a/docs/ref/models/querysets.txt b/docs/ref/models/querysets.txt
+index 219245576a..0c64eb891e 100644
+--- a/docs/ref/models/querysets.txt
++++ b/docs/ref/models/querysets.txt
+@@ -3275,6 +3275,9 @@ Example::
+ 
+     Entry.objects.filter(pub_date__isnull=True)
+ 
++    Note that the `__isnull` lookup only accepts boolean values (True or False).
++    Using non-boolean values will raise a ValueError.
++
+ SQL equivalent:
+ 
+ .. code-block:: sql
+diff --git a/tests/lookup/test_lookups.py b/tests/lookup/test_lookups.py
+index 9b2d90fdd9..ad7a96d675 100644
+--- a/tests/lookup/test_lookups.py
++++ b/tests/lookup/test_lookups.py
+@@ -15,3 +15,17 @@ class YearLookupTests(SimpleTestCase):
+         msg = 'subclasses of YearLookup must provide a get_bound_params() method'
+         with self.assertRaisesMessage(NotImplementedError, msg):
+             look_up.get_bound_params(datetime(2010, 1, 1, 0, 0, 0), datetime(2010, 1, 1, 23, 59, 59))
++
++from django.db.models.lookups import IsNull
++from django.db.models import F
++
++class IsNullLookupTests(SimpleTestCase):
++    def test_isnull_lookup_with_non_boolean_value(self):
++        with self.assertRaisesMessage(ValueError, "The __isnull lookup requires a boolean value."):
++            IsNull(lhs=F('field'), rhs='not a boolean')
++
++    def test_isnull_lookup_with_boolean_value(self):
++        look_up_true = IsNull(lhs=F('field'), rhs=True)
++        look_up_false = IsNull(lhs=F('field'), rhs=False)
++        self.assertTrue(look_up_true.rhs)
++        self.assertFalse(look_up_false.rhs)
+2024-08-04 16:46:07,381 - INFO - Grading answer for django__django-11905...
+2024-08-04 16:46:07,385 - INFO - report: {'django__django-11905': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_iterator (lookup.tests.LookupTests)'], 'failure': ['test_isnull_non_boolean_value (lookup.tests.LookupTests)']}, 'PASS_TO_PASS': {'success': ['test_chain_date_time_lookups (lookup.tests.LookupTests)', 'test_count (lookup.tests.LookupTests)', 'test_custom_field_none_rhs (lookup.tests.LookupTests)', 'test_error_messages (lookup.tests.LookupTests)', 'test_escaping (lookup.tests.LookupTests)', 'test_exact_exists (lookup.tests.LookupTests)', 'Transforms are used for __exact=None.', 'test_exact_query_rhs_with_selected_columns (lookup.tests.LookupTests)', 'test_exact_sliced_queryset_limit_one (lookup.tests.LookupTests)', 'test_exact_sliced_queryset_limit_one_offset (lookup.tests.LookupTests)', 'test_exact_sliced_queryset_not_limited_to_one (lookup.tests.LookupTests)', 'test_exclude (lookup.tests.LookupTests)', 'test_exists (lookup.tests.LookupTests)', 'test_get_next_previous_by (lookup.tests.LookupTests)', 'test_in (lookup.tests.LookupTests)', 'test_in_bulk (lookup.tests.LookupTests)', 'test_in_bulk_lots_of_ids (lookup.tests.LookupTests)', 'test_in_bulk_non_unique_field (lookup.tests.LookupTests)', 'test_in_bulk_with_field (lookup.tests.LookupTests)', 'test_in_different_database (lookup.tests.LookupTests)', 'test_in_keeps_value_ordering (lookup.tests.LookupTests)', 'test_lookup_collision (lookup.tests.LookupTests)', 'test_lookup_date_as_str (lookup.tests.LookupTests)', 'test_lookup_int_as_str (lookup.tests.LookupTests)', 'test_nested_outerref_lhs (lookup.tests.LookupTests)', 'test_none (lookup.tests.LookupTests)', 'test_nonfield_lookups (lookup.tests.LookupTests)', 'test_pattern_lookups_with_substr (lookup.tests.LookupTests)', 'test_regex (lookup.tests.LookupTests)', 'test_regex_backreferencing (lookup.tests.LookupTests)', 'test_regex_non_ascii (lookup.tests.LookupTests)', 'test_regex_non_string (lookup.tests.LookupTests)', 'test_regex_null (lookup.tests.LookupTests)', 'test_relation_nested_lookup_error (lookup.tests.LookupTests)', 'test_unsupported_lookups (lookup.tests.LookupTests)', 'test_values (lookup.tests.LookupTests)', 'test_values_list (lookup.tests.LookupTests)'], 'failure': ['Lookup.can_use_none_as_rhs=True allows None as a lookup value.']}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-11905: resolved: False
+2024-08-04 16:46:07,385 - INFO - Attempting to stop container sweb.eval.django__django-11905.swecomm_open...
+2024-08-04 16:46:22,668 - INFO - Attempting to remove container sweb.eval.django__django-11905.swecomm_open...
+2024-08-04 16:46:22,710 - INFO - Container sweb.eval.django__django-11905.swecomm_open removed.

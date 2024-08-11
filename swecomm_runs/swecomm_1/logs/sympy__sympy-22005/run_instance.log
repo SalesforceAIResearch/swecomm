@@ -1,0 +1,44 @@
+2024-07-30 17:13:39,875 - INFO - Intermediate patch for sympy__sympy-22005 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:13:40,149 - INFO - >>>>> Applied Patch:
+Checking patch sympy/solvers/polysys.py...
+Applied patch sympy/solvers/polysys.py cleanly.
+
+2024-07-30 17:13:45,775 - INFO - Git diff before:
+diff --git a/sympy/solvers/polysys.py b/sympy/solvers/polysys.py
+index b9809fd4e9..d77171b9e6 100644
+--- a/sympy/solvers/polysys.py
++++ b/sympy/solvers/polysys.py
+@@ -51,6 +51,12 @@ def solve_poly_system(seq, *gens, **args):
+     except PolificationFailed as exc:
+         raise ComputationFailed('solve_poly_system', len(seq), exc)
+ 
++    if len(polys) != len(opt.gens):
++        raise NotImplementedError(filldedent('''
++            only zero-dimensional systems supported
++            (finite number of solutions)
++            '''))
++
+     if len(polys) == len(opt.gens) == 2:
+         f, g = polys
+2024-07-30 17:13:45,776 - INFO - Eval script for sympy__sympy-22005 written to /eval.sh
+2024-07-30 17:14:55,223 - INFO - Test runtime: 69.45 seconds
+2024-07-30 17:14:55,448 - INFO - Git diff after:
+diff --git a/sympy/solvers/polysys.py b/sympy/solvers/polysys.py
+index b9809fd4e9..d77171b9e6 100644
+--- a/sympy/solvers/polysys.py
++++ b/sympy/solvers/polysys.py
+@@ -51,6 +51,12 @@ def solve_poly_system(seq, *gens, **args):
+     except PolificationFailed as exc:
+         raise ComputationFailed('solve_poly_system', len(seq), exc)
+ 
++    if len(polys) != len(opt.gens):
++        raise NotImplementedError(filldedent('''
++            only zero-dimensional systems supported
++            (finite number of solutions)
++            '''))
++
+     if len(polys) == len(opt.gens) == 2:
+         f, g = polys
+2024-07-30 17:14:55,448 - INFO - Grading answer for sympy__sympy-22005...
+2024-07-30 17:14:55,449 - INFO - report: {'sympy__sympy-22005': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_solve_poly_system'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_solve_biquadratic', 'test_solve_triangulated'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-22005: resolved: True

@@ -1,0 +1,72 @@
+2024-08-04 17:27:34,331 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-13497
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-13497:latest for scikit-learn__scikit-learn-13497
+2024-08-04 17:27:34,333 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-13497:latest already exists, skipping build.
+2024-08-04 17:27:34,333 - INFO - Creating container for scikit-learn__scikit-learn-13497...
+2024-08-04 17:27:34,385 - INFO - Container for scikit-learn__scikit-learn-13497 created: 0e41d1ac0a7377f819c09115d8e3e202f6b6da69b628a9e136aa7ae4c981de0c
+2024-08-04 17:27:34,748 - INFO - Container for scikit-learn__scikit-learn-13497 started: 0e41d1ac0a7377f819c09115d8e3e202f6b6da69b628a9e136aa7ae4c981de0c
+2024-08-04 17:27:34,748 - INFO - Intermediate patch for scikit-learn__scikit-learn-13497 written to logs/run_evaluation/swecomm_2/swecomm_2/scikit-learn__scikit-learn-13497/patch.diff, now applying to container...
+2024-08-04 17:27:34,970 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:27:35,016 - INFO - >>>>> Applied Patch:
+patching file sklearn/feature_selection/mutual_info_.py
+
+2024-08-04 17:27:35,434 - INFO - Git diff before:
+diff --git a/sklearn/feature_selection/mutual_info_.py b/sklearn/feature_selection/mutual_info_.py
+index d5d1b7fb5..5eae8cf90 100644
+--- a/sklearn/feature_selection/mutual_info_.py
++++ b/sklearn/feature_selection/mutual_info_.py
+@@ -247,7 +247,7 @@ def _estimate_mi(X, y, discrete_features='auto', discrete_target=False,
+     X, y = check_X_y(X, y, accept_sparse='csc', y_numeric=not discrete_target)
+     n_samples, n_features = X.shape
+ 
+-    if discrete_features == 'auto':
++    if isinstance(discrete_features, str) and discrete_features == 'auto':  # Ensure `discrete_features` is a string before comparison
+         discrete_features = issparse(X)
+ 
+     if isinstance(discrete_features, bool):
+@@ -255,9 +255,9 @@ def _estimate_mi(X, y, discrete_features='auto', discrete_target=False,
+         discrete_mask.fill(discrete_features)
+     else:
+         discrete_features = np.asarray(discrete_features)
+-        if discrete_features.dtype != 'bool':
+-            discrete_mask = np.zeros(n_features, dtype=bool)
+-            discrete_mask[discrete_features] = True
++        if discrete_features.dtype == 'int':  # Check if `discrete_features` is an array of indices
++            discrete_mask = np.zeros(n_features, dtype=bool)  # Create a boolean mask
++            discrete_mask[discrete_features] = True  # Set the indices to True in the mask
+         else:
+             discrete_mask = discrete_features
+2024-08-04 17:27:35,434 - INFO - Eval script for scikit-learn__scikit-learn-13497 written to logs/run_evaluation/swecomm_2/swecomm_2/scikit-learn__scikit-learn-13497/eval.sh; copying to container...
+2024-08-04 17:27:40,590 - INFO - Test runtime: 4.97 seconds
+2024-08-04 17:27:40,591 - INFO - Test output for scikit-learn__scikit-learn-13497 written to logs/run_evaluation/swecomm_2/swecomm_2/scikit-learn__scikit-learn-13497/test_output.txt
+2024-08-04 17:27:40,636 - INFO - Git diff after:
+diff --git a/sklearn/feature_selection/mutual_info_.py b/sklearn/feature_selection/mutual_info_.py
+index d5d1b7fb5..5eae8cf90 100644
+--- a/sklearn/feature_selection/mutual_info_.py
++++ b/sklearn/feature_selection/mutual_info_.py
+@@ -247,7 +247,7 @@ def _estimate_mi(X, y, discrete_features='auto', discrete_target=False,
+     X, y = check_X_y(X, y, accept_sparse='csc', y_numeric=not discrete_target)
+     n_samples, n_features = X.shape
+ 
+-    if discrete_features == 'auto':
++    if isinstance(discrete_features, str) and discrete_features == 'auto':  # Ensure `discrete_features` is a string before comparison
+         discrete_features = issparse(X)
+ 
+     if isinstance(discrete_features, bool):
+@@ -255,9 +255,9 @@ def _estimate_mi(X, y, discrete_features='auto', discrete_target=False,
+         discrete_mask.fill(discrete_features)
+     else:
+         discrete_features = np.asarray(discrete_features)
+-        if discrete_features.dtype != 'bool':
+-            discrete_mask = np.zeros(n_features, dtype=bool)
+-            discrete_mask[discrete_features] = True
++        if discrete_features.dtype == 'int':  # Check if `discrete_features` is an array of indices
++            discrete_mask = np.zeros(n_features, dtype=bool)  # Create a boolean mask
++            discrete_mask[discrete_features] = True  # Set the indices to True in the mask
+         else:
+             discrete_mask = discrete_features
+2024-08-04 17:27:40,637 - INFO - Grading answer for scikit-learn__scikit-learn-13497...
+2024-08-04 17:27:40,641 - INFO - report: {'scikit-learn__scikit-learn-13497': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_options']}, 'PASS_TO_PASS': {'success': ['sklearn/feature_selection/tests/test_mutual_info.py::test_compute_mi_dd', 'sklearn/feature_selection/tests/test_mutual_info.py::test_compute_mi_cc', 'sklearn/feature_selection/tests/test_mutual_info.py::test_compute_mi_cd', 'sklearn/feature_selection/tests/test_mutual_info.py::test_compute_mi_cd_unique_label', 'sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_classif_discrete', 'sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_regression', 'sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_classif_mixed'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for scikit-learn__scikit-learn-13497: resolved: False
+2024-08-04 17:27:40,642 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-13497.swecomm_2...
+2024-08-04 17:27:55,951 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-13497.swecomm_2...
+2024-08-04 17:27:55,973 - INFO - Container sweb.eval.scikit-learn__scikit-learn-13497.swecomm_2 removed.

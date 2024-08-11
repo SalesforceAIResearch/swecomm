@@ -1,0 +1,18 @@
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index dadd4acfa1..716c3b3e84 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -2037,6 +2037,13 @@ class InlineModelAdmin(BaseModelAdmin):
+         self.opts = self.model._meta
+         self.has_registered_model = admin_site.is_registered(self.model)
+         super().__init__()
++        # If verbose_name is specified but verbose_name_plural is not, generate
++        # verbose_name_plural from verbose_name using Django's pluralize template
++        # filter logic. This makes behavior consistent with Django's model Meta
++        # class. An explicitly defined verbose_name_plural will not be overwritten.
++        if self.verbose_name is not None and self.verbose_name_plural is None:
++            from django.template.defaultfilters import pluralize
++            self.verbose_name_plural = pluralize(self.verbose_name)
+         if self.verbose_name is None:
+             self.verbose_name = self.model._meta.verbose_name
+         if self.verbose_name_plural is None:

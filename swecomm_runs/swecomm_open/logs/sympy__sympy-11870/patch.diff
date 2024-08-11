@@ -1,0 +1,13 @@
+diff --git a/sympy/simplify/trigsimp.py b/sympy/simplify/trigsimp.py
+index bd243c1..4d25f44 100644
+--- a/sympy/simplify/trigsimp.py
++++ b/sympy/simplify/trigsimp.py
+@@ -501,6 +501,8 @@ def trigsimp(expr, **opts):
+             return new
+         return trigsimp_groebner(new, **opts)
+ 
++    expr = exptrigsimp(expr)
++
+     trigsimpfunc = {
+         'fu': (lambda x: fu(x, **opts)),
+         'matching': (lambda x: futrig(x)),

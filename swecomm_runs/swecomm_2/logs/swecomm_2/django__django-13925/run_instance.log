@@ -1,0 +1,87 @@
+2024-08-04 17:24:06,067 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-13925
+Building instance image sweb.eval.x86_64.django__django-13925:latest for django__django-13925
+2024-08-04 17:24:06,069 - INFO - Image sweb.eval.x86_64.django__django-13925:latest already exists, skipping build.
+2024-08-04 17:24:06,069 - INFO - Creating container for django__django-13925...
+2024-08-04 17:24:06,102 - INFO - Container for django__django-13925 created: 53491bad59f31fe6e8e54ba65577a416a5e8b315c02f2cd487f5dc6c6fbe99fd
+2024-08-04 17:24:06,596 - INFO - Container for django__django-13925 started: 53491bad59f31fe6e8e54ba65577a416a5e8b315c02f2cd487f5dc6c6fbe99fd
+2024-08-04 17:24:06,597 - INFO - Intermediate patch for django__django-13925 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-13925/patch.diff, now applying to container...
+2024-08-04 17:24:06,945 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:24:06,989 - INFO - >>>>> Applied Patch:
+patching file django/core/checks/model_checks.py
+patching file django/db/models/base.py
+
+2024-08-04 17:24:08,743 - INFO - Git diff before:
+diff --git a/django/core/checks/model_checks.py b/django/core/checks/model_checks.py
+index 15d9b7fd86..b862e29e1b 100644
+--- a/django/core/checks/model_checks.py
++++ b/django/core/checks/model_checks.py
+@@ -31,7 +31,11 @@ def check_all_models(app_configs=None, **kwargs):
+                 )
+             )
+         else:
+-            errors.extend(model.check(**kwargs))
++            model_errors = model.check(**kwargs)
++            # Remove W042 warning if the model has an inherited primary key
++            if getattr(model._meta, 'has_inherited_pk', False):
++                model_errors = [error for error in model_errors if error.id != 'models.W042']
++            errors.extend(model_errors)
+         for model_index in model._meta.indexes:
+             indexes[model_index.name].append(model._meta.label)
+         for model_constraint in model._meta.constraints:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 4038859cfa..224f2b63ff 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -150,6 +150,10 @@ class ModelBase(type):
+ 
+         is_proxy = new_class._meta.proxy
+ 
++        # Check if the model inherits a primary key from its parent
++        inherits_pk = any(hasattr(base, '_meta') and base._meta.pk for base in parents)
++        new_class._meta.has_inherited_pk = inherits_pk
++
+         # If the model is a proxy, ensure that the base class
+         # hasn't been swapped out.
+         if is_proxy and base_meta and base_meta.swapped:
+2024-08-04 17:24:08,743 - INFO - Eval script for django__django-13925 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-13925/eval.sh; copying to container...
+2024-08-04 17:24:12,945 - INFO - Test runtime: 4.07 seconds
+2024-08-04 17:24:12,945 - INFO - Test output for django__django-13925 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-13925/test_output.txt
+2024-08-04 17:24:13,004 - INFO - Git diff after:
+diff --git a/django/core/checks/model_checks.py b/django/core/checks/model_checks.py
+index 15d9b7fd86..b862e29e1b 100644
+--- a/django/core/checks/model_checks.py
++++ b/django/core/checks/model_checks.py
+@@ -31,7 +31,11 @@ def check_all_models(app_configs=None, **kwargs):
+                 )
+             )
+         else:
+-            errors.extend(model.check(**kwargs))
++            model_errors = model.check(**kwargs)
++            # Remove W042 warning if the model has an inherited primary key
++            if getattr(model._meta, 'has_inherited_pk', False):
++                model_errors = [error for error in model_errors if error.id != 'models.W042']
++            errors.extend(model_errors)
+         for model_index in model._meta.indexes:
+             indexes[model_index.name].append(model._meta.label)
+         for model_constraint in model._meta.constraints:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 4038859cfa..224f2b63ff 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -150,6 +150,10 @@ class ModelBase(type):
+ 
+         is_proxy = new_class._meta.proxy
+ 
++        # Check if the model inherits a primary key from its parent
++        inherits_pk = any(hasattr(base, '_meta') and base._meta.pk for base in parents)
++        new_class._meta.has_inherited_pk = inherits_pk
++
+         # If the model is a proxy, ensure that the base class
+         # hasn't been swapped out.
+         if is_proxy and base_meta and base_meta.swapped:
+2024-08-04 17:24:13,004 - INFO - Grading answer for django__django-13925...
+2024-08-04 17:24:13,008 - INFO - report: {'django__django-13925': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_auto_created_inherited_pk (check_framework.test_model_checks.ModelDefaultAutoFieldTests)', 'test_explicit_inherited_pk (check_framework.test_model_checks.ModelDefaultAutoFieldTests)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_app_default_auto_field (check_framework.test_model_checks.ModelDefaultAutoFieldTests)', 'test_auto_created_inherited_parent_link (check_framework.test_model_checks.ModelDefaultAutoFieldTests)', 'test_auto_created_pk (check_framework.test_model_checks.ModelDefaultAutoFieldTests)', 'test_default_auto_field_setting (check_framework.test_model_checks.ModelDefaultAutoFieldTests)', 'test_explicit_inherited_parent_link (check_framework.test_model_checks.ModelDefaultAutoFieldTests)', 'test_explicit_pk (check_framework.test_model_checks.ModelDefaultAutoFieldTests)', 'test_collision_abstract_model (check_framework.test_model_checks.IndexNameTests)', 'test_collision_across_apps (check_framework.test_model_checks.IndexNameTests)', 'test_collision_in_different_models (check_framework.test_model_checks.IndexNameTests)', 'test_collision_in_same_model (check_framework.test_model_checks.IndexNameTests)', 'test_no_collision_abstract_model_interpolation (check_framework.test_model_checks.IndexNameTests)', 'test_no_collision_across_apps_interpolation (check_framework.test_model_checks.IndexNameTests)', 'test_collision_abstract_model (check_framework.test_model_checks.ConstraintNameTests)', 'test_collision_across_apps (check_framework.test_model_checks.ConstraintNameTests)', 'test_collision_in_different_models (check_framework.test_model_checks.ConstraintNameTests)', 'test_collision_in_same_model (check_framework.test_model_checks.ConstraintNameTests)', 'test_no_collision_abstract_model_interpolation (check_framework.test_model_checks.ConstraintNameTests)', 'test_no_collision_across_apps_interpolation (check_framework.test_model_checks.ConstraintNameTests)', 'test_collision_across_apps (check_framework.test_model_checks.DuplicateDBTableTests)', 'test_collision_across_apps_database_routers_installed (check_framework.test_model_checks.DuplicateDBTableTests)', 'test_collision_in_same_app (check_framework.test_model_checks.DuplicateDBTableTests)', 'test_collision_in_same_app_database_routers_installed (check_framework.test_model_checks.DuplicateDBTableTests)', 'test_no_collision_for_proxy_models (check_framework.test_model_checks.DuplicateDBTableTests)', 'test_no_collision_for_unmanaged_models (check_framework.test_model_checks.DuplicateDBTableTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-13925: resolved: True
+2024-08-04 17:24:13,008 - INFO - Attempting to stop container sweb.eval.django__django-13925.swecomm_2...
+2024-08-04 17:24:28,431 - INFO - Attempting to remove container sweb.eval.django__django-13925.swecomm_2...
+2024-08-04 17:24:28,463 - INFO - Container sweb.eval.django__django-13925.swecomm_2 removed.

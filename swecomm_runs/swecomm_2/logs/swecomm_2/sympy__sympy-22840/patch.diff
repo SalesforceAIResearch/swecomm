@@ -1,0 +1,13 @@
+--- a/sympy/simplify/cse_main.py
++++ b/sympy/simplify/cse_main.py
+@@ -591,6 +591,10 @@
+                 excluded_symbols.add(expr)
+             return
+ 
++        # Treat MatrixSymbol indexing as atomic
++        if isinstance(expr, Indexed) and isinstance(expr.base, MatrixSymbol):
++            return
++
+         if iterable(expr):
+             args = expr
+ 

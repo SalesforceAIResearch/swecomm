@@ -1,0 +1,25 @@
+diff --git a/lib/matplotlib/style/core.py b/lib/matplotlib/style/core.py
+index fb0a5426e6..96934fdc37 100644
+--- a/lib/matplotlib/style/core.py
++++ b/lib/matplotlib/style/core.py
+@@ -113,10 +113,17 @@ def use(style):
+     def fix_style(s):
+         if isinstance(s, str):
+             s = style_alias.get(s, s)
+-            if s in [
++            if s == "seaborn-colorblind":
++                _api.warn_deprecated(
++                    "3.6", message="The 'seaborn-colorblind' style shipped by "
++                    "Matplotlib is deprecated since %(since)s, as it no longer "
++                    "corresponds to the style shipped by seaborn. However, it "
++                    "will remain available as 'seaborn-v0_8-colorblind'. "
++                    "Alternatively, directly use the seaborn API instead.")
++                s = "seaborn-v0_8-colorblind"
++            elif s in [
+                 "seaborn",
+-                "seaborn-bright",
+-                "seaborn-colorblind",
++                "seaborn-bright", 
+                 "seaborn-dark",
+                 "seaborn-darkgrid",
+                 "seaborn-dark-palette",

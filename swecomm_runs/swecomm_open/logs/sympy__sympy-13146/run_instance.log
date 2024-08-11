@@ -1,0 +1,46 @@
+2024-08-04 16:55:13,547 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13146
+Building instance image sweb.eval.x86_64.sympy__sympy-13146:latest for sympy__sympy-13146
+2024-08-04 16:55:13,549 - INFO - Image sweb.eval.x86_64.sympy__sympy-13146:latest already exists, skipping build.
+2024-08-04 16:55:13,549 - INFO - Creating container for sympy__sympy-13146...
+2024-08-04 16:55:13,582 - INFO - Container for sympy__sympy-13146 created: 025e151a8881b84ca1ffbacbba7e210cb21124fca72b6966d858c1781833d986
+2024-08-04 16:55:13,906 - INFO - Container for sympy__sympy-13146 started: 025e151a8881b84ca1ffbacbba7e210cb21124fca72b6966d858c1781833d986
+2024-08-04 16:55:13,906 - INFO - Intermediate patch for sympy__sympy-13146 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-13146/patch.diff, now applying to container...
+2024-08-04 16:55:14,088 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:55:14,136 - INFO - >>>>> Applied Patch:
+patching file sympy/simplify/simplify.py
+
+2024-08-04 16:55:14,750 - INFO - Git diff before:
+diff --git a/sympy/simplify/simplify.py b/sympy/simplify/simplify.py
+index f1609aa908..7fbcaa5df0 100644
+--- a/sympy/simplify/simplify.py
++++ b/sympy/simplify/simplify.py
+@@ -561,6 +561,8 @@ def shorter(*choices):
+ 
+     expr = piecewise_fold(expr)
+ 
++    expr = expr.collect(expr.free_symbols)
++
+     if expr.has(BesselBase):
+         expr = besselsimp(expr)
+2024-08-04 16:55:14,750 - INFO - Eval script for sympy__sympy-13146 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-13146/eval.sh; copying to container...
+2024-08-04 16:55:27,975 - INFO - Test runtime: 13.10 seconds
+2024-08-04 16:55:27,975 - INFO - Test output for sympy__sympy-13146 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-13146/test_output.txt
+2024-08-04 16:55:28,028 - INFO - Git diff after:
+diff --git a/sympy/simplify/simplify.py b/sympy/simplify/simplify.py
+index f1609aa908..7fbcaa5df0 100644
+--- a/sympy/simplify/simplify.py
++++ b/sympy/simplify/simplify.py
+@@ -561,6 +561,8 @@ def shorter(*choices):
+ 
+     expr = piecewise_fold(expr)
+ 
++    expr = expr.collect(expr.free_symbols)
++
+     if expr.has(BesselBase):
+         expr = besselsimp(expr)
+2024-08-04 16:55:28,028 - INFO - Grading answer for sympy__sympy-13146...
+2024-08-04 16:55:28,087 - INFO - report: {'sympy__sympy-13146': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_evalf_bugs']}, 'PASS_TO_PASS': {'success': ['test_evalf_helpers', 'test_evalf_basic', 'test_cancellation', 'test_evalf_powers', 'test_evalf_rump', 'test_evalf_complex', 'test_evalf_complex_powers', 'test_evalf_exponentiation', 'test_evalf_complex_cancellation', 'test_evalf_trig_zero_detection', 'test_evalf_sum', 'test_evalf_divergent_series', 'test_evalf_product', 'test_evalf_py_methods', 'test_evalf_power_subs_bugs', 'test_evalf_arguments', 'test_implemented_function_evalf', 'test_evaluate_false', 'test_evalf_relational', 'test_issue_5486', 'test_issue_5486_bug', 'test_bugs', 'test_subs', 'test_old_docstring', 'test_scaled_zero', 'test_chop_value', 'test_infinities', 'test_to_mpmath', 'test_issue_4945', 'test_evalf_integral', 'test_issue_8821_highprec_from_str', 'test_issue_8853', 'test_issue_9326', 'test_issue_10323'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-13146: resolved: False
+2024-08-04 16:55:28,088 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13146.swecomm_open...
+2024-08-04 16:55:43,331 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13146.swecomm_open...
+2024-08-04 16:55:43,354 - INFO - Container sweb.eval.sympy__sympy-13146.swecomm_open removed.

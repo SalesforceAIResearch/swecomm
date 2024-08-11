@@ -1,0 +1,15 @@
+
+diff --git a/sklearn/preprocessing/_encoders.py b/sklearn/preprocessing/_encoders.py
+index 1e05aba59..ee20bd2ef 100644
+--- a/sklearn/preprocessing/_encoders.py
++++ b/sklearn/preprocessing/_encoders.py
+@@ -111,6 +111,9 @@ class _BaseEncoder(BaseEstimator, TransformerMixin):
+                     # removed later.
+                     X_mask[:, i] = valid_mask
+                     Xi = Xi.copy()
++                    if Xi.dtype.kind in 'US' and self.categories_[i].dtype.kind in 'US':
++                        # Cast to object to avoid truncation if necessary
++                        Xi = Xi.astype('O')
+                     Xi[~valid_mask] = self.categories_[i][0]
+             _, encoded = _encode(Xi, self.categories_[i], encode=True)
+             X_int[:, i] = encoded

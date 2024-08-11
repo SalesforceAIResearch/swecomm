@@ -1,0 +1,133 @@
+2024-07-30 17:14:29,561 - INFO - Intermediate patch for django__django-11905 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:14:29,831 - INFO - >>>>> Applied Patch:
+/shared/patch.diff:9: trailing whitespace.
+        
+/shared/patch.diff:13: trailing whitespace.
+        
+/shared/patch.diff:45: trailing whitespace.
+        
+Checking patch django/db/models/lookups.py...
+Applied patch django/db/models/lookups.py cleanly.
+warning: 3 lines add whitespace errors.
+
+2024-07-30 17:14:42,852 - INFO - Git diff before:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 9344979c56..c9a3fdb68c 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -19,6 +19,11 @@ class Lookup:
+ 
+     def __init__(self, lhs, rhs):
+         self.lhs, self.rhs = lhs, rhs
++        
++        # Check if the lookup is 'isnull' and validate rhs
++        if self.lookup_name == 'isnull' and not isinstance(rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
++        
+         self.rhs = self.get_prep_lookup()
+         if hasattr(self.lhs, 'get_bilateral_transforms'):
+             bilateral_transforms = self.lhs.get_bilateral_transforms()
+@@ -66,6 +71,8 @@ class Lookup:
+             self.lhs, self.rhs = new_exprs
+ 
+     def get_prep_lookup(self):
++        if self.lookup_name == 'isnull' and not isinstance(self.rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
+         if hasattr(self.rhs, 'resolve_expression'):
+             return self.rhs
+         if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+@@ -83,6 +90,11 @@ class Lookup:
+ 
+     def process_rhs(self, compiler, connection):
+         value = self.rhs
++
++        # Check if the lookup is __isnull and validate the rhs value
++        if self.lookup_name == 'isnull' and not isinstance(value, bool):
++            raise ValueError("The __isnull lookup only accepts boolean values.")
++
+         if self.bilateral_transforms:
+             if self.rhs_is_direct_value():
+                 # Do not call get_db_prep_lookup here as the value will be
+@@ -173,6 +185,10 @@ class BuiltinLookup(Lookup):
+         return lhs_sql, list(params)
+ 
+     def as_sql(self, compiler, connection):
++        # Check if the lookup is 'isnull' and validate rhs
++        if self.lookup_name == 'isnull' and not isinstance(self.rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
++        
+         lhs_sql, params = self.process_lhs(compiler, connection)
+         rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+         params.extend(rhs_params)
+@@ -463,6 +479,8 @@ class IsNull(BuiltinLookup):
+     prepare_rhs = False
+ 
+     def as_sql(self, compiler, connection):
++        if not isinstance(self.rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
+         sql, params = compiler.compile(self.lhs)
+         if self.rhs:
+             return "%s IS NULL" % sql, params
+2024-07-30 17:14:42,853 - INFO - Eval script for django__django-11905 written to /eval.sh
+2024-07-30 17:15:29,052 - INFO - Test runtime: 46.20 seconds
+2024-07-30 17:15:32,200 - INFO - Git diff after:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 9344979c56..c9a3fdb68c 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -19,6 +19,11 @@ class Lookup:
+ 
+     def __init__(self, lhs, rhs):
+         self.lhs, self.rhs = lhs, rhs
++        
++        # Check if the lookup is 'isnull' and validate rhs
++        if self.lookup_name == 'isnull' and not isinstance(rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
++        
+         self.rhs = self.get_prep_lookup()
+         if hasattr(self.lhs, 'get_bilateral_transforms'):
+             bilateral_transforms = self.lhs.get_bilateral_transforms()
+@@ -66,6 +71,8 @@ class Lookup:
+             self.lhs, self.rhs = new_exprs
+ 
+     def get_prep_lookup(self):
++        if self.lookup_name == 'isnull' and not isinstance(self.rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
+         if hasattr(self.rhs, 'resolve_expression'):
+             return self.rhs
+         if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+@@ -83,6 +90,11 @@ class Lookup:
+ 
+     def process_rhs(self, compiler, connection):
+         value = self.rhs
++
++        # Check if the lookup is __isnull and validate the rhs value
++        if self.lookup_name == 'isnull' and not isinstance(value, bool):
++            raise ValueError("The __isnull lookup only accepts boolean values.")
++
+         if self.bilateral_transforms:
+             if self.rhs_is_direct_value():
+                 # Do not call get_db_prep_lookup here as the value will be
+@@ -173,6 +185,10 @@ class BuiltinLookup(Lookup):
+         return lhs_sql, list(params)
+ 
+     def as_sql(self, compiler, connection):
++        # Check if the lookup is 'isnull' and validate rhs
++        if self.lookup_name == 'isnull' and not isinstance(self.rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
++        
+         lhs_sql, params = self.process_lhs(compiler, connection)
+         rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+         params.extend(rhs_params)
+@@ -463,6 +479,8 @@ class IsNull(BuiltinLookup):
+     prepare_rhs = False
+ 
+     def as_sql(self, compiler, connection):
++        if not isinstance(self.rhs, bool):
++            raise TypeError("The right-hand side value for '__isnull' lookup must be a boolean.")
+         sql, params = compiler.compile(self.lhs)
+         if self.rhs:
+             return "%s IS NULL" % sql, params
+2024-07-30 17:15:32,200 - INFO - Grading answer for django__django-11905...
+2024-07-30 17:15:32,202 - INFO - report: {'django__django-11905': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_iterator (lookup.tests.LookupTests)'], 'failure': ['test_isnull_non_boolean_value (lookup.tests.LookupTests)']}, 'PASS_TO_PASS': {'success': ['test_chain_date_time_lookups (lookup.tests.LookupTests)', 'test_count (lookup.tests.LookupTests)', 'test_custom_field_none_rhs (lookup.tests.LookupTests)', 'Lookup.can_use_none_as_rhs=True allows None as a lookup value.', 'test_error_messages (lookup.tests.LookupTests)', 'test_escaping (lookup.tests.LookupTests)', 'test_exact_exists (lookup.tests.LookupTests)', 'Transforms are used for __exact=None.', 'test_exact_query_rhs_with_selected_columns (lookup.tests.LookupTests)', 'test_exact_sliced_queryset_limit_one (lookup.tests.LookupTests)', 'test_exact_sliced_queryset_limit_one_offset (lookup.tests.LookupTests)', 'test_exact_sliced_queryset_not_limited_to_one (lookup.tests.LookupTests)', 'test_exclude (lookup.tests.LookupTests)', 'test_exists (lookup.tests.LookupTests)', 'test_get_next_previous_by (lookup.tests.LookupTests)', 'test_in (lookup.tests.LookupTests)', 'test_in_bulk (lookup.tests.LookupTests)', 'test_in_bulk_lots_of_ids (lookup.tests.LookupTests)', 'test_in_bulk_non_unique_field (lookup.tests.LookupTests)', 'test_in_bulk_with_field (lookup.tests.LookupTests)', 'test_in_different_database (lookup.tests.LookupTests)', 'test_in_keeps_value_ordering (lookup.tests.LookupTests)', 'test_lookup_collision (lookup.tests.LookupTests)', 'test_lookup_date_as_str (lookup.tests.LookupTests)', 'test_lookup_int_as_str (lookup.tests.LookupTests)', 'test_nested_outerref_lhs (lookup.tests.LookupTests)', 'test_none (lookup.tests.LookupTests)', 'test_nonfield_lookups (lookup.tests.LookupTests)', 'test_pattern_lookups_with_substr (lookup.tests.LookupTests)', 'test_regex (lookup.tests.LookupTests)', 'test_regex_backreferencing (lookup.tests.LookupTests)', 'test_regex_non_ascii (lookup.tests.LookupTests)', 'test_regex_non_string (lookup.tests.LookupTests)', 'test_regex_null (lookup.tests.LookupTests)', 'test_relation_nested_lookup_error (lookup.tests.LookupTests)', 'test_unsupported_lookups (lookup.tests.LookupTests)', 'test_values (lookup.tests.LookupTests)', 'test_values_list (lookup.tests.LookupTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-11905: resolved: False

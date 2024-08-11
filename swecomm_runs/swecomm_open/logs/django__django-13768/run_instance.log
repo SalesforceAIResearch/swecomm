@@ -1,0 +1,85 @@
+2024-08-04 16:47:10,686 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13768
+Building instance image sweb.eval.x86_64.django__django-13768:latest for django__django-13768
+2024-08-04 16:47:10,689 - INFO - Image sweb.eval.x86_64.django__django-13768:latest already exists, skipping build.
+2024-08-04 16:47:10,689 - INFO - Creating container for django__django-13768...
+2024-08-04 16:47:10,728 - INFO - Container for django__django-13768 created: 77a14237965b0a4c8dc641efd8a0979881a0a58815c9a2c083b8e48da68a48db
+2024-08-04 16:47:11,001 - INFO - Container for django__django-13768 started: 77a14237965b0a4c8dc641efd8a0979881a0a58815c9a2c083b8e48da68a48db
+2024-08-04 16:47:11,001 - INFO - Intermediate patch for django__django-13768 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-13768/patch.diff, now applying to container...
+2024-08-04 16:47:11,178 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:47:11,218 - INFO - >>>>> Applied Patch:
+patching file django/dispatch/.backup.dispatcher.py
+patching file django/dispatch/dispatcher.py
+
+2024-08-04 16:47:13,833 - INFO - Git diff before:
+diff --git a/django/dispatch/dispatcher.py b/django/dispatch/dispatcher.py
+index b7d9d26389..7206da871a 100644
+--- a/django/dispatch/dispatcher.py
++++ b/django/dispatch/dispatcher.py
+@@ -1,6 +1,10 @@
+ import threading
+ import warnings
+ import weakref
++import logging
++
++# Configure logging for django.dispatch
++logger = logging.getLogger('django.dispatch')
+ 
+ from django.utils.deprecation import RemovedInDjango40Warning
+ from django.utils.inspect import func_accepts_kwargs
+@@ -197,6 +201,7 @@ class Signal:
+ 
+         If any receiver raises an error (specifically any subclass of
+         Exception), return the error instance as the result for that receiver.
++        The error will also be logged using the 'django.dispatch' logger.
+         """
+         if not self.receivers or self.sender_receivers_cache.get(sender) is NO_RECEIVERS:
+             return []
+@@ -208,6 +213,7 @@ class Signal:
+             try:
+                 response = receiver(signal=self, sender=sender, **named)
+             except Exception as err:
++                logger.exception('Error in signal receiver: %s', receiver)
+                 responses.append((receiver, err))
+             else:
+                 responses.append((receiver, response))
+2024-08-04 16:47:13,833 - INFO - Eval script for django__django-13768 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-13768/eval.sh; copying to container...
+2024-08-04 16:47:19,926 - INFO - Test runtime: 5.97 seconds
+2024-08-04 16:47:19,927 - INFO - Test output for django__django-13768 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-13768/test_output.txt
+2024-08-04 16:47:19,983 - INFO - Git diff after:
+diff --git a/django/dispatch/dispatcher.py b/django/dispatch/dispatcher.py
+index b7d9d26389..7206da871a 100644
+--- a/django/dispatch/dispatcher.py
++++ b/django/dispatch/dispatcher.py
+@@ -1,6 +1,10 @@
+ import threading
+ import warnings
+ import weakref
++import logging
++
++# Configure logging for django.dispatch
++logger = logging.getLogger('django.dispatch')
+ 
+ from django.utils.deprecation import RemovedInDjango40Warning
+ from django.utils.inspect import func_accepts_kwargs
+@@ -197,6 +201,7 @@ class Signal:
+ 
+         If any receiver raises an error (specifically any subclass of
+         Exception), return the error instance as the result for that receiver.
++        The error will also be logged using the 'django.dispatch' logger.
+         """
+         if not self.receivers or self.sender_receivers_cache.get(sender) is NO_RECEIVERS:
+             return []
+@@ -208,6 +213,7 @@ class Signal:
+             try:
+                 response = receiver(signal=self, sender=sender, **named)
+             except Exception as err:
++                logger.exception('Error in signal receiver: %s', receiver)
+                 responses.append((receiver, err))
+             else:
+                 responses.append((receiver, response))
+2024-08-04 16:47:19,984 - INFO - Grading answer for django__django-13768...
+2024-08-04 16:47:19,986 - INFO - report: {'django__django-13768': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_send_robust_fail (dispatch.tests.DispatcherTests)']}, 'PASS_TO_PASS': {'success': ['test_receiver_signal_list (dispatch.tests.ReceiverTestCase)', 'test_receiver_single_signal (dispatch.tests.ReceiverTestCase)', 'test_cached_garbaged_collected (dispatch.tests.DispatcherTests)', 'test_cannot_connect_no_kwargs (dispatch.tests.DispatcherTests)', 'test_cannot_connect_non_callable (dispatch.tests.DispatcherTests)', 'test_disconnection (dispatch.tests.DispatcherTests)', 'test_garbage_collected (dispatch.tests.DispatcherTests)', 'test_has_listeners (dispatch.tests.DispatcherTests)', 'test_multiple_registration (dispatch.tests.DispatcherTests)', 'test_send (dispatch.tests.DispatcherTests)', 'test_send_connected_no_sender (dispatch.tests.DispatcherTests)', 'test_send_different_no_sender (dispatch.tests.DispatcherTests)', 'test_send_no_receivers (dispatch.tests.DispatcherTests)', 'test_send_robust_ignored_sender (dispatch.tests.DispatcherTests)', 'test_send_robust_no_receivers (dispatch.tests.DispatcherTests)', 'test_send_robust_success (dispatch.tests.DispatcherTests)', 'test_uid_registration (dispatch.tests.DispatcherTests)', 'test_values_returned_by_disconnection (dispatch.tests.DispatcherTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-13768: resolved: False
+2024-08-04 16:47:19,987 - INFO - Attempting to stop container sweb.eval.django__django-13768.swecomm_open...
+2024-08-04 16:47:35,378 - INFO - Attempting to remove container sweb.eval.django__django-13768.swecomm_open...
+2024-08-04 16:47:35,415 - INFO - Container sweb.eval.django__django-13768.swecomm_open removed.

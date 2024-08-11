@@ -1,0 +1,17 @@
+diff --git a/sphinx/environment/adapters/indexentries.py b/sphinx/environment/adapters/indexentries.py
+index 5af213932..9d8396266 100644
+--- a/sphinx/environment/adapters/indexentries.py
++++ b/sphinx/environment/adapters/indexentries.py
+@@ -165,10 +165,10 @@ class IndexEntries:
+                 if k.startswith('\N{RIGHT-TO-LEFT MARK}'):
+                     k = k[1:]
+                 letter = unicodedata.normalize('NFD', k[0])[0].upper()
+-                if letter.isalpha() or letter == '_':
++                if letter.isalpha():
+                     return letter
+                 else:
+-                    # get all other symbols under one heading
++                    # get all symbols (including '_') under one heading
+                     return _('Symbols')
+             else:
+                 return v[2]

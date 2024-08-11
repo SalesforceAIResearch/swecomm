@@ -1,0 +1,26 @@
+diff --git a/sphinx/builders/latex/__init__.py b/sphinx/builders/latex/__init__.py
+index 77825f0ea..4a21c698f 100644
+--- a/sphinx/builders/latex/__init__.py
++++ b/sphinx/builders/latex/__init__.py
+@@ -347,6 +347,8 @@ class LaTeXBuilder(Builder):
+         logger.info('')
+         logger.info(__("resolving references..."))
+         self.env.resolve_references(largetree, indexfile, self)
++        self.env.assign_section_numbers(largetree)
++        self.env.assign_figure_numbers(largetree)
+         # resolve :ref:s to distant tex files -- we can't add a cross-reference,
+         # but append the document name
+         for pendingnode in largetree.traverse(addnodes.pending_xref):
+diff --git a/sphinx/builders/singlehtml.py b/sphinx/builders/singlehtml.py
+index d8ab978ed..86ea4117d 100644
+--- a/sphinx/builders/singlehtml.py
++++ b/sphinx/builders/singlehtml.py
+@@ -80,6 +80,8 @@ class SingleFileHTMLBuilder(StandaloneHTMLBuilder):
+         tree = inline_all_toctrees(self, set(), master, tree, darkgreen, [master])
+         tree['docname'] = master
+         self.env.resolve_references(tree, master, self)
++        self.env.assign_section_numbers(tree)
++        self.env.assign_figure_numbers(tree)
+         self.fix_refuris(tree)
+         return tree
+ 

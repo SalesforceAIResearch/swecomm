@@ -1,0 +1,48 @@
+2024-08-04 16:57:51,534 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-23117
+Building instance image sweb.eval.x86_64.sympy__sympy-23117:latest for sympy__sympy-23117
+2024-08-04 16:57:51,536 - INFO - Image sweb.eval.x86_64.sympy__sympy-23117:latest already exists, skipping build.
+2024-08-04 16:57:51,536 - INFO - Creating container for sympy__sympy-23117...
+2024-08-04 16:57:51,569 - INFO - Container for sympy__sympy-23117 created: c6f08365f584664e9c5b85652a1a8dc842571ba886ffffecd752bde0693d5571
+2024-08-04 16:57:51,886 - INFO - Container for sympy__sympy-23117 started: c6f08365f584664e9c5b85652a1a8dc842571ba886ffffecd752bde0693d5571
+2024-08-04 16:57:51,886 - INFO - Intermediate patch for sympy__sympy-23117 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-23117/patch.diff, now applying to container...
+2024-08-04 16:57:52,075 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:57:52,124 - INFO - >>>>> Applied Patch:
+patching file sympy/tensor/array/ndim_array.py
+
+2024-08-04 16:57:53,532 - INFO - Git diff before:
+diff --git a/sympy/tensor/array/ndim_array.py b/sympy/tensor/array/ndim_array.py
+index 6490a655a4..1eb1eb0ca6 100644
+--- a/sympy/tensor/array/ndim_array.py
++++ b/sympy/tensor/array/ndim_array.py
+@@ -195,6 +195,8 @@ def f(pointer):
+                 return [pointer], ()
+ 
+             result = []
++            if not pointer:
++                return [], ()
+             elems, shapes = zip(*[f(i) for i in pointer])
+             if len(set(shapes)) != 1:
+                 raise ValueError("could not determine shape unambiguously")
+2024-08-04 16:57:53,532 - INFO - Eval script for sympy__sympy-23117 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-23117/eval.sh; copying to container...
+2024-08-04 16:58:01,122 - INFO - Test runtime: 7.44 seconds
+2024-08-04 16:58:01,122 - INFO - Test output for sympy__sympy-23117 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-23117/test_output.txt
+2024-08-04 16:58:01,181 - INFO - Git diff after:
+diff --git a/sympy/tensor/array/ndim_array.py b/sympy/tensor/array/ndim_array.py
+index 6490a655a4..1eb1eb0ca6 100644
+--- a/sympy/tensor/array/ndim_array.py
++++ b/sympy/tensor/array/ndim_array.py
+@@ -195,6 +195,8 @@ def f(pointer):
+                 return [pointer], ()
+ 
+             result = []
++            if not pointer:
++                return [], ()
+             elems, shapes = zip(*[f(i) for i in pointer])
+             if len(set(shapes)) != 1:
+                 raise ValueError("could not determine shape unambiguously")
+2024-08-04 16:58:01,181 - INFO - Grading answer for sympy__sympy-23117...
+2024-08-04 16:58:01,183 - INFO - report: {'sympy__sympy-23117': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_issue_17851']}, 'PASS_TO_PASS': {'success': ['test_array_negative_indices', 'test_issue_18361', 'test_issue_20222'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-23117: resolved: False
+2024-08-04 16:58:01,183 - INFO - Attempting to stop container sweb.eval.sympy__sympy-23117.swecomm_open...
+2024-08-04 16:58:16,457 - INFO - Attempting to remove container sweb.eval.sympy__sympy-23117.swecomm_open...
+2024-08-04 16:58:16,496 - INFO - Container sweb.eval.sympy__sympy-23117.swecomm_open removed.

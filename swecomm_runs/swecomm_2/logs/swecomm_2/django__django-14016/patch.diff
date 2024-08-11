@@ -1,0 +1,42 @@
+
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index c2623f099f..b632b544f2 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -53,8 +53,14 @@ class Q(tree.Node):
+ 
+         obj = type(self)()
+         obj.connector = conn
+-        obj.add(self, conn)
+-        obj.add(other, conn)
++        # Convert dict_keys to list before adding to children
++        new_children = []
++        for child in self.children + other.children:
++            if isinstance(child, tuple) and isinstance(child[1], type({}.keys())):
++                new_children.append((child[0], list(child[1])))
++            else:
++                new_children.append(child)
++        obj.children = new_children
+         return obj
+ 
+     def __or__(self, other):
+diff --git a/django/utils/tree.py b/django/utils/tree.py
+index 302cd37d5f..d9cf7ee59b 100644
+--- a/django/utils/tree.py
++++ b/django/utils/tree.py
+@@ -50,7 +50,14 @@ class Node:
+     def __deepcopy__(self, memodict):
+         obj = Node(connector=self.connector, negated=self.negated)
+         obj.__class__ = self.__class__
+-        obj.children = copy.deepcopy(self.children, memodict)
++        # Explicitly handle dict_keys to ensure they are pickleable
++        new_children = []
++        for child in self.children:
++            if isinstance(child, tuple) and isinstance(child[1], type({}.keys())):
++                new_children.append((child[0], list(child[1])))
++            else:
++                new_children.append(child)
++        obj.children = copy.deepcopy(new_children, memodict)
+         return obj
+ 
+     def __len__(self):

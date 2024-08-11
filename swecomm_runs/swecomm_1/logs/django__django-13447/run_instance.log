@@ -1,0 +1,135 @@
+2024-07-30 17:14:25,700 - INFO - Intermediate patch for django__django-13447 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:14:25,927 - INFO - >>>>> Applied Patch:
+/shared/patch.diff:53: trailing whitespace.
+        
+Checking patch django/contrib/admin/sites.py...
+Applied patch django/contrib/admin/sites.py cleanly.
+warning: 1 line adds whitespace errors.
+
+2024-07-30 17:14:41,529 - INFO - Git diff before:
+diff --git a/django/contrib/admin/sites.py b/django/contrib/admin/sites.py
+index 837dabfea8..14ed17c610 100644
+--- a/django/contrib/admin/sites.py
++++ b/django/contrib/admin/sites.py
+@@ -430,7 +430,7 @@ class AdminSite:
+                     return HttpResponsePermanentRedirect(path)
+         raise Http404
+ 
+-    def _build_app_dict(self, request, label=None):
++    def build_app_dict(self, request, label=None):
+         """
+         Build the app dictionary. The optional `label` parameter filters models
+         of a specific app.
+@@ -466,6 +466,7 @@ class AdminSite:
+                 'perms': perms,
+                 'admin_url': None,
+                 'add_url': None,
++                'model': model,  # Include the model class
+             }
+             if perms.get('change') or perms.get('view'):
+                 model_dict['view_only'] = not perms.get('change')
+@@ -503,7 +504,7 @@ class AdminSite:
+         Return a sorted list of all the installed apps that have been
+         registered in this site.
+         """
+-        app_dict = self._build_app_dict(request)
++        app_dict = self.build_app_dict(request)
+ 
+         # Sort the apps alphabetically.
+         app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
+@@ -521,6 +522,11 @@ class AdminSite:
+         """
+         app_list = self.get_app_list(request)
+ 
++        # Include the model class in the app_list context
++        for app in app_list:
++            for model in app['models']:
++                model['model_class'] = model['model']
++
+         context = {
+             **self.each_context(request),
+             'title': self.index_title,
+@@ -534,11 +540,16 @@ class AdminSite:
+         return TemplateResponse(request, self.index_template or 'admin/index.html', context)
+ 
+     def app_index(self, request, app_label, extra_context=None):
+-        app_dict = self._build_app_dict(request, app_label)
++        app_dict = self.build_app_dict(request, app_label)
+         if not app_dict:
+             raise Http404('The requested admin page does not exist.')
+         # Sort the models alphabetically within each app.
+         app_dict['models'].sort(key=lambda x: x['name'])
++        
++        # Include the model class in the app_dict context
++        for model in app_dict['models']:
++            model['model_class'] = model['model']
++
+         context = {
+             **self.each_context(request),
+             'title': _('%(app)s administration') % {'app': app_dict['name']},
+2024-07-30 17:14:41,529 - INFO - Eval script for django__django-13447 written to /eval.sh
+2024-07-30 17:15:38,046 - INFO - Test runtime: 56.52 seconds
+2024-07-30 17:15:38,212 - INFO - Git diff after:
+diff --git a/django/contrib/admin/sites.py b/django/contrib/admin/sites.py
+index 837dabfea8..14ed17c610 100644
+--- a/django/contrib/admin/sites.py
++++ b/django/contrib/admin/sites.py
+@@ -430,7 +430,7 @@ class AdminSite:
+                     return HttpResponsePermanentRedirect(path)
+         raise Http404
+ 
+-    def _build_app_dict(self, request, label=None):
++    def build_app_dict(self, request, label=None):
+         """
+         Build the app dictionary. The optional `label` parameter filters models
+         of a specific app.
+@@ -466,6 +466,7 @@ class AdminSite:
+                 'perms': perms,
+                 'admin_url': None,
+                 'add_url': None,
++                'model': model,  # Include the model class
+             }
+             if perms.get('change') or perms.get('view'):
+                 model_dict['view_only'] = not perms.get('change')
+@@ -503,7 +504,7 @@ class AdminSite:
+         Return a sorted list of all the installed apps that have been
+         registered in this site.
+         """
+-        app_dict = self._build_app_dict(request)
++        app_dict = self.build_app_dict(request)
+ 
+         # Sort the apps alphabetically.
+         app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
+@@ -521,6 +522,11 @@ class AdminSite:
+         """
+         app_list = self.get_app_list(request)
+ 
++        # Include the model class in the app_list context
++        for app in app_list:
++            for model in app['models']:
++                model['model_class'] = model['model']
++
+         context = {
+             **self.each_context(request),
+             'title': self.index_title,
+@@ -534,11 +540,16 @@ class AdminSite:
+         return TemplateResponse(request, self.index_template or 'admin/index.html', context)
+ 
+     def app_index(self, request, app_label, extra_context=None):
+-        app_dict = self._build_app_dict(request, app_label)
++        app_dict = self.build_app_dict(request, app_label)
+         if not app_dict:
+             raise Http404('The requested admin page does not exist.')
+         # Sort the models alphabetically within each app.
+         app_dict['models'].sort(key=lambda x: x['name'])
++        
++        # Include the model class in the app_dict context
++        for model in app_dict['models']:
++            model['model_class'] = model['model']
++
+         context = {
+             **self.each_context(request),
+             'title': _('%(app)s administration') % {'app': app_dict['name']},
+2024-07-30 17:15:38,212 - INFO - Grading answer for django__django-13447...
+2024-07-30 17:15:38,230 - INFO - report: {'django__django-13447': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_available_apps (admin_views.test_adminsite.SiteEachContextTest)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_add_action (admin_views.test_adminsite.SiteActionsTests)', 'test_disable_action (admin_views.test_adminsite.SiteActionsTests)', "AdminSite.get_action() returns an action even if it's disabled.", 'test_each_context (admin_views.test_adminsite.SiteEachContextTest)', 'test_each_context_site_url_with_script_name (admin_views.test_adminsite.SiteEachContextTest)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-13447: resolved: True

@@ -1,0 +1,118 @@
+2024-07-30 17:15:51,461 - INFO - Intermediate patch for pylint-dev__pylint-7228 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:15:51,948 - INFO - >>>>> Applied Patch:
+Checking patch pylint/config/arguments_manager.py...
+Checking patch pylint/config/option.py...
+Applied patch pylint/config/arguments_manager.py cleanly.
+Applied patch pylint/config/option.py cleanly.
+
+2024-07-30 17:15:53,952 - INFO - Git diff before:
+diff --git a/pylint/config/arguments_manager.py b/pylint/config/arguments_manager.py
+index eda1a583d..384e832dc 100644
+--- a/pylint/config/arguments_manager.py
++++ b/pylint/config/arguments_manager.py
+@@ -537,6 +537,13 @@ class _ArgumentsManager:
+                 if not sect.isupper() and values:
+                     parser._sections[sect.upper()] = values  # type: ignore[attr-defined]
+ 
++        # Handle regular expressions with \p{Han}
++        for section in parser.sections():
++            for option, value in parser.items(section):
++                if isinstance(value, str) and r"\p{Han}" in value:
++                    value = value.replace(r"\p{Han}", r"[\u4E00-\u9FFF]")
++                    parser.set(section, option, value)
++
+         if verbose:
+             print(f"Using config file '{config_file}'", file=sys.stderr)
+ 
+@@ -567,6 +574,9 @@ class _ArgumentsManager:
+                     values[option] = ",".join(value)
+                 else:
+                     values[option] = str(value)
++                # Handle regular expressions with \p{Han}
++                if isinstance(value, str) and r"\p{Han}" in value:
++                    values[option] = value.replace(r"\p{Han}", r"[\u4E00-\u9FFF]")
+             for option, value in values.items():
+                 try:
+                     parser.set(section_name, option, value=value)
+@@ -744,6 +754,10 @@ class _ArgumentsManager:
+                 if optdict.get("type") == "py_version":
+                     value = ".".join(str(i) for i in value)
+ 
++                # Handle regular expressions with \p{Han}
++                if isinstance(value, str) and r"\p{Han}" in value:
++                    value = value.replace(r"\p{Han}", r"[\u4E00-\u9FFF]")
++
+                 # Add to table
+                 group_table.add(optname, value)
+                 group_table.add(tomlkit.nl())
+diff --git a/pylint/config/option.py b/pylint/config/option.py
+index 5043fe765..5076e7e91 100644
+--- a/pylint/config/option.py
++++ b/pylint/config/option.py
+@@ -20,6 +20,8 @@ def _csv_validator(_, name, value):
+ 
+ 
+ # pylint: disable=unused-argument
++import regex as re
++
+ def _regexp_validator(_, name, value):
+     if hasattr(value, "pattern"):
+         return value
+2024-07-30 17:15:53,953 - INFO - Eval script for pylint-dev__pylint-7228 written to /eval.sh
+2024-07-30 17:17:26,630 - INFO - Test runtime: 92.68 seconds
+2024-07-30 17:17:27,020 - INFO - Git diff after:
+diff --git a/pylint/config/arguments_manager.py b/pylint/config/arguments_manager.py
+index eda1a583d..384e832dc 100644
+--- a/pylint/config/arguments_manager.py
++++ b/pylint/config/arguments_manager.py
+@@ -537,6 +537,13 @@ class _ArgumentsManager:
+                 if not sect.isupper() and values:
+                     parser._sections[sect.upper()] = values  # type: ignore[attr-defined]
+ 
++        # Handle regular expressions with \p{Han}
++        for section in parser.sections():
++            for option, value in parser.items(section):
++                if isinstance(value, str) and r"\p{Han}" in value:
++                    value = value.replace(r"\p{Han}", r"[\u4E00-\u9FFF]")
++                    parser.set(section, option, value)
++
+         if verbose:
+             print(f"Using config file '{config_file}'", file=sys.stderr)
+ 
+@@ -567,6 +574,9 @@ class _ArgumentsManager:
+                     values[option] = ",".join(value)
+                 else:
+                     values[option] = str(value)
++                # Handle regular expressions with \p{Han}
++                if isinstance(value, str) and r"\p{Han}" in value:
++                    values[option] = value.replace(r"\p{Han}", r"[\u4E00-\u9FFF]")
+             for option, value in values.items():
+                 try:
+                     parser.set(section_name, option, value=value)
+@@ -744,6 +754,10 @@ class _ArgumentsManager:
+                 if optdict.get("type") == "py_version":
+                     value = ".".join(str(i) for i in value)
+ 
++                # Handle regular expressions with \p{Han}
++                if isinstance(value, str) and r"\p{Han}" in value:
++                    value = value.replace(r"\p{Han}", r"[\u4E00-\u9FFF]")
++
+                 # Add to table
+                 group_table.add(optname, value)
+                 group_table.add(tomlkit.nl())
+diff --git a/pylint/config/option.py b/pylint/config/option.py
+index 5043fe765..5076e7e91 100644
+--- a/pylint/config/option.py
++++ b/pylint/config/option.py
+@@ -20,6 +20,8 @@ def _csv_validator(_, name, value):
+ 
+ 
+ # pylint: disable=unused-argument
++import regex as re
++
+ def _regexp_validator(_, name, value):
+     if hasattr(value, "pattern"):
+         return value
+2024-07-30 17:17:27,021 - INFO - Grading answer for pylint-dev__pylint-7228...
+2024-07-30 17:17:27,023 - INFO - report: {'pylint-dev__pylint-7228': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['tests/config/test_config.py::test_regex_error', 'tests/config/test_config.py::test_csv_regex_error']}, 'PASS_TO_PASS': {'success': [], 'failure': ['tests/config/test_config.py::test_can_read_toml_env_variable', 'tests/config/test_config.py::test_unknown_message_id', 'tests/config/test_config.py::test_unknown_option_name', 'tests/config/test_config.py::test_unknown_short_option_name', 'tests/config/test_config.py::test_unknown_confidence', 'tests/config/test_config.py::test_empty_confidence', 'tests/config/test_config.py::test_unknown_yes_no', 'tests/config/test_config.py::test_unknown_py_version', 'tests/config/test_config.py::test_short_verbose', 'tests/config/test_config.py::test_argument_separator']}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for pylint-dev__pylint-7228: resolved: False

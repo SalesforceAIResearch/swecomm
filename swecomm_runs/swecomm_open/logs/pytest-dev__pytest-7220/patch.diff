@@ -1,0 +1,31 @@
+diff --git a/src/_pytest/_code/code.py b/src/_pytest/_code/code.py
+index 7b17d7612..9ceca1901 100644
+--- a/src/_pytest/_code/code.py
++++ b/src/_pytest/_code/code.py
+@@ -776,7 +776,7 @@ class FormattedExcinfo:
+             else:
+                 message = excinfo and excinfo.typename or ""
+             path = self._makepath(entry.path)
+-            reprfileloc = ReprFileLocation(path, entry.lineno + 1, message)
++            reprfileloc = ReprFileLocation(path, entry.lineno + 1, message, original_path=entry.path)
+             localsrepr = self.repr_locals(entry.locals)
+             return ReprEntry(lines, reprargs, localsrepr, reprfileloc, style)
+         elif style == "value":
+@@ -1107,6 +1107,7 @@ class ReprFileLocation(TerminalRepr):
+     path = attr.ib(type=str, converter=str)
+     lineno = attr.ib(type=int)
+     message = attr.ib(type=str)
++    original_path = attr.ib(type=str, default=None)
+ 
+     def toterminal(self, tw: TerminalWriter) -> None:
+         # filename and lineno output for each entry,
+@@ -1115,7 +1116,8 @@ class ReprFileLocation(TerminalRepr):
+         i = msg.find("\n")
+         if i != -1:
+             msg = msg[:i]
+-        tw.write(self.path, bold=True, red=True)
++        display_path = self.original_path if self.original_path is not None else self.path
++        tw.write(display_path, bold=True, red=True)
+         tw.line(":{}: {}".format(self.lineno, msg))
+ 
+ 

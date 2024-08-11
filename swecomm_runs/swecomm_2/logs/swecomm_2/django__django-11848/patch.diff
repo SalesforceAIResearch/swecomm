@@ -1,0 +1,29 @@
+--- a/django/utils/http.py
++++ b/django/utils/http.py
+@@ -162,6 +162,10 @@
+     The three formats allowed by the RFC are accepted, even if only the first
+     one is still in widespread use.
+ 
++    For two-digit years, as per RFC 7231, timestamps that appear to be more
++    than 50 years in the future are interpreted as representing the most
++    recent year in the past that had the same last two digits.
++
+     Return an integer expressed in seconds since the epoch, in UTC.
+     """
+     # email.utils.parsedate() does the job for RFC1123 dates; unfortunately
+@@ -176,10 +180,11 @@
+     try:
+         year = int(m.group('year'))
+         if year < 100:
+-            if year < 70:
+-                year += 2000
+-            else:
+-                year += 1900
++            current_year = datetime.datetime.now().year
++            current_century = current_year // 100 * 100
++            year += current_century
++            if year > current_year + 50:
++                year -= 100
+         month = MONTHS.index(m.group('mon').lower()) + 1
+         day = int(m.group('day'))
+         hour = int(m.group('hour'))

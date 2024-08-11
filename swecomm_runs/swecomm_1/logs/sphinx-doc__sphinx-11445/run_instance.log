@@ -1,0 +1,146 @@
+2024-07-30 17:14:23,752 - INFO - Intermediate patch for sphinx-doc__sphinx-11445 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:14:24,120 - INFO - >>>>> Applied Patch:
+Checking patch sphinx/environment/collectors/toctree.py...
+Checking patch sphinx/parsers.py...
+Applied patch sphinx/environment/collectors/toctree.py cleanly.
+Applied patch sphinx/parsers.py cleanly.
+
+2024-07-30 17:14:27,947 - INFO - Git diff before:
+diff --git a/sphinx/environment/collectors/toctree.py b/sphinx/environment/collectors/toctree.py
+index 7e4e887e6..7aac9275a 100644
+--- a/sphinx/environment/collectors/toctree.py
++++ b/sphinx/environment/collectors/toctree.py
+@@ -146,6 +146,24 @@ class TocTreeCollector(EnvironmentCollector):
+                                     continue
+ 
+                                 entries.append(entry)
++                        # handle domain directives in top-level headings
++                        elif isinstance(toctreenode, nodes.title) and 'refuri' in toctreenode:
++                            anchorname = _make_anchor_name(toctreenode['ids'], numentries)
++                            reference = nodes.reference(
++                                '', '', internal=True, refuri=docname,
++                                anchorname=anchorname, *toctreenode.children)
++                            para = addnodes.compact_paragraph('', '', reference)
++                            item = nodes.list_item('', para)
++                            entries.append(item)
++                        # handle domain directives in top-level headings
++                        elif isinstance(toctreenode, nodes.title) and 'refuri' in toctreenode:
++                            anchorname = _make_anchor_name(toctreenode['ids'], numentries)
++                            reference = nodes.reference(
++                                '', '', internal=True, refuri=docname,
++                                anchorname=anchorname, *toctreenode.children)
++                            para = addnodes.compact_paragraph('', '', reference)
++                            item = nodes.list_item('', para)
++                            entries.append(item)
+ 
+             if entries:
+                 return nodes.bullet_list('', *entries)
+diff --git a/sphinx/parsers.py b/sphinx/parsers.py
+index 3bcd69f52..9306ea938 100644
+--- a/sphinx/parsers.py
++++ b/sphinx/parsers.py
+@@ -82,7 +82,18 @@ class RSTParser(docutils.parsers.rst.Parser, Parser):
+ 
+     def decorate(self, content: StringList) -> None:
+         """Preprocess reST content before parsing."""
+-        prepend_prolog(content, self.config.rst_prolog)
++        if content:
++            first_line = content[0]
++            heading_re = re.compile(r'^(={2,}|-{2,}|\*{2,}|#{2,}|\+{2,}|~{2,})$')
++            if len(content) > 1 and heading_re.match(content[1]):
++                # Insert rst_prolog after the first heading
++                pos = 2
++                while pos < len(content) and not content[pos].strip():
++                    pos += 1
++                prepend_prolog(content[pos:], self.config.rst_prolog)
++            else:
++                # Prepend rst_prolog as usual
++                prepend_prolog(content, self.config.rst_prolog)
+         append_epilog(content, self.config.rst_epilog)
+ 
+ 
+diff --git a/tox.ini b/tox.ini
+index 512aa5f74..84c8093a3 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -24,7 +24,7 @@ setenv =
+     PYTHONWARNINGS = error
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:docs]
+ basepython = python3
+2024-07-30 17:14:27,947 - INFO - Eval script for sphinx-doc__sphinx-11445 written to /eval.sh
+2024-07-30 17:15:33,547 - INFO - Test runtime: 65.60 seconds
+2024-07-30 17:15:33,911 - INFO - Git diff after:
+diff --git a/sphinx/environment/collectors/toctree.py b/sphinx/environment/collectors/toctree.py
+index 7e4e887e6..7aac9275a 100644
+--- a/sphinx/environment/collectors/toctree.py
++++ b/sphinx/environment/collectors/toctree.py
+@@ -146,6 +146,24 @@ class TocTreeCollector(EnvironmentCollector):
+                                     continue
+ 
+                                 entries.append(entry)
++                        # handle domain directives in top-level headings
++                        elif isinstance(toctreenode, nodes.title) and 'refuri' in toctreenode:
++                            anchorname = _make_anchor_name(toctreenode['ids'], numentries)
++                            reference = nodes.reference(
++                                '', '', internal=True, refuri=docname,
++                                anchorname=anchorname, *toctreenode.children)
++                            para = addnodes.compact_paragraph('', '', reference)
++                            item = nodes.list_item('', para)
++                            entries.append(item)
++                        # handle domain directives in top-level headings
++                        elif isinstance(toctreenode, nodes.title) and 'refuri' in toctreenode:
++                            anchorname = _make_anchor_name(toctreenode['ids'], numentries)
++                            reference = nodes.reference(
++                                '', '', internal=True, refuri=docname,
++                                anchorname=anchorname, *toctreenode.children)
++                            para = addnodes.compact_paragraph('', '', reference)
++                            item = nodes.list_item('', para)
++                            entries.append(item)
+ 
+             if entries:
+                 return nodes.bullet_list('', *entries)
+diff --git a/sphinx/parsers.py b/sphinx/parsers.py
+index 3bcd69f52..9306ea938 100644
+--- a/sphinx/parsers.py
++++ b/sphinx/parsers.py
+@@ -82,7 +82,18 @@ class RSTParser(docutils.parsers.rst.Parser, Parser):
+ 
+     def decorate(self, content: StringList) -> None:
+         """Preprocess reST content before parsing."""
+-        prepend_prolog(content, self.config.rst_prolog)
++        if content:
++            first_line = content[0]
++            heading_re = re.compile(r'^(={2,}|-{2,}|\*{2,}|#{2,}|\+{2,}|~{2,})$')
++            if len(content) > 1 and heading_re.match(content[1]):
++                # Insert rst_prolog after the first heading
++                pos = 2
++                while pos < len(content) and not content[pos].strip():
++                    pos += 1
++                prepend_prolog(content[pos:], self.config.rst_prolog)
++            else:
++                # Prepend rst_prolog as usual
++                prepend_prolog(content, self.config.rst_prolog)
+         append_epilog(content, self.config.rst_epilog)
+ 
+ 
+diff --git a/tox.ini b/tox.ini
+index 512aa5f74..84c8093a3 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -24,7 +24,7 @@ setenv =
+     PYTHONWARNINGS = error
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:docs]
+ basepython = python3
+2024-07-30 17:15:33,911 - INFO - Grading answer for sphinx-doc__sphinx-11445...
+2024-07-30 17:15:33,972 - INFO - report: {'sphinx-doc__sphinx-11445': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['tests/test_util_rst.py::test_prepend_prolog_with_roles_in_sections_with_newline', 'tests/test_util_rst.py::test_prepend_prolog_with_roles_in_sections_without_newline']}, 'PASS_TO_PASS': {'success': ['tests/test_util_rst.py::test_escape', 'tests/test_util_rst.py::test_append_epilog', 'tests/test_util_rst.py::test_prepend_prolog', 'tests/test_util_rst.py::test_prepend_prolog_with_CR', 'tests/test_util_rst.py::test_prepend_prolog_without_CR', 'tests/test_util_rst.py::test_prepend_prolog_with_roles_in_sections', 'tests/test_util_rst.py::test_textwidth', 'tests/test_util_rst.py::test_heading'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sphinx-doc__sphinx-11445: resolved: False

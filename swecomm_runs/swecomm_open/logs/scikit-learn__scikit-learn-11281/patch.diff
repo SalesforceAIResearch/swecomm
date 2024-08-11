@@ -1,0 +1,67 @@
+diff --git a/sklearn/mixture/base.py b/sklearn/mixture/base.py
+index a9f66740f..fac536158 100644
+--- a/sklearn/mixture/base.py
++++ b/sklearn/mixture/base.py
+@@ -74,6 +74,7 @@ class BaseMixture(six.with_metaclass(ABCMeta, DensityMixin, BaseEstimator)):
+     def __init__(self, n_components, tol, reg_covar,
+                  max_iter, n_init, init_params, random_state, warm_start,
+                  verbose, verbose_interval):
++        self.labels_ = None
+         self.n_components = n_components
+         self.tol = tol
+         self.reg_covar = reg_covar
+@@ -242,6 +243,21 @@ class BaseMixture(six.with_metaclass(ABCMeta, DensityMixin, BaseEstimator)):
+ 
+         return self
+ 
++    def fit_predict(self, X, y=None):
++        """Fit and then predict labels for data.
++
++        Parameters
++        ----------
++        X : array-like, shape = [n_samples, n_features]
++
++        Returns
++        -------
++        labels : array, shape = (n_samples,) component memberships
++        """
++        self.fit(X, y)
++        self.labels_ = self.predict(X)
++        return self.labels_
++
+     def _e_step(self, X):
+         """E step.
+ 
+diff --git a/sklearn/mixture/gmm.py b/sklearn/mixture/gmm.py
+index b3c231314..037330445 100644
+--- a/sklearn/mixture/gmm.py
++++ b/sklearn/mixture/gmm.py
+@@ -260,6 +260,7 @@ class _GMMBase(BaseEstimator):
+                  random_state=None, tol=1e-3, min_covar=1e-3,
+                  n_iter=100, n_init=1, params='wmc', init_params='wmc',
+                  verbose=0):
++        self.labels_ = None
+         self.n_components = n_components
+         self.covariance_type = covariance_type
+         self.tol = tol
+@@ -372,7 +373,9 @@ class _GMMBase(BaseEstimator):
+         C : array, shape = (n_samples,) component memberships
+         """
+         logprob, responsibilities = self.score_samples(X)
+-        return responsibilities.argmax(axis=1)
++        labels = responsibilities.argmax(axis=1)
++        self.labels_ = labels
++        return labels
+ 
+     def predict_proba(self, X):
+         """Predict posterior probability of data under each Gaussian
+@@ -450,7 +453,8 @@ class _GMMBase(BaseEstimator):
+         -------
+         C : array, shape = (n_samples,) component memberships
+         """
+-        return self._fit(X, y).argmax(axis=1)
++        self.labels_ = self._fit(X, y).argmax(axis=1)
++        return self.labels_
+ 
+     def _fit(self, X, y=None, do_prediction=False):
+         """Estimate model parameters with the EM algorithm.

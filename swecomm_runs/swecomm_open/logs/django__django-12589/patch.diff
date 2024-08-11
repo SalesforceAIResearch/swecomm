@@ -1,0 +1,16 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 56581f2..b0795a2 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -112,7 +112,10 @@ class SQLCompiler:
+         ref_sources = {
+             expr.source for expr in expressions if isinstance(expr, Ref)
+         }
+-        for expr, _, _ in select:
++        for expr, _, alias in select:
++            if alias in self.query.annotations:
++                # Avoid adding subquery annotations directly to GROUP BY clause.
++                continue
+             # Skip members of the select clause that are already included
+             # by reference.
+             if expr in ref_sources:

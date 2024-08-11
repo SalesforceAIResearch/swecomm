@@ -1,0 +1,14 @@
+diff --git a/src/_pytest/assertion/rewrite.py b/src/_pytest/assertion/rewrite.py
+index 456681ab2..f153d860b 100644
+--- a/src/_pytest/assertion/rewrite.py
++++ b/src/_pytest/assertion/rewrite.py
+@@ -940,6 +940,9 @@ class AssertionRewriter(ast.NodeVisitor):
+             else:
+                 assertmsg = ast.Str("")
+                 explanation = "assert " + explanation
++            # Remove decorator code from explanation
++            explanation_lines = explanation.split('\n')
++            explanation = '\n'.join(line for line in explanation_lines if not line.strip().startswith('@'))
+             template = ast.BinOp(assertmsg, ast.Add(), ast.Str(explanation))
+             msg = self.pop_format_context(template)
+             fmt = self.helper("_format_explanation", msg)

@@ -1,0 +1,156 @@
+2024-07-30 17:14:30,612 - INFO - Intermediate patch for pytest-dev__pytest-7168 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:14:31,123 - INFO - >>>>> Applied Patch:
+Checking patch src/_pytest/_io/saferepr.py...
+Checking patch src/_pytest/reports.py...
+Applied patch src/_pytest/_io/saferepr.py cleanly.
+Applied patch src/_pytest/reports.py cleanly.
+
+2024-07-30 17:14:32,372 - INFO - Git diff before:
+diff --git a/src/_pytest/_io/saferepr.py b/src/_pytest/_io/saferepr.py
+index 23af4d0bb..96d31ced7 100644
+--- a/src/_pytest/_io/saferepr.py
++++ b/src/_pytest/_io/saferepr.py
+@@ -79,7 +79,10 @@ def saferepr(obj: Any, maxsize: int = 240) -> str:
+     care to never raise exceptions itself.  This function is a wrapper
+     around the Repr/reprlib functionality of the standard 2.6 lib.
+     """
+-    return SafeRepr(maxsize).repr(obj)
++    try:
++        return SafeRepr(maxsize).repr(obj)
++    except Exception as exc:
++        return _format_repr_exception(exc, obj)
+ 
+ 
+ class AlwaysDispatchingPrettyPrinter(pprint.PrettyPrinter):
+diff --git a/src/_pytest/reports.py b/src/_pytest/reports.py
+index 8459c1cb9..4c0e19c0e 100644
+--- a/src/_pytest/reports.py
++++ b/src/_pytest/reports.py
+@@ -290,12 +290,15 @@ class TestReport(BaseReport):
+                 longrepr = (str(r.path), r.lineno, r.message)
+             else:
+                 outcome = "failed"
+-                if call.when == "call":
+-                    longrepr = item.repr_failure(excinfo)
+-                else:  # exception in setup or teardown
+-                    longrepr = item._repr_failure_py(
+-                        excinfo, style=item.config.getoption("tbstyle", "auto")
+-                    )
++                try:
++                    if call.when == "call":
++                        longrepr = item.repr_failure(excinfo)
++                    else:  # exception in setup or teardown
++                        longrepr = item._repr_failure_py(
++                            excinfo, style=item.config.getoption("tbstyle", "auto")
++                        )
++                except Exception as repr_exc:
++                    longrepr = f"Error generating failure representation: {repr_exc}"
+         for rwhen, key, content in item._report_sections:
+             sections.append(("Captured {} {}".format(key, rwhen), content))
+         return cls(
+@@ -368,6 +371,12 @@ def _report_to_json(report):
+     serialization.
+     """
+ 
++    def safe_repr(obj):
++        try:
++            return repr(obj)
++        except Exception:
++            return "<unprintable object>"
++
+     def serialize_repr_entry(entry):
+         entry_data = {"type": type(entry).__name__, "data": attr.asdict(entry)}
+         for key, value in entry_data["data"].items():
+@@ -415,7 +424,7 @@ def _report_to_json(report):
+         ):
+             d["longrepr"] = serialize_longrepr(report)
+         else:
+-            d["longrepr"] = str(report.longrepr)
++            d["longrepr"] = safe_repr(report.longrepr)
+     else:
+         d["longrepr"] = report.longrepr
+     for name in d:
+@@ -423,6 +432,8 @@ def _report_to_json(report):
+             d[name] = str(d[name])
+         elif name == "result":
+             d[name] = None  # for now
++        else:
++            d[name] = safe_repr(d[name])
+     return d
+2024-07-30 17:14:32,372 - INFO - Eval script for pytest-dev__pytest-7168 written to /eval.sh
+2024-07-30 17:15:15,506 - INFO - Test runtime: 43.13 seconds
+2024-07-30 17:15:15,822 - INFO - Git diff after:
+diff --git a/src/_pytest/_io/saferepr.py b/src/_pytest/_io/saferepr.py
+index 23af4d0bb..96d31ced7 100644
+--- a/src/_pytest/_io/saferepr.py
++++ b/src/_pytest/_io/saferepr.py
+@@ -79,7 +79,10 @@ def saferepr(obj: Any, maxsize: int = 240) -> str:
+     care to never raise exceptions itself.  This function is a wrapper
+     around the Repr/reprlib functionality of the standard 2.6 lib.
+     """
+-    return SafeRepr(maxsize).repr(obj)
++    try:
++        return SafeRepr(maxsize).repr(obj)
++    except Exception as exc:
++        return _format_repr_exception(exc, obj)
+ 
+ 
+ class AlwaysDispatchingPrettyPrinter(pprint.PrettyPrinter):
+diff --git a/src/_pytest/reports.py b/src/_pytest/reports.py
+index 8459c1cb9..4c0e19c0e 100644
+--- a/src/_pytest/reports.py
++++ b/src/_pytest/reports.py
+@@ -290,12 +290,15 @@ class TestReport(BaseReport):
+                 longrepr = (str(r.path), r.lineno, r.message)
+             else:
+                 outcome = "failed"
+-                if call.when == "call":
+-                    longrepr = item.repr_failure(excinfo)
+-                else:  # exception in setup or teardown
+-                    longrepr = item._repr_failure_py(
+-                        excinfo, style=item.config.getoption("tbstyle", "auto")
+-                    )
++                try:
++                    if call.when == "call":
++                        longrepr = item.repr_failure(excinfo)
++                    else:  # exception in setup or teardown
++                        longrepr = item._repr_failure_py(
++                            excinfo, style=item.config.getoption("tbstyle", "auto")
++                        )
++                except Exception as repr_exc:
++                    longrepr = f"Error generating failure representation: {repr_exc}"
+         for rwhen, key, content in item._report_sections:
+             sections.append(("Captured {} {}".format(key, rwhen), content))
+         return cls(
+@@ -368,6 +371,12 @@ def _report_to_json(report):
+     serialization.
+     """
+ 
++    def safe_repr(obj):
++        try:
++            return repr(obj)
++        except Exception:
++            return "<unprintable object>"
++
+     def serialize_repr_entry(entry):
+         entry_data = {"type": type(entry).__name__, "data": attr.asdict(entry)}
+         for key, value in entry_data["data"].items():
+@@ -415,7 +424,7 @@ def _report_to_json(report):
+         ):
+             d["longrepr"] = serialize_longrepr(report)
+         else:
+-            d["longrepr"] = str(report.longrepr)
++            d["longrepr"] = safe_repr(report.longrepr)
+     else:
+         d["longrepr"] = report.longrepr
+     for name in d:
+@@ -423,6 +432,8 @@ def _report_to_json(report):
+             d[name] = str(d[name])
+         elif name == "result":
+             d[name] = None  # for now
++        else:
++            d[name] = safe_repr(d[name])
+     return d
+2024-07-30 17:15:15,822 - INFO - Grading answer for pytest-dev__pytest-7168...
+2024-07-30 17:15:15,824 - INFO - report: {'pytest-dev__pytest-7168': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['testing/io/test_saferepr.py::test_simple_repr', 'testing/io/test_saferepr.py::test_maxsize', 'testing/io/test_saferepr.py::test_maxsize_error_on_instance', 'testing/io/test_saferepr.py::test_exceptions', 'testing/io/test_saferepr.py::test_baseexception', 'testing/io/test_saferepr.py::test_buggy_builtin_repr', 'testing/io/test_saferepr.py::test_big_repr', 'testing/io/test_saferepr.py::test_repr_on_newstyle', 'testing/io/test_saferepr.py::test_unicode', 'testing/io/test_saferepr.py::test_pformat_dispatch'], 'failure': ['testing/io/test_saferepr.py::test_broken_getattribute']}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for pytest-dev__pytest-7168: resolved: False

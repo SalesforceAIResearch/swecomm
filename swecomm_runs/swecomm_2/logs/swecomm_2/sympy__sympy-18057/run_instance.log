@@ -1,0 +1,86 @@
+2024-08-04 17:28:41,306 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-18057
+Building instance image sweb.eval.x86_64.sympy__sympy-18057:latest for sympy__sympy-18057
+2024-08-04 17:28:41,309 - INFO - Image sweb.eval.x86_64.sympy__sympy-18057:latest already exists, skipping build.
+2024-08-04 17:28:41,309 - INFO - Creating container for sympy__sympy-18057...
+2024-08-04 17:28:41,351 - INFO - Container for sympy__sympy-18057 created: ace48e8c25294a323048e2133dc394fb4a0b29983a4dc0fa391e177e0a64a91b
+2024-08-04 17:28:41,608 - INFO - Container for sympy__sympy-18057 started: ace48e8c25294a323048e2133dc394fb4a0b29983a4dc0fa391e177e0a64a91b
+2024-08-04 17:28:41,609 - INFO - Intermediate patch for sympy__sympy-18057 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-18057/patch.diff, now applying to container...
+2024-08-04 17:28:41,779 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:28:41,818 - INFO - >>>>> Applied Patch:
+patching file sympy/core/basic.py
+
+2024-08-04 17:28:42,626 - INFO - Git diff before:
+diff --git a/sympy/core/basic.py b/sympy/core/basic.py
+index 79deff1978..b197560a8a 100644
+--- a/sympy/core/basic.py
++++ b/sympy/core/basic.py
+@@ -320,25 +320,9 @@ def __eq__(self, other):
+         if self is other:
+             return True
+ 
+-        tself = type(self)
+-        tother = type(other)
+-        if tself is not tother:
+-            try:
+-                other = _sympify(other)
+-                tother = type(other)
+-            except SympifyError:
+-                return NotImplemented
+-
+-            # As long as we have the ordering of classes (sympy.core),
+-            # comparing types will be slow in Python 2, because it uses
+-            # __cmp__. Until we can remove it
+-            # (https://github.com/sympy/sympy/issues/4269), we only compare
+-            # types in Python 2 directly if they actually have __ne__.
+-            if PY3 or type(tself).__ne__ is not type.__ne__:
+-                if tself != tother:
+-                    return False
+-            elif tself is not tother:
+-                return False
++        if not isinstance(other, Basic):
++            # If 'other' is not a SymPy object, then it cannot be equal to 'self'.
++            return False
+ 
+         return self._hashable_content() == other._hashable_content()
+2024-08-04 17:28:42,626 - INFO - Eval script for sympy__sympy-18057 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-18057/eval.sh; copying to container...
+2024-08-04 17:28:46,229 - INFO - Test runtime: 3.46 seconds
+2024-08-04 17:28:46,229 - INFO - Test output for sympy__sympy-18057 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-18057/test_output.txt
+2024-08-04 17:28:46,276 - INFO - Git diff after:
+diff --git a/sympy/core/basic.py b/sympy/core/basic.py
+index 79deff1978..b197560a8a 100644
+--- a/sympy/core/basic.py
++++ b/sympy/core/basic.py
+@@ -320,25 +320,9 @@ def __eq__(self, other):
+         if self is other:
+             return True
+ 
+-        tself = type(self)
+-        tother = type(other)
+-        if tself is not tother:
+-            try:
+-                other = _sympify(other)
+-                tother = type(other)
+-            except SympifyError:
+-                return NotImplemented
+-
+-            # As long as we have the ordering of classes (sympy.core),
+-            # comparing types will be slow in Python 2, because it uses
+-            # __cmp__. Until we can remove it
+-            # (https://github.com/sympy/sympy/issues/4269), we only compare
+-            # types in Python 2 directly if they actually have __ne__.
+-            if PY3 or type(tself).__ne__ is not type.__ne__:
+-                if tself != tother:
+-                    return False
+-            elif tself is not tother:
+-                return False
++        if not isinstance(other, Basic):
++            # If 'other' is not a SymPy object, then it cannot be equal to 'self'.
++            return False
+ 
+         return self._hashable_content() == other._hashable_content()
+2024-08-04 17:28:46,276 - INFO - Grading answer for sympy__sympy-18057...
+2024-08-04 17:28:46,278 - INFO - report: {'sympy__sympy-18057': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_var']}, 'PASS_TO_PASS': {'success': ['test_var_return', 'test_var_accepts_comma', 'test_var_keywords'], 'failure': ['test_basic', 'test_ibasic', 'test_relational', 'test_relational_assumptions', 'test_basic_nostr', 'test_series_expansion_for_uniform_order', 'test_leadterm', 'test_as_leading_term', 'test_leadterm2', 'test_leadterm3', 'test_as_leading_term2', 'test_as_leading_term3', 'test_as_leading_term4', 'test_as_leading_term_stub', 'test_as_leading_term_deriv_integral', 'test_atoms', 'test_is_polynomial', 'test_is_rational_function', 'test_is_algebraic_expr', 'test_SAGE1', 'test_SAGE2', 'test_SAGE3', 'test_len', 'test_doit', 'test_attribute_error', 'test_args', 'test_noncommutative_expand_issue_3757', 'test_as_numer_denom', 'test_trunc', 'test_as_independent', 'test_replace', 'test_find', 'test_count', 'test_has_basics', 'test_has_multiple', 'test_has_piecewise', 'test_has_iterative', 'test_has_integrals', 'test_has_tuple', 'test_has_units', 'test_has_polys', 'test_has_physics', 'test_as_poly_as_expr', 'test_nonzero', 'test_is_number', 'test_as_coeff_add', 'test_as_coeff_mul', 'test_as_coeff_exponent', 'test_extractions', 'test_nan_extractions', 'test_coeff', 'test_coeff2', 'test_coeff2_0', 'test_coeff_expand', 'test_integrate', 'test_as_base_exp', 'test_issue_4963', 'test_action_verbs', 'test_as_powers_dict', 'test_as_coefficients_dict', 'test_args_cnc', 'test_new_rawargs', 'test_issue_5226', 'test_free_symbols', 'test_issue_5300', 'test_floordiv', 'test_as_coeff_Mul', 'test_as_coeff_Add', 'test_expr_sorting', 'test_as_ordered_factors', 'test_as_ordered_terms', 'test_sort_key_atomic_expr', 'test_eval_interval', 'test_eval_interval_zoo', 'test_primitive', 'test_issue_5843', 'test_is_constant', 'test_equals', 'test_random', 'test_round', 'test_held_expression_UnevaluatedExpr', 'test_round_exception_nostr', 'test_extract_branch_factor', 'test_identity_removal', 'test_float_0', 'test_issue_6325', 'test_issue_7426', 'test_issue_11122', 'test_issue_10651', 'test_issue_10161', 'test_issue_10755', 'test_issue_11877', 'test_normal', 'test_expr', 'test_ExprBuilder']}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-18057: resolved: False
+2024-08-04 17:28:46,279 - INFO - Attempting to stop container sweb.eval.sympy__sympy-18057.swecomm_2...
+2024-08-04 17:29:01,621 - INFO - Attempting to remove container sweb.eval.sympy__sympy-18057.swecomm_2...
+2024-08-04 17:29:01,648 - INFO - Container sweb.eval.sympy__sympy-18057.swecomm_2 removed.

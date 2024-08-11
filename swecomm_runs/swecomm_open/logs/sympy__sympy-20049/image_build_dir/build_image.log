@@ -1,0 +1,190 @@
+2024-08-03 19:44:47,330 - INFO - Building image sweb.eval.x86_64.sympy__sympy-20049:latest
+Using dockerfile:
+FROM --platform=linux/x86_64 sweb.env.x86_64.c795f4b88616b8462021ed:latest
+
+COPY ./setup_repo.sh /root/
+RUN /bin/bash /root/setup_repo.sh
+
+WORKDIR /testbed/
+
+Adding (1) setup scripts to image build repo
+2024-08-03 19:44:47,330 - INFO - [SETUP SCRIPT] setup_repo.sh:
+#!/bin/bash
+set -euxo pipefail
+git clone -o origin https://github.com/sympy/sympy /testbed
+chmod -R 777 /testbed
+cd /testbed
+git reset --hard d57aaf064041fe52c0fa357639b069100f8b28e1
+git remote remove origin
+source /opt/miniconda3/bin/activate
+conda activate testbed
+echo "Current environment: $CONDA_DEFAULT_ENV"
+python -m pip install -e .
+
+2024-08-03 19:44:47,331 - INFO - Building docker image sweb.eval.x86_64.sympy__sympy-20049:latest in logs/build_images/instances/sweb.eval.x86_64.sympy__sympy-20049__latest with platform linux/x86_64
+2024-08-03 19:44:47,337 - INFO - Step 1/4 : FROM --platform=linux/x86_64 sweb.env.x86_64.c795f4b88616b8462021ed:latest
+2024-08-03 19:44:47,337 - INFO - 
+2024-08-03 19:44:47,337 - INFO - ---> ae3629909412
+2024-08-03 19:44:47,337 - INFO - Step 2/4 : COPY ./setup_repo.sh /root/
+2024-08-03 19:44:47,337 - INFO - 
+2024-08-03 19:44:47,704 - INFO - ---> 999208b06b97
+2024-08-03 19:44:47,704 - INFO - Step 3/4 : RUN /bin/bash /root/setup_repo.sh
+2024-08-03 19:44:47,704 - INFO - 
+2024-08-03 19:44:47,858 - INFO - ---> Running in 1c789a6354f7
+2024-08-03 19:44:48,459 - INFO - + git clone -o origin https://github.com/sympy/sympy /testbed
+Cloning into '/testbed'...
+2024-08-03 19:45:05,525 - INFO - + chmod -R 777 /testbed
+2024-08-03 19:45:05,549 - INFO - + cd /testbed
++ git reset --hard d57aaf064041fe52c0fa357639b069100f8b28e1
+2024-08-03 19:45:05,916 - INFO - HEAD is now at d57aaf0640 Merge pull request #20104 from Soumi7/GSoD_Elementary_trigonometric
+2024-08-03 19:45:05,924 - INFO - + git remote remove origin
+2024-08-03 19:45:05,930 - INFO - + source /opt/miniconda3/bin/activate
+2024-08-03 19:45:05,931 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
+2024-08-03 19:45:05,931 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
+2024-08-03 19:45:05,931 - INFO - +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2024-08-03 19:45:05,931 - INFO - +++ '[' -z '' ']'
+2024-08-03 19:45:05,931 - INFO - +++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
+2024-08-03 19:45:05,931 - INFO - +++ '[' -n '' ']'
+2024-08-03 19:45:05,932 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2024-08-03 19:45:05,935 - INFO - ++++ dirname /opt/miniconda3/bin
+2024-08-03 19:45:05,935 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+2024-08-03 19:45:05,936 - INFO - ++ '[' -n '' ']'
+2024-08-03 19:45:05,936 - INFO - ++ local ask_conda
+2024-08-03 19:45:05,936 - INFO - +++ PS1=
++++ __conda_exe shell.posix activate
+2024-08-03 19:45:05,938 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2024-08-03 19:45:06,112 - INFO - ++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
+2024-08-03 19:45:06,112 - INFO - +++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
+2024-08-03 19:45:06,113 - INFO - +++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+2024-08-03 19:45:06,113 - INFO - ++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+2024-08-03 19:45:06,113 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2024-08-03 19:45:06,282 - INFO - + ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+2024-08-03 19:45:06,282 - INFO - ++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+2024-08-03 19:45:06,282 - INFO - ++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+2024-08-03 19:45:06,282 - INFO - ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2024-08-03 19:45:06,282 - INFO - + __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
+2024-08-03 19:45:06,282 - INFO - + echo 'Current environment: testbed'
+2024-08-03 19:45:06,282 - INFO - + python -m pip install -e .
+2024-08-03 19:45:06,282 - INFO - Current environment: testbed
+2024-08-03 19:45:06,772 - INFO - Obtaining file:///testbed
+2024-08-03 19:45:06,773 - INFO - Preparing metadata (setup.py): started
+2024-08-03 19:45:07,076 - INFO - Preparing metadata (setup.py): finished with status 'done'
+2024-08-03 19:45:07,084 - INFO - Requirement already satisfied: mpmath>=0.19 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from sympy==1.7.dev0) (1.3.0)
+2024-08-03 19:45:07,121 - INFO - Installing collected packages: sympy
+2024-08-03 19:45:07,124 - INFO - Running setup.py develop for sympy
+2024-08-03 19:45:07,648 - INFO - Successfully installed sympy-1.7.dev0
+2024-08-03 19:45:07,649 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+2024-08-03 19:45:10,718 - INFO - ---> Removed intermediate container 1c789a6354f7
+2024-08-03 19:45:10,718 - INFO - ---> 40c9af45cce8
+2024-08-03 19:45:10,718 - INFO - Step 4/4 : WORKDIR /testbed/
+2024-08-03 19:45:10,718 - INFO - 
+2024-08-03 19:45:10,756 - INFO - ---> Running in 5b48314cc8c3
+2024-08-03 19:45:10,803 - INFO - ---> Removed intermediate container 5b48314cc8c3
+2024-08-03 19:45:10,803 - INFO - ---> eb0a1189076e
+2024-08-03 19:45:10,803 - INFO - Successfully built eb0a1189076e
+2024-08-03 19:45:10,809 - INFO - Successfully tagged sweb.eval.x86_64.sympy__sympy-20049:latest
+2024-08-03 19:45:10,809 - INFO - Image built successfully!

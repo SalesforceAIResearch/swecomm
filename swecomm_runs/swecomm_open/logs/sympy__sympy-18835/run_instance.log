@@ -1,0 +1,55 @@
+2024-08-04 16:56:43,880 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-18835
+Building instance image sweb.eval.x86_64.sympy__sympy-18835:latest for sympy__sympy-18835
+2024-08-04 16:56:43,883 - INFO - Image sweb.eval.x86_64.sympy__sympy-18835:latest already exists, skipping build.
+2024-08-04 16:56:43,883 - INFO - Creating container for sympy__sympy-18835...
+2024-08-04 16:56:43,915 - INFO - Container for sympy__sympy-18835 created: 31026da5119b8bc4c550350d22d670b71ea772039d8e7c285dfba89bbf457100
+2024-08-04 16:56:44,255 - INFO - Container for sympy__sympy-18835 started: 31026da5119b8bc4c550350d22d670b71ea772039d8e7c285dfba89bbf457100
+2024-08-04 16:56:44,255 - INFO - Intermediate patch for sympy__sympy-18835 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-18835/patch.diff, now applying to container...
+2024-08-04 16:56:44,466 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:56:44,522 - INFO - >>>>> Applied Patch:
+patching file sympy/utilities/.backup.iterables.py
+patching file sympy/utilities/.backup.test_uniq.py
+patching file sympy/utilities/iterables.py
+patching file sympy/utilities/test_uniq.py
+
+2024-08-04 16:56:46,204 - INFO - Git diff before:
+diff --git a/sympy/utilities/iterables.py b/sympy/utilities/iterables.py
+index d96e76263b..a657b80efd 100644
+--- a/sympy/utilities/iterables.py
++++ b/sympy/utilities/iterables.py
+@@ -2109,7 +2109,10 @@ def uniq(seq, result=None):
+     try:
+         seen = set()
+         result = result or []
++        initial_size = len(seq) if hasattr(seq, '__len__') else None
+         for i, s in enumerate(seq):
++            if initial_size is not None and len(seq) != initial_size:
++                raise RuntimeError("sequence changed size during iteration")
+             if not (s in seen or seen.add(s)):
+                 yield s
+     except TypeError:
+2024-08-04 16:56:46,205 - INFO - Eval script for sympy__sympy-18835 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-18835/eval.sh; copying to container...
+2024-08-04 16:56:51,798 - INFO - Test runtime: 5.36 seconds
+2024-08-04 16:56:51,798 - INFO - Test output for sympy__sympy-18835 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-18835/test_output.txt
+2024-08-04 16:56:51,847 - INFO - Git diff after:
+diff --git a/sympy/utilities/iterables.py b/sympy/utilities/iterables.py
+index d96e76263b..a657b80efd 100644
+--- a/sympy/utilities/iterables.py
++++ b/sympy/utilities/iterables.py
+@@ -2109,7 +2109,10 @@ def uniq(seq, result=None):
+     try:
+         seen = set()
+         result = result or []
++        initial_size = len(seq) if hasattr(seq, '__len__') else None
+         for i, s in enumerate(seq):
++            if initial_size is not None and len(seq) != initial_size:
++                raise RuntimeError("sequence changed size during iteration")
+             if not (s in seen or seen.add(s)):
+                 yield s
+     except TypeError:
+2024-08-04 16:56:51,847 - INFO - Grading answer for sympy__sympy-18835...
+2024-08-04 16:56:51,849 - INFO - report: {'sympy__sympy-18835': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_uniq']}, 'PASS_TO_PASS': {'success': ['test_is_palindromic', 'test_postorder_traversal', 'test_flatten', 'test_iproduct', 'test_group', 'test_subsets', 'test_variations', 'test_cartes', 'test_filter_symbols', 'test_numbered_symbols', 'test_sift', 'test_take', 'test_dict_merge', 'test_prefixes', 'test_postfixes', 'test_topological_sort', 'test_strongly_connected_components', 'test_connected_components', 'test_rotate', 'test_multiset_partitions', 'test_multiset_combinations', 'test_multiset_permutations', 'test_partitions', 'test_binary_partitions', 'test_bell_perm', 'test_involutions', 'test_derangements', 'test_necklaces', 'test_bracelets', 'test_generate_oriented_forest', 'test_unflatten', 'test_common_prefix_suffix', 'test_minlex', 'test_ordered', 'test_runs', 'test_reshape', 'test_kbins', 'test_has_dups', 'test__partition', 'test_ordered_partitions', 'test_rotations'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-18835: resolved: False
+2024-08-04 16:56:51,849 - INFO - Attempting to stop container sweb.eval.sympy__sympy-18835.swecomm_open...
+2024-08-04 16:57:07,170 - INFO - Attempting to remove container sweb.eval.sympy__sympy-18835.swecomm_open...
+2024-08-04 16:57:07,201 - INFO - Container sweb.eval.sympy__sympy-18835.swecomm_open removed.

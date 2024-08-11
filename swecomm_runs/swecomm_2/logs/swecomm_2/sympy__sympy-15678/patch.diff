@@ -1,0 +1,31 @@
+diff --git a/sympy/geometry/util.py b/sympy/geometry/util.py
+index d32adc3066..5f01713bd8 100644
+--- a/sympy/geometry/util.py
++++ b/sympy/geometry/util.py
+@@ -13,6 +13,8 @@
+ from __future__ import division, print_function
+ 
+ from sympy import Function, Symbol, solve
++from sympy.core.relational import Eq
++from sympy.core.function import Function as SymFunction
+ from sympy.core.compatibility import (
+     is_sequence, range, string_types, ordered)
+ from sympy.core.containers import OrderedSet
+@@ -528,6 +530,17 @@ def hypot(x, y):
+ def idiff(eq, y, x, n=1):
+     """Return ``dy/dx`` assuming that ``eq == 0``.
+ 
++    # Check if eq is an instance of Eq and convert it to an expression
++    if isinstance(eq, Eq):
++        eq = eq.lhs - eq.rhs
++        # Convert Eq instance to expression for processing
++
++    # Check if y is a function expression and extract the symbol
++    if isinstance(y, SymFunction):
++        y = y.args[0]
++        # Handle function expression as dependent variable
++
++
+     Parameters
+     ==========
+ 

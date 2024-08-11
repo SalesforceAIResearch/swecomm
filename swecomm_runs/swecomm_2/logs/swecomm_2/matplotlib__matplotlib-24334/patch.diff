@@ -1,0 +1,28 @@
+diff --git a/lib/matplotlib/axis.py b/lib/matplotlib/axis.py
+index af0815d41d..f50fd1b923 100644
+--- a/lib/matplotlib/axis.py
++++ b/lib/matplotlib/axis.py
+@@ -1991,6 +1991,10 @@ class Axis(martist.Artist):
+         """
+         Set this Axis' tick locations and optionally labels.
+ 
++        If `labels` is not provided and `kwargs` is not empty, this method
++        will validate `kwargs` against `Text` properties and raise an error
++        if any `kwargs` are invalid without `labels`.
++
+         If necessary, the view limits of the Axis are expanded so that all
+         given ticks are visible.
+ 
+@@ -2024,6 +2028,12 @@ class Axis(martist.Artist):
+         result = self._set_tick_locations(ticks, minor=minor)
+         if labels is not None:
+             self.set_ticklabels(labels, minor=minor, **kwargs)
++        elif kwargs:
++            valid_properties = matplotlib.text.Text.get_valid_properties()
++            invalid_kwargs = [key for key in kwargs if key not in valid_properties]
++            if invalid_kwargs:
++                raise ValueError(f"Invalid kwargs: {', '.join(invalid_kwargs)} are not valid Text properties. "
++                                 "This error occurred because 'labels' were not set. Kwargs are only valid if 'labels' are also provided.")
+         return result
+ 
+     def _get_tick_boxes_siblings(self, renderer):

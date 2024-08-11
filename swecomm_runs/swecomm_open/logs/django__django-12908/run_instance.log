@@ -1,0 +1,54 @@
+2024-08-04 16:46:25,454 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-12908
+Building instance image sweb.eval.x86_64.django__django-12908:latest for django__django-12908
+2024-08-04 16:46:25,456 - INFO - Image sweb.eval.x86_64.django__django-12908:latest already exists, skipping build.
+2024-08-04 16:46:25,456 - INFO - Creating container for django__django-12908...
+2024-08-04 16:46:25,489 - INFO - Container for django__django-12908 created: a4be88bbb5816a31f8191549c39e465b808ee0d4bb47053f30f8db1ef58d9c71
+2024-08-04 16:46:25,960 - INFO - Container for django__django-12908 started: a4be88bbb5816a31f8191549c39e465b808ee0d4bb47053f30f8db1ef58d9c71
+2024-08-04 16:46:25,960 - INFO - Intermediate patch for django__django-12908 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-12908/patch.diff, now applying to container...
+2024-08-04 16:46:26,138 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:46:26,182 - INFO - >>>>> Applied Patch:
+patching file django/db/models/.backup.query.py
+patching file django/db/models/query.py
+patching file sample_app/__init__.py
+patching file sample_app/models.py
+patching file sample_app/tests/test_union_distinct.py
+patching file tests/queries/.backup.test_union_distinct.py
+patching file tests/test_settings.py
+
+2024-08-04 16:46:28,723 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index e0eeccefa6..df42c5d43c 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1140,6 +1140,8 @@ class QuerySet:
+         """
+         assert not self.query.is_sliced, \
+             "Cannot create distinct fields once a slice has been taken."
++        if self.query.combinator:
++            raise NotImplementedError("distinct() is not supported on combined queries.")
+         obj = self._chain()
+         obj.query.add_distinct_fields(*field_names)
+         return obj
+2024-08-04 16:46:28,724 - INFO - Eval script for django__django-12908 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-12908/eval.sh; copying to container...
+2024-08-04 16:46:35,581 - INFO - Test runtime: 6.72 seconds
+2024-08-04 16:46:35,581 - INFO - Test output for django__django-12908 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-12908/test_output.txt
+2024-08-04 16:46:35,625 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index e0eeccefa6..df42c5d43c 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1140,6 +1140,8 @@ class QuerySet:
+         """
+         assert not self.query.is_sliced, \
+             "Cannot create distinct fields once a slice has been taken."
++        if self.query.combinator:
++            raise NotImplementedError("distinct() is not supported on combined queries.")
+         obj = self._chain()
+         obj.query.add_distinct_fields(*field_names)
+         return obj
+2024-08-04 16:46:35,625 - INFO - Grading answer for django__django-12908...
+2024-08-04 16:46:35,628 - INFO - report: {'django__django-12908': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_unsupported_operations_on_combined_qs (queries.test_qs_combinators.QuerySetSetOperationTests)'], 'failure': ['test_unsupported_ordering_slicing_raises_db_error (queries.test_qs_combinators.QuerySetSetOperationTests)']}, 'PASS_TO_PASS': {'success': ['test_combining_multiple_models (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_count_difference (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_count_intersection (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_count_union (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_count_union_empty_result (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_difference_with_empty_qs (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_difference_with_values (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_intersection_with_empty_qs (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_intersection_with_values (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_limits (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_order_by_same_type (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_order_raises_on_non_selected_column (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_ordering (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_ordering_by_f_expression (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_qs_with_subcompound_qs (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_simple_difference (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_simple_intersection (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_simple_union (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_union_distinct (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_union_with_empty_qs (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_union_with_extra_and_values_list (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_union_with_two_annotated_values_list (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_union_with_values (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_union_with_values_list_and_order (queries.test_qs_combinators.QuerySetSetOperationTests)', 'test_union_with_values_list_on_annotated_and_unannotated (queries.test_qs_combinators.QuerySetSetOperationTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-12908: resolved: False
+2024-08-04 16:46:35,628 - INFO - Attempting to stop container sweb.eval.django__django-12908.swecomm_open...
+2024-08-04 16:46:50,979 - INFO - Attempting to remove container sweb.eval.django__django-12908.swecomm_open...
+2024-08-04 16:46:51,018 - INFO - Container sweb.eval.django__django-12908.swecomm_open removed.

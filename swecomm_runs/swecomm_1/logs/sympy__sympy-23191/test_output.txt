@@ -1,0 +1,1653 @@
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
++++++ dirname /opt/miniconda3/bin/conda
+++++ dirname /opt/miniconda3/bin
++++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1=
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   sympy/printing/pretty/pretty.py
+	modified:   sympy/vector/vector.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git show
+commit fa9b4b140ec0eaf75a62c1111131626ef0f6f524
+Merge: d5c95e27ee cffd6f72fa
+Author: Oscar Gustafsson <oscar.gustafsson@gmail.com>
+Date:   Wed Mar 2 14:45:42 2022 +0100
+
+    Merge pull request #23193 from asmeurer/mailmap_check-url
+    
+    Fix the URL printed by mailmap_check in the CI
+
++ git diff fa9b4b140ec0eaf75a62c1111131626ef0f6f524
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..e54dbf1dc4 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -2772,11 +2772,11 @@ def _print_CoordSystem(self, coords):
+ 
+     def _print_BaseScalarField(self, field):
+         string = field._coord_sys.symbols[field._index].name
+-        return self._print(pretty_symbol(string))
++        return prettyForm(pretty_symbol(string))
+ 
+     def _print_BaseVectorField(self, field):
+         s = U('PARTIAL DIFFERENTIAL') + '_' + field._coord_sys.symbols[field._index].name
+-        return self._print(pretty_symbol(s))
++        return prettyForm(pretty_symbol(s))
+ 
+     def _print_Differential(self, diff):
+         if self._use_unicode:
+@@ -2835,7 +2835,27 @@ def _print_AssignmentBase(self, e):
+ 
+     def _print_Str(self, s):
+         return self._print(s.name)
++    def _print_Vector(self, e):
++        from sympy.vector.vector import BaseVector
++        components = e.components
++        result = None
+ 
++        for vec, coef in components.items():
++            pform_coef = self._print(coef)
++            pform_vec = self._print(vec)
++
++            if isinstance(vec, BaseVector):
++                pform_vec = prettyForm(vec._pretty_form)
++
++            combined = prettyForm(*pform_coef.right(pform_vec))
++
++            if result is None:
++                result = combined
++            else:
++                result = prettyForm(*result.right(' + '))
++                result = prettyForm(*result.right(combined))
++
++        return result
+ 
+ @print_function(PrettyPrinter)
+ def pretty(expr, **settings):
+diff --git a/sympy/vector/vector.py b/sympy/vector/vector.py
+index 87320d0366..0362995f04 100644
+--- a/sympy/vector/vector.py
++++ b/sympy/vector/vector.py
+@@ -52,7 +52,7 @@ def components(self):
+         """
+         # The '_components' attribute is defined according to the
+         # subclass of Vector the instance belongs to.
+-        return self._components
++        return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+ 
+     def magnitude(self):
+         """
+@@ -271,7 +271,7 @@ def _projections(self):
+         from sympy.vector.operators import _get_coord_systems
+         if isinstance(self, VectorZero):
+             return (S.Zero, S.Zero, S.Zero)
+-        base_vec = next(iter(_get_coord_systems(self))).base_vectors()
++        base_vec = sorted(next(iter(_get_coord_systems(self))).base_vectors(), key=str)
+         return tuple([self.dot(i) for i in base_vec])
+ 
+     def __or__(self, other):
+@@ -354,9 +354,9 @@ class BaseVector(Vector, AtomicExpr):
+ 
+     def __new__(cls, index, system, pretty_str=None, latex_str=None):
+         if pretty_str is None:
+-            pretty_str = "x{}".format(index)
++            pretty_str = "{}_{}".format(system._vector_names[index], system._name)
+         if latex_str is None:
+-            latex_str = "x_{}".format(index)
++            latex_str = r"\mathbf{{{}}}_{{{}}}".format(system._vector_names[index], system._name)
+         pretty_str = str(pretty_str)
+         latex_str = str(latex_str)
+         # Verify arguments
+@@ -372,7 +372,7 @@ def __new__(cls, index, system, pretty_str=None, latex_str=None):
+         obj._components = {obj: S.One}
+         obj._measure_number = S.One
+         obj._name = system._name + '.' + name
+-        obj._pretty_form = '' + pretty_str
++        obj._pretty_form = pretty_str
+         obj._latex_form = latex_str
+         obj._system = system
+         # The _id is used for printing purposes
+@@ -392,11 +392,16 @@ def system(self):
+         return self._system
+ 
+     def _sympystr(self, printer):
+-        return self._name
++        components = self.components
++        terms = []
++        for base_vector, measure_number in components.items():
++            term = f"{printer._print(measure_number)}*{printer._print(base_vector)}"
++            terms.append(term)
++        return " + ".join(terms)
+ 
+     def _sympyrepr(self, printer):
+         index, system = self._id
+-        return printer._print(system) + '.' + system._vector_names[index]
++        return f"{printer._print(system)}.{system._vector_names[index]}"
+ 
+     @property
+     def free_symbols(self):
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z x ']'
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1='(testbed) '
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=3
++++ CONDA_SHLVL=3
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=4
+++ CONDA_SHLVL=4
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_3=/opt/miniconda3
+++ CONDA_PREFIX_3=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ python -m pip install -e .
+Obtaining file:///testbed
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Requirement already satisfied: mpmath>=0.19 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from sympy==1.11.dev0) (1.3.0)
+Installing collected packages: sympy
+  Attempting uninstall: sympy
+    Found existing installation: sympy 1.11.dev0
+    Uninstalling sympy-1.11.dev0:
+      Successfully uninstalled sympy-1.11.dev0
+  Running setup.py develop for sympy
+Successfully installed sympy-1.11.dev0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ git checkout fa9b4b140ec0eaf75a62c1111131626ef0f6f524 sympy/vector/tests/test_printing.py
+Updated 0 paths from 209d75a00c
++ git apply -v -
+Checking patch sympy/vector/tests/test_printing.py...
+Applied patch sympy/vector/tests/test_printing.py cleanly.
++ PYTHONWARNINGS=ignore::UserWarning,ignore::SyntaxWarning
++ bin/test -C --verbose sympy/vector/tests/test_printing.py
+============================= test process starts ==============================
+executable:         /opt/miniconda3/envs/testbed/bin/python  (3.9.19-final-0) [CPython]
+architecture:       64-bit
+cache:              no
+ground types:       python 
+numpy:              None
+random seed:        16558828
+hash randomization: on (PYTHONHASHSEED=3973108494)
+
+E
+________________________________________________________________________________
+________________________________________________________________________________
+Traceback (most recent call last):
+  File "/testbed/sympy/vector/tests/test_printing.py", line 26, in <module>
+    C = N.orient_new_axis('C', a, N.k)  # type: ignore
+  File "/testbed/sympy/vector/coordsysrect.py", line 773, in orient_new_axis
+    return self.orient_new(name, orienter,
+  File "/testbed/sympy/vector/coordsysrect.py", line 705, in orient_new
+    final_matrix = orienters.rotation_matrix(self)
+  File "/testbed/sympy/vector/orienters.py", line 84, in rotation_matrix
+    axis = sympy.vector.express(self.axis, system).normalize()
+  File "/testbed/sympy/vector/functions.py", line 88, in express
+    parts = expr.separate()
+  File "/testbed/sympy/vector/vector.py", line 332, in separate
+    for vect, measure in self.components.items():
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/vector/vector.py", line 55, in <lambda>
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+  File "/testbed/sympy/core/_print_helpers.py", line 29, in __str__
+    return sstr(self, order=None)
+  File "/testbed/sympy/printing/printer.py", line 372, in __call__
+    return self.__wrapped__(*args, **kwargs)
+  File "/testbed/sympy/printing/str.py", line 1001, in sstr
+    s = p.doprint(expr)
+  File "/testbed/sympy/printing/printer.py", line 292, in doprint
+    return self._str(self._print(expr))
+  File "/testbed/sympy/printing/printer.py", line 309, in _print
+    return getattr(expr, self.printmethod)(self, **kwargs)
+  File "/testbed/sympy/vector/vector.py", line 395, in _sympystr
+    components = self.components
+  File "/testbed/sympy/vector/vector.py", line 55, in components
+    return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+RecursionError: maximum recursion depth exceeded while calling a Python object
+
+=========== tests finished: 0 passed, 1 exceptions, in 0.19 seconds ============
+DO *NOT* COMMIT!
++ git checkout fa9b4b140ec0eaf75a62c1111131626ef0f6f524 sympy/vector/tests/test_printing.py
+Updated 1 path from 209d75a00c

@@ -1,0 +1,2 @@
+python swecomm.py swecomm_open --model bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0 \
+ --subs_to_eval 20240523_aider,20240623_moatless_claude35sonnet,20240630_agentless_gpt4o,20240725_opendevin_codeact_v1.8_claude35sonnet

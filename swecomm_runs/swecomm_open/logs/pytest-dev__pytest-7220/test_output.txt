@@ -1,0 +1,555 @@
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
++++++ dirname /opt/miniconda3/bin/conda
+++++ dirname /opt/miniconda3/bin
++++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1=
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/_pytest/_code/code.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git show
+commit 56bf819c2f4eaf8b36bd8c42c06bb59d5a3bfc0f
+Author: Bruno Oliveira <nicoddemus@gmail.com>
+Date:   Sat May 30 14:33:22 2020 -0300
+
+    Do not call TestCase.tearDown for skipped tests (#7236)
+    
+    Fix #7215
+
+diff --git a/changelog/7215.bugfix.rst b/changelog/7215.bugfix.rst
+new file mode 100644
+index 000000000..815149132
+--- /dev/null
++++ b/changelog/7215.bugfix.rst
+@@ -0,0 +1,2 @@
++Fix regression where running with ``--pdb`` would call the ``tearDown`` methods of ``unittest.TestCase``
++subclasses for skipped tests.
+diff --git a/src/_pytest/unittest.py b/src/_pytest/unittest.py
+index 773f545af..0d9133f60 100644
+--- a/src/_pytest/unittest.py
++++ b/src/_pytest/unittest.py
+@@ -41,7 +41,7 @@ class UnitTestCase(Class):
+         if not getattr(cls, "__test__", True):
+             return
+ 
+-        skipped = getattr(cls, "__unittest_skip__", False)
++        skipped = _is_skipped(cls)
+         if not skipped:
+             self._inject_setup_teardown_fixtures(cls)
+             self._inject_setup_class_fixture()
+@@ -89,7 +89,7 @@ def _make_xunit_fixture(obj, setup_name, teardown_name, scope, pass_self):
+ 
+     @pytest.fixture(scope=scope, autouse=True)
+     def fixture(self, request):
+-        if getattr(self, "__unittest_skip__", None):
++        if _is_skipped(self):
+             reason = self.__unittest_skip_why__
+             pytest.skip(reason)
+         if setup is not None:
+@@ -220,7 +220,7 @@ class TestCaseFunction(Function):
+             # arguably we could always postpone tearDown(), but this changes the moment where the
+             # TestCase instance interacts with the results object, so better to only do it
+             # when absolutely needed
+-            if self.config.getoption("usepdb"):
++            if self.config.getoption("usepdb") and not _is_skipped(self.obj):
+                 self._explicit_tearDown = self._testcase.tearDown
+                 setattr(self._testcase, "tearDown", lambda *args: None)
+ 
+@@ -301,3 +301,8 @@ def check_testcase_implements_trial_reporter(done=[]):
+ 
+     classImplements(TestCaseFunction, IReporter)
+     done.append(1)
++
++
++def _is_skipped(obj) -> bool:
++    """Return True if the given object has been marked with @unittest.skip"""
++    return bool(getattr(obj, "__unittest_skip__", False))
+diff --git a/testing/test_unittest.py b/testing/test_unittest.py
+index 83f1b6b2a..74a36c41b 100644
+--- a/testing/test_unittest.py
++++ b/testing/test_unittest.py
+@@ -1193,6 +1193,40 @@ def test_pdb_teardown_called(testdir, monkeypatch):
+     ]
+ 
+ 
++@pytest.mark.parametrize("mark", ["@unittest.skip", "@pytest.mark.skip"])
++def test_pdb_teardown_skipped(testdir, monkeypatch, mark):
++    """
++    With --pdb, setUp and tearDown should not be called for skipped tests.
++    """
++    tracked = []
++    monkeypatch.setattr(pytest, "test_pdb_teardown_skipped", tracked, raising=False)
++
++    testdir.makepyfile(
++        """
++        import unittest
++        import pytest
++
++        class MyTestCase(unittest.TestCase):
++
++            def setUp(self):
++                pytest.test_pdb_teardown_skipped.append("setUp:" + self.id())
++
++            def tearDown(self):
++                pytest.test_pdb_teardown_skipped.append("tearDown:" + self.id())
++
++            {mark}("skipped for reasons")
++            def test_1(self):
++                pass
++
++    """.format(
++            mark=mark
++        )
++    )
++    result = testdir.runpytest_inprocess("--pdb")
++    result.stdout.fnmatch_lines("* 1 skipped in *")
++    assert tracked == []
++
++
+ def test_async_support(testdir):
+     pytest.importorskip("unittest.async_case")
+ 
++ git diff 56bf819c2f4eaf8b36bd8c42c06bb59d5a3bfc0f
+diff --git a/src/_pytest/_code/code.py b/src/_pytest/_code/code.py
+index 7b17d7612..9ceca1901 100644
+--- a/src/_pytest/_code/code.py
++++ b/src/_pytest/_code/code.py
+@@ -776,7 +776,7 @@ class FormattedExcinfo:
+             else:
+                 message = excinfo and excinfo.typename or ""
+             path = self._makepath(entry.path)
+-            reprfileloc = ReprFileLocation(path, entry.lineno + 1, message)
++            reprfileloc = ReprFileLocation(path, entry.lineno + 1, message, original_path=entry.path)
+             localsrepr = self.repr_locals(entry.locals)
+             return ReprEntry(lines, reprargs, localsrepr, reprfileloc, style)
+         elif style == "value":
+@@ -1107,6 +1107,7 @@ class ReprFileLocation(TerminalRepr):
+     path = attr.ib(type=str, converter=str)
+     lineno = attr.ib(type=int)
+     message = attr.ib(type=str)
++    original_path = attr.ib(type=str, default=None)
+ 
+     def toterminal(self, tw: TerminalWriter) -> None:
+         # filename and lineno output for each entry,
+@@ -1115,7 +1116,8 @@ class ReprFileLocation(TerminalRepr):
+         i = msg.find("\n")
+         if i != -1:
+             msg = msg[:i]
+-        tw.write(self.path, bold=True, red=True)
++        display_path = self.original_path if self.original_path is not None else self.path
++        tw.write(display_path, bold=True, red=True)
+         tw.line(":{}: {}".format(self.lineno, msg))
+ 
+ 
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z x ']'
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1='(testbed) '
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=3
++++ CONDA_SHLVL=3
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=4
+++ CONDA_SHLVL=4
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_3=/opt/miniconda3
+++ CONDA_PREFIX_3=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ python -m pip install -e .
+Obtaining file:///testbed
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: py>=1.5.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev380+g56bf819c2.d20240804) (1.11.0)
+Requirement already satisfied: packaging in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev380+g56bf819c2.d20240804) (23.1)
+Requirement already satisfied: attrs>=17.4.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev380+g56bf819c2.d20240804) (23.1.0)
+Requirement already satisfied: more-itertools>=4.0.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev380+g56bf819c2.d20240804) (10.1.0)
+Requirement already satisfied: pluggy<1.0,>=0.12 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev380+g56bf819c2.d20240804) (0.13.1)
+Requirement already satisfied: wcwidth in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev380+g56bf819c2.d20240804) (0.2.13)
+Building wheels for collected packages: pytest
+  Building editable for pytest (pyproject.toml): started
+  Building editable for pytest (pyproject.toml): finished with status 'done'
+  Created wheel for pytest: filename=pytest-5.4.1.dev380+g56bf819c2.d20240804-0.editable-py3-none-any.whl size=8138 sha256=3e4e9468ef9eed23505019b8e83d1cc78af4197e4775d9306eb64034967d5a25
+  Stored in directory: /tmp/pip-ephem-wheel-cache-0ws_feit/wheels/7d/66/67/70d1ee2124ccf21d601c352e25cdca10f611f7c8b3f9ffb9e4
+Successfully built pytest
+Installing collected packages: pytest
+  Attempting uninstall: pytest
+    Found existing installation: pytest 5.4.1.dev380+g56bf819c2
+    Uninstalling pytest-5.4.1.dev380+g56bf819c2:
+      Successfully uninstalled pytest-5.4.1.dev380+g56bf819c2
+Successfully installed pytest-5.4.1.dev380+g56bf819c2.d20240804
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ git checkout 56bf819c2f4eaf8b36bd8c42c06bb59d5a3bfc0f testing/test_nodes.py
+Updated 0 paths from 817d02661
++ git apply -v -
+Checking patch testing/test_nodes.py...
+Applied patch testing/test_nodes.py cleanly.
++ pytest -rA testing/test_nodes.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.19, pytest-5.4.1.dev380+g56bf819c2.d20240804, py-1.11.0, pluggy-0.13.1
+rootdir: /testbed, inifile: tox.ini
+collected 12 items
+
+testing/test_nodes.py ...........F                                       [100%]
+
+=================================== FAILURES ===================================
+________________________ test_failure_with_changed_cwd _________________________
+
+testdir = <Testdir local('/tmp/pytest-of-root/pytest-0/test_failure_with_changed_cwd0')>
+
+    def test_failure_with_changed_cwd(testdir):
+        """
+        Test failure lines should use absolute paths if cwd has changed since
+        invocation, so the path is correct (#6428).
+        """
+        p = testdir.makepyfile(
+            """
+            import os
+            import pytest
+    
+            @pytest.fixture
+            def private_dir():
+                out_dir = 'ddd'
+                os.mkdir(out_dir)
+                old_dir = os.getcwd()
+                os.chdir(out_dir)
+                yield out_dir
+                os.chdir(old_dir)
+    
+            def test_show_wrong_path(private_dir):
+                assert False
+        """
+        )
+        result = testdir.runpytest()
+>       result.stdout.fnmatch_lines([str(p) + ":*: AssertionError", "*1 failed in *"])
+E       Failed: nomatch: '/tmp/pytest-of-root/pytest-0/test_failure_with_changed_cwd0/test_failure_with_changed_cwd.py:*: AssertionError'
+E           and: '============================= test session starts =============================='
+E           and: 'platform linux -- Python 3.9.19, pytest-5.4.1.dev380+g56bf819c2.d20240804, py-1.11.0, pluggy-0.13.1'
+E           and: 'rootdir: /tmp/pytest-of-root/pytest-0/test_failure_with_changed_cwd0'
+E           and: 'collected 1 item'
+E           and: ''
+E           and: 'test_failure_with_changed_cwd.py F                                       [100%]'
+E           and: ''
+E           and: '=================================== FAILURES ==================================='
+E           and: '_____________________________ test_show_wrong_path _____________________________'
+E           and: ''
+E           and: "private_dir = 'ddd'"
+E           and: ''
+E           and: '    def test_show_wrong_path(private_dir):'
+E           and: '>       assert False'
+E           and: 'E       assert False'
+E           and: ''
+E       remains unmatched: '/tmp/pytest-of-root/pytest-0/test_failure_with_changed_cwd0/test_failure_with_changed_cwd.py:*: AssertionError'
+
+Traceback (most recent call last):
+  File "/opt/miniconda3/envs/testbed/bin/pytest", line 8, in <module>
+    sys.exit(console_main())
+  File "/testbed/src/_pytest/config/__init__.py", line 152, in console_main
+    code = main()
+  File "/testbed/src/_pytest/config/__init__.py", line 129, in main
+    ret = config.hook.pytest_cmdline_main(
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/hooks.py", line 286, in __call__
+    return self._hookexec(self, self.get_hookimpls(), kwargs)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/manager.py", line 93, in _hookexec
+    return self._inner_hookexec(hook, methods, kwargs)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/manager.py", line 84, in <lambda>
+    self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/callers.py", line 208, in _multicall
+    return outcome.get_result()
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/callers.py", line 80, in get_result
+    raise ex[1].with_traceback(ex[2])
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/callers.py", line 187, in _multicall
+    res = hook_impl.function(*args)
+  File "/testbed/src/_pytest/main.py", line 240, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "/testbed/src/_pytest/main.py", line 228, in wrap_session
+    config.hook.pytest_sessionfinish(
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/hooks.py", line 286, in __call__
+    return self._hookexec(self, self.get_hookimpls(), kwargs)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/manager.py", line 93, in _hookexec
+    return self._inner_hookexec(hook, methods, kwargs)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/manager.py", line 84, in <lambda>
+    self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/callers.py", line 203, in _multicall
+    gen.send(outcome)
+  File "/testbed/src/_pytest/terminal.py", line 733, in pytest_sessionfinish
+    self.config.hook.pytest_terminal_summary(
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/hooks.py", line 286, in __call__
+    return self._hookexec(self, self.get_hookimpls(), kwargs)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/manager.py", line 93, in _hookexec
+    return self._inner_hookexec(hook, methods, kwargs)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/manager.py", line 84, in <lambda>
+    self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/callers.py", line 208, in _multicall
+    return outcome.get_result()
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/callers.py", line 80, in get_result
+    raise ex[1].with_traceback(ex[2])
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pluggy/callers.py", line 182, in _multicall
+    next(gen)  # first yield
+  File "/testbed/src/_pytest/terminal.py", line 748, in pytest_terminal_summary
+    self.summary_failures()
+  File "/testbed/src/_pytest/terminal.py", line 933, in summary_failures
+    self._outrep_summary(rep)
+  File "/testbed/src/_pytest/terminal.py", line 952, in _outrep_summary
+    rep.toterminal(self._tw)
+  File "/testbed/src/_pytest/reports.py", line 65, in toterminal
+    longrepr.toterminal(out)
+  File "/testbed/src/_pytest/_code/code.py", line 961, in toterminal
+    element[0].toterminal(tw)
+  File "/testbed/src/_pytest/_code/code.py", line 991, in toterminal
+    entry.toterminal(tw)
+  File "/testbed/src/_pytest/_code/code.py", line 1097, in toterminal
+    self.reprfileloc.toterminal(tw)
+  File "/testbed/src/_pytest/_code/code.py", line 1120, in toterminal
+    tw.write(display_path, bold=True, red=True)
+  File "/testbed/src/_pytest/_io/terminalwriter.py", line 153, in write
+    current_line = msg.rsplit("\n", 1)[-1]
+AttributeError: 'LocalPath' object has no attribute 'rsplit'
++ git checkout 56bf819c2f4eaf8b36bd8c42c06bb59d5a3bfc0f testing/test_nodes.py
+Updated 1 path from 817d02661

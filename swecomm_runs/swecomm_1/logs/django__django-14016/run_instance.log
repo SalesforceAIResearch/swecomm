@@ -1,0 +1,62 @@
+2024-07-30 17:14:28,280 - INFO - Intermediate patch for django__django-14016 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:14:28,533 - INFO - >>>>> Applied Patch:
+Checking patch django/db/models/query_utils.py...
+Applied patch django/db/models/query_utils.py cleanly.
+
+2024-07-30 17:14:43,148 - INFO - Git diff before:
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index c2623f099f..b04219ea05 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -46,10 +46,18 @@ class Q(tree.Node):
+ 
+         # If the other Q() is empty, ignore it and just use `self`.
+         if not other:
+-            return copy.deepcopy(self)
++            obj = type(self)()
++            obj.connector = self.connector
++            obj.negated = self.negated
++            obj.children = self.children[:]
++            return obj
+         # Or if this Q is empty, ignore it and just use `other`.
+         elif not self:
+-            return copy.deepcopy(other)
++            obj = type(other)()
++            obj.connector = other.connector
++            obj.negated = other.negated
++            obj.children = other.children[:]
++            return obj
+ 
+         obj = type(self)()
+         obj.connector = conn
+2024-07-30 17:14:43,148 - INFO - Eval script for django__django-14016 written to /eval.sh
+2024-07-30 17:15:36,505 - INFO - Test runtime: 53.36 seconds
+2024-07-30 17:15:37,473 - INFO - Git diff after:
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index c2623f099f..b04219ea05 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -46,10 +46,18 @@ class Q(tree.Node):
+ 
+         # If the other Q() is empty, ignore it and just use `self`.
+         if not other:
+-            return copy.deepcopy(self)
++            obj = type(self)()
++            obj.connector = self.connector
++            obj.negated = self.negated
++            obj.children = self.children[:]
++            return obj
+         # Or if this Q is empty, ignore it and just use `other`.
+         elif not self:
+-            return copy.deepcopy(other)
++            obj = type(other)()
++            obj.connector = other.connector
++            obj.negated = other.negated
++            obj.children = other.children[:]
++            return obj
+ 
+         obj = type(self)()
+         obj.connector = conn
+2024-07-30 17:15:37,473 - INFO - Grading answer for django__django-14016...
+2024-07-30 17:15:37,555 - INFO - report: {'django__django-14016': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_combine_and_empty (queries.test_q.QTests)', 'test_combine_or_empty (queries.test_q.QTests)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_combine_and_both_empty (queries.test_q.QTests)', 'test_combine_not_q_object (queries.test_q.QTests)', 'test_combine_or_both_empty (queries.test_q.QTests)', 'test_deconstruct (queries.test_q.QTests)', 'test_deconstruct_and (queries.test_q.QTests)', 'test_deconstruct_multiple_kwargs (queries.test_q.QTests)', 'test_deconstruct_negated (queries.test_q.QTests)', 'test_deconstruct_nested (queries.test_q.QTests)', 'test_deconstruct_or (queries.test_q.QTests)', 'test_reconstruct (queries.test_q.QTests)', 'test_reconstruct_and (queries.test_q.QTests)', 'test_reconstruct_negated (queries.test_q.QTests)', 'test_reconstruct_or (queries.test_q.QTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-14016: resolved: True

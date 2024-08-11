@@ -1,0 +1,14 @@
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1160,6 +1160,11 @@
+         clone.negated = not self.negated
+         return clone
+ 
++    def __rand__(self, other):
++        if isinstance(other, Q):
++            return other.__and__(self)
++        return NotImplemented
++
+     def as_sql(self, compiler, connection, template=None, **extra_context):
+         query = self.query.exists(using=connection.alias)
+         sql, params = super().as_sql(

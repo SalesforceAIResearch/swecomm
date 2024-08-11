@@ -1,0 +1,1 @@
+pytest=8.3.2 # just needs this to make moatless tools working

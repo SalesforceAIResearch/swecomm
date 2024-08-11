@@ -1,0 +1,29 @@
+diff --git a/django/forms/utils.py b/django/forms/utils.py
+index 905babce4d..686efa0e09 100644
+--- a/django/forms/utils.py
++++ b/django/forms/utils.py
+@@ -5,6 +5,7 @@ from collections import UserList
+ from django.conf import settings
+ from django.core.exceptions import ValidationError
+ from django.forms.renderers import get_default_renderer
++from django.forms.formsets import ManagementForm
+ from django.utils import timezone
+ from django.utils.deprecation import RemovedInDjango50Warning
+ from django.utils.html import escape, format_html_join
+@@ -65,12 +66,11 @@ class RenderableMixin:
+         renderer = renderer or self.renderer
+         template = template_name or self.template_name
+         context = context or self.get_context()
+-        if (
+-            template == "django/forms/default.html"
+-            or template == "django/forms/formsets/default.html"
+-        ):
++        if (template == "django/forms/default.html" or template == "django/forms/formsets/default.html") and not isinstance(self, ManagementForm):  # Bypass deprecation warning for ManagementForm instances
+             warnings.warn(
+-                DEFAULT_TEMPLATE_DEPRECATION_MSG, RemovedInDjango50Warning, stacklevel=2
++                DEFAULT_TEMPLATE_DEPRECATION_MSG,
++                RemovedInDjango50Warning,
++                stacklevel=2,
+             )
+         return mark_safe(renderer.render(template, context))
+ 

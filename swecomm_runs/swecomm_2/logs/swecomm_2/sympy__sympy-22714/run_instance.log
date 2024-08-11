@@ -1,0 +1,90 @@
+2024-08-04 17:29:01,651 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-22714
+Building instance image sweb.eval.x86_64.sympy__sympy-22714:latest for sympy__sympy-22714
+2024-08-04 17:29:01,653 - INFO - Image sweb.eval.x86_64.sympy__sympy-22714:latest already exists, skipping build.
+2024-08-04 17:29:01,654 - INFO - Creating container for sympy__sympy-22714...
+2024-08-04 17:29:01,686 - INFO - Container for sympy__sympy-22714 created: 02915bf03c82d1620b23f4110cf4f2b2b6ff20fbddc621f742eace35cbce58f1
+2024-08-04 17:29:01,981 - INFO - Container for sympy__sympy-22714 started: 02915bf03c82d1620b23f4110cf4f2b2b6ff20fbddc621f742eace35cbce58f1
+2024-08-04 17:29:01,981 - INFO - Intermediate patch for sympy__sympy-22714 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-22714/patch.diff, now applying to container...
+2024-08-04 17:29:02,164 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:29:02,213 - INFO - >>>>> Applied Patch:
+patching file sympy/geometry/point.py
+
+2024-08-04 17:29:03,168 - INFO - Git diff before:
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 73c20334d0..5122e8eadc 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -150,11 +150,12 @@ def __new__(cls, *args, **kwargs):
+                 raise ValueError(filldedent('''
+                         on_morph value should be 'error',
+                         'warn' or 'ignore'.'''))
+-        if any(coords[dim:]):
++        if any(coords[dim:]):  # Check if there are nonzero coordinates beyond the specified dimension
+             raise ValueError('Nonzero coordinates cannot be removed.')
+-        if any(a.is_number and im(a) for a in coords):
+-            raise ValueError('Imaginary coordinates are not permitted.')
+-        if not all(isinstance(a, Expr) for a in coords):
++        if evaluate:  # Only check for imaginary coordinates if evaluate is True
++            if any(a.is_number and im(a) for a in coords):
++                raise ValueError('Imaginary coordinates are not permitted.')
++        if not all(isinstance(a, Expr) for a in coords):  # Ensure all coordinates are valid SymPy expressions
+             raise TypeError('Coordinates must be valid SymPy expressions.')
+ 
+         # pad with zeros appropriately
+@@ -162,10 +163,10 @@ def __new__(cls, *args, **kwargs):
+ 
+         # Turn any Floats into rationals and simplify
+         # any expressions before we instantiate
+-        if evaluate:
++        if evaluate:  # Only convert floats to rationals if evaluate is True
+             coords = coords.xreplace({
+                 f: simplify(nsimplify(f, rational=True))
+-                 for f in coords.atoms(Float)})
++                for f in coords.atoms(Float)})
+ 
+         # return 2D or 3D instances
+         if len(coords) == 2:
+2024-08-04 17:29:03,169 - INFO - Eval script for sympy__sympy-22714 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-22714/eval.sh; copying to container...
+2024-08-04 17:29:13,326 - INFO - Test runtime: 10.03 seconds
+2024-08-04 17:29:13,326 - INFO - Test output for sympy__sympy-22714 written to logs/run_evaluation/swecomm_2/swecomm_2/sympy__sympy-22714/test_output.txt
+2024-08-04 17:29:13,379 - INFO - Git diff after:
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 73c20334d0..5122e8eadc 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -150,11 +150,12 @@ def __new__(cls, *args, **kwargs):
+                 raise ValueError(filldedent('''
+                         on_morph value should be 'error',
+                         'warn' or 'ignore'.'''))
+-        if any(coords[dim:]):
++        if any(coords[dim:]):  # Check if there are nonzero coordinates beyond the specified dimension
+             raise ValueError('Nonzero coordinates cannot be removed.')
+-        if any(a.is_number and im(a) for a in coords):
+-            raise ValueError('Imaginary coordinates are not permitted.')
+-        if not all(isinstance(a, Expr) for a in coords):
++        if evaluate:  # Only check for imaginary coordinates if evaluate is True
++            if any(a.is_number and im(a) for a in coords):
++                raise ValueError('Imaginary coordinates are not permitted.')
++        if not all(isinstance(a, Expr) for a in coords):  # Ensure all coordinates are valid SymPy expressions
+             raise TypeError('Coordinates must be valid SymPy expressions.')
+ 
+         # pad with zeros appropriately
+@@ -162,10 +163,10 @@ def __new__(cls, *args, **kwargs):
+ 
+         # Turn any Floats into rationals and simplify
+         # any expressions before we instantiate
+-        if evaluate:
++        if evaluate:  # Only convert floats to rationals if evaluate is True
+             coords = coords.xreplace({
+                 f: simplify(nsimplify(f, rational=True))
+-                 for f in coords.atoms(Float)})
++                for f in coords.atoms(Float)})
+ 
+         # return 2D or 3D instances
+         if len(coords) == 2:
+2024-08-04 17:29:13,380 - INFO - Grading answer for sympy__sympy-22714...
+2024-08-04 17:29:13,381 - INFO - report: {'sympy__sympy-22714': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_issue_22684'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_point', 'test_point3D', 'test_Point2D', 'test_issue_9214', 'test_issue_11617', 'test_transform', 'test_concyclic_doctest_bug', 'test_arguments', 'test_unit', 'test_dot', 'test__normalize_dimension'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-22714: resolved: True
+2024-08-04 17:29:13,381 - INFO - Attempting to stop container sweb.eval.sympy__sympy-22714.swecomm_2...
+2024-08-04 17:29:28,629 - INFO - Attempting to remove container sweb.eval.sympy__sympy-22714.swecomm_2...
+2024-08-04 17:29:28,661 - INFO - Container sweb.eval.sympy__sympy-22714.swecomm_2 removed.

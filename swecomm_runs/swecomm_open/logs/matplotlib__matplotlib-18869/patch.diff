@@ -1,0 +1,22 @@
+diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
+index b657a35cf7..da5918d0e2 100644
+--- a/lib/matplotlib/__init__.py
++++ b/lib/matplotlib/__init__.py
+@@ -130,7 +130,17 @@ __bibtex__ = r"""@Article{Hunter:2007,
+ }"""
+ 
+ 
++from distutils.version import LooseVersion
++
++__version__ = _version.version
++version_info = tuple(map(int, __version__.split('.')[:3]))
++__loose_version__ = LooseVersion(__version__)
++
+ def __getattr__(name):
++    if name == "version_info":
++        return version_info
++    if name == "__loose_version__":
++        return __loose_version__
+     if name == "__version__":
+         import setuptools_scm
+         global __version__  # cache it.

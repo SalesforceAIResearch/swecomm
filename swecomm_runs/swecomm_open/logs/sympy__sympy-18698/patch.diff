@@ -1,0 +1,20 @@
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index c9e77a901f..7070b9ff03 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -5879,13 +5879,11 @@ def _sorted_factors(factors, method):
+     if method == 'sqf':
+         def key(obj):
+             poly, exp = obj
+-            rep = poly.rep.rep
+-            return (exp, len(rep), len(poly.gens), rep)
++            return (exp, poly.degree(), len(poly.gens), poly.rep.rep)
+     else:
+         def key(obj):
+             poly, exp = obj
+-            rep = poly.rep.rep
+-            return (len(rep), len(poly.gens), exp, rep)
++            return (poly.degree(), len(poly.gens), exp, poly.rep.rep)
+ 
+     return sorted(factors, key=key)
+ 

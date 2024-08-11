@@ -1,0 +1,13 @@
+diff --git a/sympy/simplify/simplify.py b/sympy/simplify/simplify.py
+index f1609aa908..7fbcaa5df0 100644
+--- a/sympy/simplify/simplify.py
++++ b/sympy/simplify/simplify.py
+@@ -561,6 +561,8 @@ def shorter(*choices):
+ 
+     expr = piecewise_fold(expr)
+ 
++    expr = expr.collect(expr.free_symbols)
++
+     if expr.has(BesselBase):
+         expr = besselsimp(expr)
+ 

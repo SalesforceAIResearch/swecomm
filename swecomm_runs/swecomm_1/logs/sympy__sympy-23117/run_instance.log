@@ -1,0 +1,40 @@
+2024-07-30 17:16:08,866 - INFO - Intermediate patch for sympy__sympy-23117 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:16:09,066 - INFO - >>>>> Applied Patch:
+Checking patch sympy/tensor/array/ndim_array.py...
+Applied patch sympy/tensor/array/ndim_array.py cleanly.
+
+2024-07-30 17:16:15,230 - INFO - Git diff before:
+diff --git a/sympy/tensor/array/ndim_array.py b/sympy/tensor/array/ndim_array.py
+index 6490a655a4..b627027e2a 100644
+--- a/sympy/tensor/array/ndim_array.py
++++ b/sympy/tensor/array/ndim_array.py
+@@ -194,6 +194,9 @@ def f(pointer):
+             if not isinstance(pointer, Iterable):
+                 return [pointer], ()
+ 
++            if len(pointer) == 0:
++                return [], (0,)
++
+             result = []
+             elems, shapes = zip(*[f(i) for i in pointer])
+             if len(set(shapes)) != 1:
+2024-07-30 17:16:15,230 - INFO - Eval script for sympy__sympy-23117 written to /eval.sh
+2024-07-30 17:17:11,695 - INFO - Test runtime: 56.46 seconds
+2024-07-30 17:17:12,062 - INFO - Git diff after:
+diff --git a/sympy/tensor/array/ndim_array.py b/sympy/tensor/array/ndim_array.py
+index 6490a655a4..b627027e2a 100644
+--- a/sympy/tensor/array/ndim_array.py
++++ b/sympy/tensor/array/ndim_array.py
+@@ -194,6 +194,9 @@ def f(pointer):
+             if not isinstance(pointer, Iterable):
+                 return [pointer], ()
+ 
++            if len(pointer) == 0:
++                return [], (0,)
++
+             result = []
+             elems, shapes = zip(*[f(i) for i in pointer])
+             if len(set(shapes)) != 1:
+2024-07-30 17:17:12,062 - INFO - Grading answer for sympy__sympy-23117...
+2024-07-30 17:17:12,064 - INFO - report: {'sympy__sympy-23117': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_issue_17851'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_array_negative_indices', 'test_issue_18361', 'test_issue_20222'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-23117: resolved: True

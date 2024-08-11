@@ -1,0 +1,66 @@
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 09e2b00735..4368a13947 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -28,6 +28,7 @@
+     annotated
+ 
+ from sympy.utilities import default_sort_key
++from sympy.vector.vector import Vector, BaseVector, VectorAdd, VectorMul, VectorZero
+ 
+ # rename for usage from outside
+ pprint_use_unicode = pretty_use_unicode
+@@ -2256,6 +2257,24 @@ def _print_Differential(self, diff):
+             pform = prettyForm(*pform.parens())
+             return prettyForm(*pform.left(u"\N{DOUBLE-STRUCK ITALIC SMALL D}"))
+ 
++    def _print_Vector(self, e):
++        pform = self._print(e.args[0])
++        pform = prettyForm(*pform.parens())
++        pform.baseline = pform.height() // 2
++        return pform
++
++    def _print_BaseVector(self, e):
++        return prettyForm(e._pretty_form)
++
++    def _print_VectorAdd(self, e):
++        return self._print_Add(e)
++
++    def _print_VectorMul(self, e):
++        return self._print_Mul(e)
++
++    def _print_VectorZero(self, e):
++        return prettyForm('0')
++
+     def _print_Tr(self, p):
+         #TODO: Handle indices
+         pform = self._print(p.args[0])
+diff --git a/sympy/vector/vector.py b/sympy/vector/vector.py
+index c62b1dbf0d..706526f635 100755
+--- a/sympy/vector/vector.py
++++ b/sympy/vector/vector.py
+@@ -2,7 +2,9 @@
+ from sympy.core import S, Pow, sympify
+ from sympy.core.expr import AtomicExpr, Expr
+ from sympy.core.compatibility import range, default_sort_key
+-from sympy import sqrt, ImmutableMatrix as Matrix, Add
++from math import sqrt
++from sympy.matrices import ImmutableMatrix as Matrix
++from sympy import Add
+ from sympy.vector.coordsysrect import CoordSys3D
+ from sympy.vector.basisdependent import (BasisDependent, BasisDependentAdd,
+                                          BasisDependentMul, BasisDependentZero)
+@@ -371,6 +373,13 @@ def system(self):
+     def __str__(self, printer=None):
+         return self._name
+ 
++    def _pretty(self, printer, *args):
++        from sympy.printing.pretty.stringpict import prettyForm
++        return prettyForm(self._pretty_form)
++
++    def _latex(self, printer, *args):
++        return self._latex_form
++
+     @property
+     def free_symbols(self):
+         return {self}

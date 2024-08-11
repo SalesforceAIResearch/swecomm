@@ -1,0 +1,37 @@
+diff --git a/sklearn/neighbors/base.py b/sklearn/neighbors/base.py
+index 3e5e729c2..67f13d601 100644
+--- a/sklearn/neighbors/base.py
++++ b/sklearn/neighbors/base.py
+@@ -24,6 +24,7 @@ from ..externals import six
+ from ..externals.joblib import Parallel, delayed
+ from ..exceptions import NotFittedError
+ from ..exceptions import DataConversionWarning
++import numbers
+ 
+ VALID_METRICS = dict(ball_tree=BallTree.valid_metrics,
+                      kd_tree=KDTree.valid_metrics,
+@@ -107,6 +108,12 @@ class NeighborsBase(six.with_metaclass(ABCMeta, BaseEstimator)):
+                  algorithm='auto', leaf_size=30, metric='minkowski',
+                  p=2, metric_params=None, n_jobs=1):
+ 
++        if n_neighbors is not None:
++            if not isinstance(n_neighbors, numbers.Integral):
++                raise TypeError(
++                    "n_neighbors does not take %s value, "
++                    "enter integer value" %
++                    type(n_neighbors))
+         self.n_neighbors = n_neighbors
+         self.radius = radius
+         self.algorithm = algorithm
+@@ -327,6 +334,11 @@ class KNeighborsMixin(object):
+ 
+         if n_neighbors is None:
+             n_neighbors = self.n_neighbors
++        elif not isinstance(n_neighbors, numbers.Integral):
++            raise TypeError(
++                "n_neighbors does not take %s value, "
++                "enter integer value" %
++                type(n_neighbors))
+ 
+         if X is not None:
+             query_is_train = False

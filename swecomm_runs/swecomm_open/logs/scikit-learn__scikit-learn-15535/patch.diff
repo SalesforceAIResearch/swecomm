@@ -1,0 +1,31 @@
+diff --git a/sklearn/metrics/cluster/_supervised.py b/sklearn/metrics/cluster/_supervised.py
+index 4bddae35c..91c57d15e 100644
+--- a/sklearn/metrics/cluster/_supervised.py
++++ b/sklearn/metrics/cluster/_supervised.py
+@@ -589,12 +589,11 @@ def mutual_info_score(labels_true, labels_pred, contingency=None):
+ 
+     Parameters
+     ----------
+-    labels_true : int array, shape = [n_samples]
++    labels_true : array-like of shape (n_samples,)
+         A clustering of the data into disjoint subsets.
+ 
+-    labels_pred : int array-like of shape (n_samples,)
++    labels_pred : array-like of shape (n_samples,)
+         A clustering of the data into disjoint subsets.
+-
+     contingency : {None, array, sparse matrix}, \
+                   shape = [n_classes_true, n_classes_pred]
+         A contingency matrix given by the :func:`contingency_matrix` function.
+@@ -617,6 +616,11 @@ def mutual_info_score(labels_true, labels_pred, contingency=None):
+     """
+     if contingency is None:
+         labels_true, labels_pred = check_clusterings(labels_true, labels_pred)
++        # Convert string labels to integers
++        if labels_true.dtype.kind in {'U', 'S'}:
++            _, labels_true = np.unique(labels_true, return_inverse=True)
++        if labels_pred.dtype.kind in {'U', 'S'}:
++            _, labels_pred = np.unique(labels_pred, return_inverse=True)
+         contingency = contingency_matrix(labels_true, labels_pred, sparse=True)
+     else:
+         contingency = check_array(contingency,

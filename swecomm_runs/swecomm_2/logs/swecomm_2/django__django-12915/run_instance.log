@@ -1,0 +1,54 @@
+2024-08-04 17:23:37,569 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-12915
+Building instance image sweb.eval.x86_64.django__django-12915:latest for django__django-12915
+2024-08-04 17:23:37,572 - INFO - Image sweb.eval.x86_64.django__django-12915:latest already exists, skipping build.
+2024-08-04 17:23:37,572 - INFO - Creating container for django__django-12915...
+2024-08-04 17:23:37,604 - INFO - Container for django__django-12915 created: 19fdf7ef12ed59b2f24868772a239aaba1f3b3c2aa2e58fd1af70b693c6b29ed
+2024-08-04 17:23:38,404 - INFO - Container for django__django-12915 started: 19fdf7ef12ed59b2f24868772a239aaba1f3b3c2aa2e58fd1af70b693c6b29ed
+2024-08-04 17:23:38,404 - INFO - Intermediate patch for django__django-12915 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-12915/patch.diff, now applying to container...
+2024-08-04 17:23:38,616 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:23:38,663 - INFO - >>>>> Applied Patch:
+patching file django/contrib/staticfiles/handlers.py
+
+2024-08-04 17:23:40,909 - INFO - Git diff before:
+diff --git a/django/contrib/staticfiles/handlers.py b/django/contrib/staticfiles/handlers.py
+index 711d8864ad..535a94a169 100644
+--- a/django/contrib/staticfiles/handlers.py
++++ b/django/contrib/staticfiles/handlers.py
+@@ -86,3 +86,11 @@ class ASGIStaticFilesHandler(StaticFilesHandlerMixin, ASGIHandler):
+             return await super().__call__(scope, receive, send)
+         # Hand off to the main app
+         return await self.application(scope, receive, send)
++
++    async def get_response_async(self, request):
++        """
++        Asynchronously get a response for a given request.
++        """
++        if self._should_handle(request.path_info):
++            return await self.serve(request)
++        return await super().get_response_async(request)
+2024-08-04 17:23:40,909 - INFO - Eval script for django__django-12915 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-12915/eval.sh; copying to container...
+2024-08-04 17:23:51,119 - INFO - Test runtime: 10.06 seconds
+2024-08-04 17:23:51,119 - INFO - Test output for django__django-12915 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-12915/test_output.txt
+2024-08-04 17:23:51,164 - INFO - Git diff after:
+diff --git a/django/contrib/staticfiles/handlers.py b/django/contrib/staticfiles/handlers.py
+index 711d8864ad..535a94a169 100644
+--- a/django/contrib/staticfiles/handlers.py
++++ b/django/contrib/staticfiles/handlers.py
+@@ -86,3 +86,11 @@ class ASGIStaticFilesHandler(StaticFilesHandlerMixin, ASGIHandler):
+             return await super().__call__(scope, receive, send)
+         # Hand off to the main app
+         return await self.application(scope, receive, send)
++
++    async def get_response_async(self, request):
++        """
++        Asynchronously get a response for a given request.
++        """
++        if self._should_handle(request.path_info):
++            return await self.serve(request)
++        return await super().get_response_async(request)
+2024-08-04 17:23:51,164 - INFO - Grading answer for django__django-12915...
+2024-08-04 17:23:51,166 - INFO - report: {'django__django-12915': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_get_async_response (staticfiles_tests.test_handlers.TestASGIStaticFilesHandler)', 'test_get_async_response_not_found (staticfiles_tests.test_handlers.TestASGIStaticFilesHandler)', 'test_static_file_response (asgi.tests.ASGITest)']}, 'PASS_TO_PASS': {'success': ['test_disconnect (asgi.tests.ASGITest)', 'test_file_response (asgi.tests.ASGITest)', 'test_get_asgi_application (asgi.tests.ASGITest)', 'test_get_query_string (asgi.tests.ASGITest)', 'test_headers (asgi.tests.ASGITest)', 'test_non_unicode_query_string (asgi.tests.ASGITest)', 'test_request_lifecycle_signals_dispatched_with_thread_sensitive (asgi.tests.ASGITest)', 'test_wrong_connection_type (asgi.tests.ASGITest)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-12915: resolved: False
+2024-08-04 17:23:51,167 - INFO - Attempting to stop container sweb.eval.django__django-12915.swecomm_2...
+2024-08-04 17:24:06,747 - INFO - Attempting to remove container sweb.eval.django__django-12915.swecomm_2...
+2024-08-04 17:24:06,791 - INFO - Container sweb.eval.django__django-12915.swecomm_2 removed.

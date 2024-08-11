@@ -1,0 +1,33 @@
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -86,9 +86,10 @@
+         """Receives a Response. Returns a generator of Responses."""
+ 
+         i = 0
++        current_request = req
+ 
+         while resp.is_redirect:
+-            prepared_request = req.copy()
++            prepared_request = current_request.copy()
+ 
+             resp.content  # Consume socket so it can be released
+ 
+@@ -99,7 +100,7 @@
+             resp.close()
+ 
+             url = resp.headers['location']
+-            method = req.method
++            method = prepared_request.method
+ 
+             # Handle redirection without scheme (see: RFC 1808 Section 4)
+             if url.startswith('//'):
+@@ -182,6 +183,9 @@
+ 
+             i += 1
+             yield resp
++            
++            # Update current_request for the next iteration
++            current_request = prepared_request
+ 
+ 
+ class Session(SessionRedirectMixin):

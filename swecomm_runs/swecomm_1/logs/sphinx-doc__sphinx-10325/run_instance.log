@@ -1,0 +1,126 @@
+2024-07-30 17:16:12,154 - INFO - Intermediate patch for sphinx-doc__sphinx-10325 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:16:12,446 - INFO - >>>>> Applied Patch:
+Checking patch sphinx/ext/autodoc/__init__.py...
+Applied patch sphinx/ext/autodoc/__init__.py cleanly.
+
+2024-07-30 17:16:16,106 - INFO - Git diff before:
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 62631f7ff..12e15ff15 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -110,11 +110,15 @@ def exclude_members_option(arg: Any) -> Union[object, Set[str]]:
+ 
+ 
+ def inherited_members_option(arg: Any) -> Union[object, Set[str]]:
+-    """Used to convert the :members: option to auto directives."""
++    """Used to convert the :inherited-members: option to auto directives."""
+     if arg in (None, True):
+-        return 'object'
++        return ALL
++    elif isinstance(arg, str):
++        return {arg.strip()}
++    elif isinstance(arg, list):
++        return {x.strip() for x in arg if x.strip()}
+     else:
+-        return arg
++        raise ValueError(__('invalid value for inherited-members option: %s') % arg)
+ 
+ 
+ def member_order_option(arg: Any) -> Optional[str]:
+@@ -1710,10 +1714,20 @@ class ClassDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # type:
+                                    (name, self.fullname), type='autodoc')
+             return False, selected
+         elif self.options.inherited_members:
++            if isinstance(self.options.inherited_members, set):
++                return False, self.filter_inherited_members(list(members.values()), self.options.inherited_members)
+             return False, list(members.values())
+         else:
+             return False, [m for m in members.values() if m.class_ == self.object]
+ 
++    def filter_inherited_members(self, members: List[ObjectMember], allowed_bases: Set[str]) -> List[ObjectMember]:
++        """Filter members to include only those inherited from the specified base classes."""
++        filtered_members = []
++        for member in members:
++            if member.class_ and member.class_.__name__ in allowed_bases:
++                filtered_members.append(member)
++        return filtered_members
++
+     def get_doc(self, ignore: int = None) -> Optional[List[List[str]]]:
+         if self.doc_as_attr:
+             # Don't show the docstring of the class when it is an alias.
+diff --git a/tox.ini b/tox.ini
+index f0afd779b..30ca90275 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -28,7 +28,7 @@ setenv =
+     PYTHONWARNINGS = all
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -m pytest --durations 25 {posargs}
++    python -X dev -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:du-latest]
+ commands =
+2024-07-30 17:16:16,106 - INFO - Eval script for sphinx-doc__sphinx-10325 written to /eval.sh
+2024-07-30 17:17:11,765 - INFO - Test runtime: 55.66 seconds
+2024-07-30 17:17:12,138 - INFO - Git diff after:
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 62631f7ff..12e15ff15 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -110,11 +110,15 @@ def exclude_members_option(arg: Any) -> Union[object, Set[str]]:
+ 
+ 
+ def inherited_members_option(arg: Any) -> Union[object, Set[str]]:
+-    """Used to convert the :members: option to auto directives."""
++    """Used to convert the :inherited-members: option to auto directives."""
+     if arg in (None, True):
+-        return 'object'
++        return ALL
++    elif isinstance(arg, str):
++        return {arg.strip()}
++    elif isinstance(arg, list):
++        return {x.strip() for x in arg if x.strip()}
+     else:
+-        return arg
++        raise ValueError(__('invalid value for inherited-members option: %s') % arg)
+ 
+ 
+ def member_order_option(arg: Any) -> Optional[str]:
+@@ -1710,10 +1714,20 @@ class ClassDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # type:
+                                    (name, self.fullname), type='autodoc')
+             return False, selected
+         elif self.options.inherited_members:
++            if isinstance(self.options.inherited_members, set):
++                return False, self.filter_inherited_members(list(members.values()), self.options.inherited_members)
+             return False, list(members.values())
+         else:
+             return False, [m for m in members.values() if m.class_ == self.object]
+ 
++    def filter_inherited_members(self, members: List[ObjectMember], allowed_bases: Set[str]) -> List[ObjectMember]:
++        """Filter members to include only those inherited from the specified base classes."""
++        filtered_members = []
++        for member in members:
++            if member.class_ and member.class_.__name__ in allowed_bases:
++                filtered_members.append(member)
++        return filtered_members
++
+     def get_doc(self, ignore: int = None) -> Optional[List[List[str]]]:
+         if self.doc_as_attr:
+             # Don't show the docstring of the class when it is an alias.
+diff --git a/tox.ini b/tox.ini
+index f0afd779b..30ca90275 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -28,7 +28,7 @@ setenv =
+     PYTHONWARNINGS = all
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -m pytest --durations 25 {posargs}
++    python -X dev -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:du-latest]
+ commands =
+2024-07-30 17:17:12,138 - INFO - Grading answer for sphinx-doc__sphinx-10325...
+2024-07-30 17:17:12,174 - INFO - report: {'sphinx-doc__sphinx-10325': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['tests/test_ext_autodoc_automodule.py::test_automodule_inherited_members']}, 'PASS_TO_PASS': {'success': ['tests/test_ext_autodoc_automodule.py::test_empty_all', 'tests/test_ext_autodoc_automodule.py::test_automodule', 'tests/test_ext_autodoc_automodule.py::test_automodule_undoc_members', 'tests/test_ext_autodoc_automodule.py::test_automodule_special_members', 'tests/test_ext_autodoc_automodule.py::test_subclass_of_mocked_object'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sphinx-doc__sphinx-10325: resolved: False

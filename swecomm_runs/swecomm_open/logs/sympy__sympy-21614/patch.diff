@@ -1,0 +1,15 @@
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index 69df976b8b..74fd1b93b8 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -1055,6 +1055,10 @@ class Derivative(Expr):
+     Carries out differentiation of the given expression with respect to symbols.
+ 
+     Examples
++
++    @property
++    def kind(self):
++        return self.expr.kind
+     ========
+ 
+     >>> from sympy import Derivative, Function, symbols, Subs

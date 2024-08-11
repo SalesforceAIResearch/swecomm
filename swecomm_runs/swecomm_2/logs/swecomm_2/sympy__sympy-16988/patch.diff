@@ -1,0 +1,35 @@
+
+diff --git a/.coveragerc b/.coveragerc
+new file mode 100644
+index 0000000000..bef85d5ee1
+--- /dev/null
++++ b/.coveragerc
+@@ -0,0 +1,5 @@
++[run]
++omit = 
++	# adde`d by auto-code-rover
++	sympy/sets/tests/test_sets.py
++
+diff --git a/sympy/sets/sets.py b/sympy/sets/sets.py
+index 03cf57a30b..874300dabf 100644
+--- a/sympy/sets/sets.py
++++ b/sympy/sets/sets.py
+@@ -1259,15 +1259,14 @@ def zero(self):
+     def __new__(cls, *args, **kwargs):
+         evaluate = kwargs.get('evaluate', global_evaluate[0])
+ 
+-        # flatten inputs to merge intersections and iterables
+-        args = _sympify(args)
+-
++        # Remove duplicates and flatten inputs to merge intersections and iterables
++        args = list(ordered(set(_sympify(args))))
+         # Reduce sets using known rules
+         if evaluate:
+             args = list(cls._new_args_filter(args))
+             return simplify_intersection(args)
+ 
+-        args = list(ordered(args, Set._infimum_key))
++        args = list(ordered(args))
+ 
+         obj = Basic.__new__(cls, *args)
+         obj._argset = frozenset(args)

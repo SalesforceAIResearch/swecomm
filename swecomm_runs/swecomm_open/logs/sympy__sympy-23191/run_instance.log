@@ -1,0 +1,81 @@
+2024-08-04 16:57:55,747 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-23191
+Building instance image sweb.eval.x86_64.sympy__sympy-23191:latest for sympy__sympy-23191
+2024-08-04 16:57:55,749 - INFO - Image sweb.eval.x86_64.sympy__sympy-23191:latest already exists, skipping build.
+2024-08-04 16:57:55,749 - INFO - Creating container for sympy__sympy-23191...
+2024-08-04 16:57:55,795 - INFO - Container for sympy__sympy-23191 created: cea442ea240a834facbccf79081c98c35053eac085ea433b50954cee09654d43
+2024-08-04 16:57:56,242 - INFO - Container for sympy__sympy-23191 started: cea442ea240a834facbccf79081c98c35053eac085ea433b50954cee09654d43
+2024-08-04 16:57:56,243 - INFO - Intermediate patch for sympy__sympy-23191 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-23191/patch.diff, now applying to container...
+2024-08-04 16:57:56,449 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:57:56,505 - INFO - >>>>> Applied Patch:
+patching file .backup.reproduce_bug.py
+patching file .backup.test_vector_pretty_print.py
+patching file reproduce_bug.py
+patching file sympy/printing/pretty/.backup.pretty.py
+patching file sympy/printing/pretty/pretty.py
+patching file test_vector_pretty_print.py
+
+2024-08-04 16:57:57,914 - INFO - Git diff before:
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..cee8c27434 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -44,6 +44,23 @@ class PrettyPrinter(Printer):
+         "perm_cyclic": True
+     }
+ 
++    def _print_Vector(self, expr):
++        from sympy.vector import Vector, BaseVector
++        components = expr.components
++        terms = []
++        for base, coeff in components.items():
++            if isinstance(base, BaseVector):
++                base_str = prettyForm(str(base))
++            else:
++                base_str = self._print(base)
++            if coeff == 1:
++                terms.append(base_str)
++            elif coeff == -1:
++                terms.append(prettyForm('-') * base_str)
++            else:
++                terms.append(self._print(coeff) * base_str)
++        return prettyForm.__add__(*terms)
++
+     def __init__(self, settings=None):
+         Printer.__init__(self, settings)
+2024-08-04 16:57:57,915 - INFO - Eval script for sympy__sympy-23191 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-23191/eval.sh; copying to container...
+2024-08-04 16:58:03,411 - INFO - Test runtime: 5.34 seconds
+2024-08-04 16:58:03,411 - INFO - Test output for sympy__sympy-23191 written to logs/run_evaluation/swecomm_open/swecomm_open/sympy__sympy-23191/test_output.txt
+2024-08-04 16:58:03,464 - INFO - Git diff after:
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..cee8c27434 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -44,6 +44,23 @@ class PrettyPrinter(Printer):
+         "perm_cyclic": True
+     }
+ 
++    def _print_Vector(self, expr):
++        from sympy.vector import Vector, BaseVector
++        components = expr.components
++        terms = []
++        for base, coeff in components.items():
++            if isinstance(base, BaseVector):
++                base_str = prettyForm(str(base))
++            else:
++                base_str = self._print(base)
++            if coeff == 1:
++                terms.append(base_str)
++            elif coeff == -1:
++                terms.append(prettyForm('-') * base_str)
++            else:
++                terms.append(self._print(coeff) * base_str)
++        return prettyForm.__add__(*terms)
++
+     def __init__(self, settings=None):
+         Printer.__init__(self, settings)
+2024-08-04 16:58:03,465 - INFO - Grading answer for sympy__sympy-23191...
+2024-08-04 16:58:03,466 - INFO - report: {'sympy__sympy-23191': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_issue_23058']}, 'PASS_TO_PASS': {'success': ['test_str_printing', 'test_latex_printing'], 'failure': ['test_pretty_print_unicode_v']}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-23191: resolved: False
+2024-08-04 16:58:03,466 - INFO - Attempting to stop container sweb.eval.sympy__sympy-23191.swecomm_open...
+2024-08-04 16:58:18,712 - INFO - Attempting to remove container sweb.eval.sympy__sympy-23191.swecomm_open...
+2024-08-04 16:58:18,756 - INFO - Container sweb.eval.sympy__sympy-23191.swecomm_open removed.

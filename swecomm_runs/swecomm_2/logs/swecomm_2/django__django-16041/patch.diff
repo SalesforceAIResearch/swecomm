@@ -1,0 +1,22 @@
+
+diff --git a/django/forms/formsets.py b/django/forms/formsets.py
+index 57676428ff..b5ca476df5 100644
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -210,11 +210,13 @@ class BaseFormSet(RenderableFormMixin):
+     def get_form_kwargs(self, index):
+         """
+         Return additional keyword arguments for each individual formset form.
+-
+         index will be None if the form being constructed is a new empty
+-        form.
++        form. In this case, 'empty_permitted' should not be included.
+         """
+-        return self.form_kwargs.copy()
++        kwargs = self.form_kwargs.copy()
++        if index is None:
++            kwargs.pop('empty_permitted', None)
++        return kwargs
+ 
+     def _construct_form(self, i, **kwargs):
+         """Instantiate and return the i-th form instance in a formset."""

@@ -1,0 +1,116 @@
+2024-08-04 17:23:36,165 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12453
+Building instance image sweb.eval.x86_64.django__django-12453:latest for django__django-12453
+2024-08-04 17:23:36,167 - INFO - Image sweb.eval.x86_64.django__django-12453:latest already exists, skipping build.
+2024-08-04 17:23:36,167 - INFO - Creating container for django__django-12453...
+2024-08-04 17:23:36,196 - INFO - Container for django__django-12453 created: 83a7bda3ddf05ddbc7c45f59e1e06b0f80179afb82cbd0baa3199b3b2788f009
+2024-08-04 17:23:36,710 - INFO - Container for django__django-12453 started: 83a7bda3ddf05ddbc7c45f59e1e06b0f80179afb82cbd0baa3199b3b2788f009
+2024-08-04 17:23:36,710 - INFO - Intermediate patch for django__django-12453 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-12453/patch.diff, now applying to container...
+2024-08-04 17:23:36,901 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:23:36,946 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/base/creation.py
+patching file tests/auth_tests/db.sqlite3
+patching file tests/auth_tests/settings.py
+
+2024-08-04 17:23:39,047 - INFO - Git diff before:
+diff --git a/django/db/backends/base/creation.py b/django/db/backends/base/creation.py
+index c50fc90171..5cf1f5b3c2 100644
+--- a/django/db/backends/base/creation.py
++++ b/django/db/backends/base/creation.py
+@@ -5,7 +5,7 @@ from io import StringIO
+ from django.apps import apps
+ from django.conf import settings
+ from django.core import serializers
+-from django.db import router
++from django.db import router, transaction
+ 
+ # The prefix to put on the default database name when creating
+ # the test database.
+@@ -126,8 +126,9 @@ class BaseDatabaseCreation:
+         the serialize_db_to_string() method.
+         """
+         data = StringIO(data)
+-        for obj in serializers.deserialize("json", data, using=self.connection.alias):
+-            obj.save()
++        with transaction.atomic(using=self.connection.alias):
++            for obj in serializers.deserialize("json", data, using=self.connection.alias):
++                obj.save()
+ 
+     def _get_database_display_str(self, verbosity, database_name):
+         """
+diff --git a/tests/auth_tests/settings.py b/tests/auth_tests/settings.py
+index 9fd71dfe87..179c318703 100644
+--- a/tests/auth_tests/settings.py
++++ b/tests/auth_tests/settings.py
+@@ -1,5 +1,5 @@
+ import os
+-
++SECRET_KEY = 'dummy-secret-key-for-testing'
+ AUTH_MIDDLEWARE = [
+     'django.contrib.sessions.middleware.SessionMiddleware',
+     'django.contrib.auth.middleware.AuthenticationMiddleware',
+@@ -16,3 +16,9 @@ AUTH_TEMPLATES = [{
+         ],
+     },
+ }]
++DATABASES = {
++    'default': {
++        'ENGINE': 'django.db.backends.sqlite3',
++        'NAME': os.path.join(os.path.dirname(__file__), 'db.sqlite3'),
++    }
++}
+2024-08-04 17:23:39,048 - INFO - Eval script for django__django-12453 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-12453/eval.sh; copying to container...
+2024-08-04 17:23:46,200 - INFO - Test runtime: 7.02 seconds
+2024-08-04 17:23:46,201 - INFO - Test output for django__django-12453 written to logs/run_evaluation/swecomm_2/swecomm_2/django__django-12453/test_output.txt
+2024-08-04 17:23:46,254 - INFO - Git diff after:
+diff --git a/django/db/backends/base/creation.py b/django/db/backends/base/creation.py
+index c50fc90171..5cf1f5b3c2 100644
+--- a/django/db/backends/base/creation.py
++++ b/django/db/backends/base/creation.py
+@@ -5,7 +5,7 @@ from io import StringIO
+ from django.apps import apps
+ from django.conf import settings
+ from django.core import serializers
+-from django.db import router
++from django.db import router, transaction
+ 
+ # The prefix to put on the default database name when creating
+ # the test database.
+@@ -126,8 +126,9 @@ class BaseDatabaseCreation:
+         the serialize_db_to_string() method.
+         """
+         data = StringIO(data)
+-        for obj in serializers.deserialize("json", data, using=self.connection.alias):
+-            obj.save()
++        with transaction.atomic(using=self.connection.alias):
++            for obj in serializers.deserialize("json", data, using=self.connection.alias):
++                obj.save()
+ 
+     def _get_database_display_str(self, verbosity, database_name):
+         """
+diff --git a/tests/auth_tests/settings.py b/tests/auth_tests/settings.py
+index 9fd71dfe87..179c318703 100644
+--- a/tests/auth_tests/settings.py
++++ b/tests/auth_tests/settings.py
+@@ -1,5 +1,5 @@
+ import os
+-
++SECRET_KEY = 'dummy-secret-key-for-testing'
+ AUTH_MIDDLEWARE = [
+     'django.contrib.sessions.middleware.SessionMiddleware',
+     'django.contrib.auth.middleware.AuthenticationMiddleware',
+@@ -16,3 +16,9 @@ AUTH_TEMPLATES = [{
+         ],
+     },
+ }]
++DATABASES = {
++    'default': {
++        'ENGINE': 'django.db.backends.sqlite3',
++        'NAME': os.path.join(os.path.dirname(__file__), 'db.sqlite3'),
++    }
++}
+2024-08-04 17:23:46,254 - INFO - Grading answer for django__django-12453...
+2024-08-04 17:23:46,257 - INFO - report: {'django__django-12453': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_circular_reference (backends.base.test_creation.TestDeserializeDbFromString)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_custom_test_name (backends.base.test_creation.TestDbSignatureTests)', 'test_custom_test_name_with_test_prefix (backends.base.test_creation.TestDbSignatureTests)', 'test_default_name (backends.base.test_creation.TestDbSignatureTests)', 'test_migrate_test_setting_false (backends.base.test_creation.TestDbCreationTests)', 'test_migrate_test_setting_true (backends.base.test_creation.TestDbCreationTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-12453: resolved: True
+2024-08-04 17:23:46,258 - INFO - Attempting to stop container sweb.eval.django__django-12453.swecomm_2...
+2024-08-04 17:24:01,742 - INFO - Attempting to remove container sweb.eval.django__django-12453.swecomm_2...
+2024-08-04 17:24:01,789 - INFO - Container sweb.eval.django__django-12453.swecomm_2 removed.

@@ -1,0 +1,1 @@
+{"instance_id": "pydata__xarray-4248", "identified_spans": [{"file_path": "xarray/core/dataset.py", "span_ids": ["Dataset.__repr__"], "content": [{"span_id": "Dataset.__repr__", "start_line": 1661, "end_line": 1662, "content": ["    def __repr__(self) -> str:\n", "        return formatting.dataset_repr(self)\n"]}]}]}

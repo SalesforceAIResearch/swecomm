@@ -1,0 +1,28 @@
+--- a/django/core/checks/model_checks.py
++++ b/django/core/checks/model_checks.py
+@@ -31,7 +31,11 @@
+                 )
+             )
+         else:
+-            errors.extend(model.check(**kwargs))
++            model_errors = model.check(**kwargs)
++            # Remove W042 warning if the model has an inherited primary key
++            if getattr(model._meta, 'has_inherited_pk', False):
++                model_errors = [error for error in model_errors if error.id != 'models.W042']
++            errors.extend(model_errors)
+         for model_index in model._meta.indexes:
+             indexes[model_index.name].append(model._meta.label)
+         for model_constraint in model._meta.constraints:
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -149,6 +149,10 @@
+                     new_class._meta.get_latest_by = base_meta.get_latest_by
+ 
+         is_proxy = new_class._meta.proxy
++
++        # Check if the model inherits a primary key from its parent
++        inherits_pk = any(hasattr(base, '_meta') and base._meta.pk for base in parents)
++        new_class._meta.has_inherited_pk = inherits_pk
+ 
+         # If the model is a proxy, ensure that the base class
+         # hasn't been swapped out.

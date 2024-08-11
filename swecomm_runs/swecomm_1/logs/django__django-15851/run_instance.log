@@ -1,0 +1,53 @@
+2024-07-30 17:15:51,203 - INFO - Intermediate patch for django__django-15851 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:15:51,804 - INFO - >>>>> Applied Patch:
+/shared/patch.diff:11: trailing whitespace.
+        
+/shared/patch.diff:13: trailing whitespace.
+        
+Checking patch django/db/backends/postgresql/client.py...
+Applied patch django/db/backends/postgresql/client.py cleanly.
+warning: 2 lines add whitespace errors.
+
+2024-07-30 17:16:10,099 - INFO - Git diff before:
+diff --git a/django/db/backends/postgresql/client.py b/django/db/backends/postgresql/client.py
+index 4c9bd63546..b2be4f40d1 100644
+--- a/django/db/backends/postgresql/client.py
++++ b/django/db/backends/postgresql/client.py
+@@ -32,9 +32,11 @@ class DatabaseClient(BaseDatabaseClient):
+             args += ["-h", host]
+         if port:
+             args += ["-p", str(port)]
+-        if dbname:
+-            args += [dbname]
++        
+         args.extend(parameters)
++        
++        if dbname:
++            args.append(dbname)
+ 
+         env = {}
+         if passwd:
+2024-07-30 17:16:10,099 - INFO - Eval script for django__django-15851 written to /eval.sh
+2024-07-30 17:17:29,603 - INFO - Test runtime: 79.50 seconds
+2024-07-30 17:17:30,004 - INFO - Git diff after:
+diff --git a/django/db/backends/postgresql/client.py b/django/db/backends/postgresql/client.py
+index 4c9bd63546..b2be4f40d1 100644
+--- a/django/db/backends/postgresql/client.py
++++ b/django/db/backends/postgresql/client.py
+@@ -32,9 +32,11 @@ class DatabaseClient(BaseDatabaseClient):
+             args += ["-h", host]
+         if port:
+             args += ["-p", str(port)]
+-        if dbname:
+-            args += [dbname]
++        
+         args.extend(parameters)
++        
++        if dbname:
++            args.append(dbname)
+ 
+         env = {}
+         if passwd:
+2024-07-30 17:17:30,004 - INFO - Grading answer for django__django-15851...
+2024-07-30 17:17:30,045 - INFO - report: {'django__django-15851': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_parameters (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_accent (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)', 'test_basic (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)', 'test_column (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)', 'test_crash_password_does_not_leak (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)', 'test_nopass (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)', 'test_passfile (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)', 'test_service (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)', 'test_ssl_certificate (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-15851: resolved: True

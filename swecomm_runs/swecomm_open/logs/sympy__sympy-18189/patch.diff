@@ -1,0 +1,14 @@
+diff --git a/sympy/solvers/diophantine.py b/sympy/solvers/diophantine.py
+index 6092e35dab..6fc0e30795 100644
+--- a/sympy/solvers/diophantine.py
++++ b/sympy/solvers/diophantine.py
+@@ -331,7 +331,9 @@ def diophantine(eq, param=symbols("t", integer=True), syms=None,
+     if not sols and eq.subs(zip(var, null)).is_zero:
+         sols.add(null)
+     final_soln = set([])
++    sym_index = [var.index(sym) for sym in syms] if syms else range(len(var))
+     for sol in sols:
++        sol = tuple([sol[i] for i in sym_index])
+         if all(_is_int(s) for s in sol):
+             if do_permute_signs:
+                 permuted_sign = set(permute_signs(sol))

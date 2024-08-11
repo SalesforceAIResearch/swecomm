@@ -1,0 +1,68 @@
+2024-08-04 17:26:37,912 - INFO - Environment image sweb.env.x86_64.e5bb89bf78258a7d14c34b:latest found for pylint-dev__pylint-5859
+Building instance image sweb.eval.x86_64.pylint-dev__pylint-5859:latest for pylint-dev__pylint-5859
+2024-08-04 17:26:37,914 - INFO - Image sweb.eval.x86_64.pylint-dev__pylint-5859:latest already exists, skipping build.
+2024-08-04 17:26:37,914 - INFO - Creating container for pylint-dev__pylint-5859...
+2024-08-04 17:26:37,940 - INFO - Container for pylint-dev__pylint-5859 created: 6ed4d62666dfd15e51c7878a3812539eef0507501c3facefdc9c728ab854eb90
+2024-08-04 17:26:38,236 - INFO - Container for pylint-dev__pylint-5859 started: 6ed4d62666dfd15e51c7878a3812539eef0507501c3facefdc9c728ab854eb90
+2024-08-04 17:26:38,236 - INFO - Intermediate patch for pylint-dev__pylint-5859 written to logs/run_evaluation/swecomm_2/swecomm_2/pylint-dev__pylint-5859/patch.diff, now applying to container...
+2024-08-04 17:26:38,431 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 17:26:38,479 - INFO - >>>>> Applied Patch:
+patching file pylint/checkers/misc.py
+
+2024-08-04 17:26:38,898 - INFO - Git diff before:
+diff --git a/pylint/checkers/misc.py b/pylint/checkers/misc.py
+index 69149e61a..7d69b4935 100644
+--- a/pylint/checkers/misc.py
++++ b/pylint/checkers/misc.py
+@@ -119,11 +119,16 @@ class EncodingChecker(BaseChecker):
+     def open(self):
+         super().open()
+ 
+-        notes = "|".join(re.escape(note) for note in self.config.notes)
++        def escape_note(note):
++            if note.isalnum():
++                return re.escape(note) + r'\b'
++            return re.escape(note)
++
++        notes = "|".join(escape_note(note) for note in self.config.notes)
+         if self.config.notes_rgx:
+-            regex_string = rf"#\s*({notes}|{self.config.notes_rgx})\b"
++            regex_string = rf"#\s*({notes}|{self.config.notes_rgx})"
+         else:
+-            regex_string = rf"#\s*({notes})\b"
++            regex_string = rf"#\s*({notes})"
+ 
+         self._fixme_pattern = re.compile(regex_string, re.I)
+2024-08-04 17:26:38,898 - INFO - Eval script for pylint-dev__pylint-5859 written to logs/run_evaluation/swecomm_2/swecomm_2/pylint-dev__pylint-5859/eval.sh; copying to container...
+2024-08-04 17:26:43,099 - INFO - Test runtime: 4.07 seconds
+2024-08-04 17:26:43,099 - INFO - Test output for pylint-dev__pylint-5859 written to logs/run_evaluation/swecomm_2/swecomm_2/pylint-dev__pylint-5859/test_output.txt
+2024-08-04 17:26:43,151 - INFO - Git diff after:
+diff --git a/pylint/checkers/misc.py b/pylint/checkers/misc.py
+index 69149e61a..7d69b4935 100644
+--- a/pylint/checkers/misc.py
++++ b/pylint/checkers/misc.py
+@@ -119,11 +119,16 @@ class EncodingChecker(BaseChecker):
+     def open(self):
+         super().open()
+ 
+-        notes = "|".join(re.escape(note) for note in self.config.notes)
++        def escape_note(note):
++            if note.isalnum():
++                return re.escape(note) + r'\b'
++            return re.escape(note)
++
++        notes = "|".join(escape_note(note) for note in self.config.notes)
+         if self.config.notes_rgx:
+-            regex_string = rf"#\s*({notes}|{self.config.notes_rgx})\b"
++            regex_string = rf"#\s*({notes}|{self.config.notes_rgx})"
+         else:
+-            regex_string = rf"#\s*({notes})\b"
++            regex_string = rf"#\s*({notes})"
+ 
+         self._fixme_pattern = re.compile(regex_string, re.I)
+2024-08-04 17:26:43,151 - INFO - Grading answer for pylint-dev__pylint-5859...
+2024-08-04 17:26:43,153 - INFO - report: {'pylint-dev__pylint-5859': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['tests/checkers/unittest_misc.py::TestFixme::test_non_alphanumeric_codetag'], 'failure': []}, 'PASS_TO_PASS': {'success': ['tests/checkers/unittest_misc.py::TestFixme::test_fixme_with_message', 'tests/checkers/unittest_misc.py::TestFixme::test_todo_without_message', 'tests/checkers/unittest_misc.py::TestFixme::test_xxx_without_space', 'tests/checkers/unittest_misc.py::TestFixme::test_xxx_middle', 'tests/checkers/unittest_misc.py::TestFixme::test_without_space_fixme', 'tests/checkers/unittest_misc.py::TestFixme::test_absent_codetag', 'tests/checkers/unittest_misc.py::TestFixme::test_other_present_codetag', 'tests/checkers/unittest_misc.py::TestFixme::test_issue_2321_should_not_trigger', 'tests/checkers/unittest_misc.py::TestFixme::test_issue_2321_should_trigger', 'tests/checkers/unittest_misc.py::TestFixme::test_dont_trigger_on_todoist'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for pylint-dev__pylint-5859: resolved: True
+2024-08-04 17:26:43,154 - INFO - Attempting to stop container sweb.eval.pylint-dev__pylint-5859.swecomm_2...
+2024-08-04 17:26:58,765 - INFO - Attempting to remove container sweb.eval.pylint-dev__pylint-5859.swecomm_2...
+2024-08-04 17:26:58,790 - INFO - Container sweb.eval.pylint-dev__pylint-5859.swecomm_2 removed.

@@ -1,0 +1,230 @@
+2024-07-30 17:16:08,287 - INFO - Intermediate patch for sympy__sympy-23191 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:16:08,553 - INFO - >>>>> Applied Patch:
+Checking patch sympy/printing/pretty/pretty.py...
+Checking patch sympy/vector/vector.py...
+Applied patch sympy/printing/pretty/pretty.py cleanly.
+Applied patch sympy/vector/vector.py cleanly.
+
+2024-07-30 17:16:14,592 - INFO - Git diff before:
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..e54dbf1dc4 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -2772,11 +2772,11 @@ def _print_CoordSystem(self, coords):
+ 
+     def _print_BaseScalarField(self, field):
+         string = field._coord_sys.symbols[field._index].name
+-        return self._print(pretty_symbol(string))
++        return prettyForm(pretty_symbol(string))
+ 
+     def _print_BaseVectorField(self, field):
+         s = U('PARTIAL DIFFERENTIAL') + '_' + field._coord_sys.symbols[field._index].name
+-        return self._print(pretty_symbol(s))
++        return prettyForm(pretty_symbol(s))
+ 
+     def _print_Differential(self, diff):
+         if self._use_unicode:
+@@ -2835,7 +2835,27 @@ def _print_AssignmentBase(self, e):
+ 
+     def _print_Str(self, s):
+         return self._print(s.name)
++    def _print_Vector(self, e):
++        from sympy.vector.vector import BaseVector
++        components = e.components
++        result = None
+ 
++        for vec, coef in components.items():
++            pform_coef = self._print(coef)
++            pform_vec = self._print(vec)
++
++            if isinstance(vec, BaseVector):
++                pform_vec = prettyForm(vec._pretty_form)
++
++            combined = prettyForm(*pform_coef.right(pform_vec))
++
++            if result is None:
++                result = combined
++            else:
++                result = prettyForm(*result.right(' + '))
++                result = prettyForm(*result.right(combined))
++
++        return result
+ 
+ @print_function(PrettyPrinter)
+ def pretty(expr, **settings):
+diff --git a/sympy/vector/vector.py b/sympy/vector/vector.py
+index 87320d0366..0362995f04 100644
+--- a/sympy/vector/vector.py
++++ b/sympy/vector/vector.py
+@@ -52,7 +52,7 @@ def components(self):
+         """
+         # The '_components' attribute is defined according to the
+         # subclass of Vector the instance belongs to.
+-        return self._components
++        return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+ 
+     def magnitude(self):
+         """
+@@ -271,7 +271,7 @@ def _projections(self):
+         from sympy.vector.operators import _get_coord_systems
+         if isinstance(self, VectorZero):
+             return (S.Zero, S.Zero, S.Zero)
+-        base_vec = next(iter(_get_coord_systems(self))).base_vectors()
++        base_vec = sorted(next(iter(_get_coord_systems(self))).base_vectors(), key=str)
+         return tuple([self.dot(i) for i in base_vec])
+ 
+     def __or__(self, other):
+@@ -354,9 +354,9 @@ class BaseVector(Vector, AtomicExpr):
+ 
+     def __new__(cls, index, system, pretty_str=None, latex_str=None):
+         if pretty_str is None:
+-            pretty_str = "x{}".format(index)
++            pretty_str = "{}_{}".format(system._vector_names[index], system._name)
+         if latex_str is None:
+-            latex_str = "x_{}".format(index)
++            latex_str = r"\mathbf{{{}}}_{{{}}}".format(system._vector_names[index], system._name)
+         pretty_str = str(pretty_str)
+         latex_str = str(latex_str)
+         # Verify arguments
+@@ -372,7 +372,7 @@ def __new__(cls, index, system, pretty_str=None, latex_str=None):
+         obj._components = {obj: S.One}
+         obj._measure_number = S.One
+         obj._name = system._name + '.' + name
+-        obj._pretty_form = '' + pretty_str
++        obj._pretty_form = pretty_str
+         obj._latex_form = latex_str
+         obj._system = system
+         # The _id is used for printing purposes
+@@ -392,11 +392,16 @@ def system(self):
+         return self._system
+ 
+     def _sympystr(self, printer):
+-        return self._name
++        components = self.components
++        terms = []
++        for base_vector, measure_number in components.items():
++            term = f"{printer._print(measure_number)}*{printer._print(base_vector)}"
++            terms.append(term)
++        return " + ".join(terms)
+ 
+     def _sympyrepr(self, printer):
+         index, system = self._id
+-        return printer._print(system) + '.' + system._vector_names[index]
++        return f"{printer._print(system)}.{system._vector_names[index]}"
+ 
+     @property
+     def free_symbols(self):
+2024-07-30 17:16:14,592 - INFO - Eval script for sympy__sympy-23191 written to /eval.sh
+2024-07-30 17:16:55,898 - INFO - Test runtime: 41.31 seconds
+2024-07-30 17:16:56,307 - INFO - Git diff after:
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..e54dbf1dc4 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -2772,11 +2772,11 @@ def _print_CoordSystem(self, coords):
+ 
+     def _print_BaseScalarField(self, field):
+         string = field._coord_sys.symbols[field._index].name
+-        return self._print(pretty_symbol(string))
++        return prettyForm(pretty_symbol(string))
+ 
+     def _print_BaseVectorField(self, field):
+         s = U('PARTIAL DIFFERENTIAL') + '_' + field._coord_sys.symbols[field._index].name
+-        return self._print(pretty_symbol(s))
++        return prettyForm(pretty_symbol(s))
+ 
+     def _print_Differential(self, diff):
+         if self._use_unicode:
+@@ -2835,7 +2835,27 @@ def _print_AssignmentBase(self, e):
+ 
+     def _print_Str(self, s):
+         return self._print(s.name)
++    def _print_Vector(self, e):
++        from sympy.vector.vector import BaseVector
++        components = e.components
++        result = None
+ 
++        for vec, coef in components.items():
++            pform_coef = self._print(coef)
++            pform_vec = self._print(vec)
++
++            if isinstance(vec, BaseVector):
++                pform_vec = prettyForm(vec._pretty_form)
++
++            combined = prettyForm(*pform_coef.right(pform_vec))
++
++            if result is None:
++                result = combined
++            else:
++                result = prettyForm(*result.right(' + '))
++                result = prettyForm(*result.right(combined))
++
++        return result
+ 
+ @print_function(PrettyPrinter)
+ def pretty(expr, **settings):
+diff --git a/sympy/vector/vector.py b/sympy/vector/vector.py
+index 87320d0366..0362995f04 100644
+--- a/sympy/vector/vector.py
++++ b/sympy/vector/vector.py
+@@ -52,7 +52,7 @@ def components(self):
+         """
+         # The '_components' attribute is defined according to the
+         # subclass of Vector the instance belongs to.
+-        return self._components
++        return dict(sorted(self._components.items(), key=lambda item: str(item[0])))
+ 
+     def magnitude(self):
+         """
+@@ -271,7 +271,7 @@ def _projections(self):
+         from sympy.vector.operators import _get_coord_systems
+         if isinstance(self, VectorZero):
+             return (S.Zero, S.Zero, S.Zero)
+-        base_vec = next(iter(_get_coord_systems(self))).base_vectors()
++        base_vec = sorted(next(iter(_get_coord_systems(self))).base_vectors(), key=str)
+         return tuple([self.dot(i) for i in base_vec])
+ 
+     def __or__(self, other):
+@@ -354,9 +354,9 @@ class BaseVector(Vector, AtomicExpr):
+ 
+     def __new__(cls, index, system, pretty_str=None, latex_str=None):
+         if pretty_str is None:
+-            pretty_str = "x{}".format(index)
++            pretty_str = "{}_{}".format(system._vector_names[index], system._name)
+         if latex_str is None:
+-            latex_str = "x_{}".format(index)
++            latex_str = r"\mathbf{{{}}}_{{{}}}".format(system._vector_names[index], system._name)
+         pretty_str = str(pretty_str)
+         latex_str = str(latex_str)
+         # Verify arguments
+@@ -372,7 +372,7 @@ def __new__(cls, index, system, pretty_str=None, latex_str=None):
+         obj._components = {obj: S.One}
+         obj._measure_number = S.One
+         obj._name = system._name + '.' + name
+-        obj._pretty_form = '' + pretty_str
++        obj._pretty_form = pretty_str
+         obj._latex_form = latex_str
+         obj._system = system
+         # The _id is used for printing purposes
+@@ -392,11 +392,16 @@ def system(self):
+         return self._system
+ 
+     def _sympystr(self, printer):
+-        return self._name
++        components = self.components
++        terms = []
++        for base_vector, measure_number in components.items():
++            term = f"{printer._print(measure_number)}*{printer._print(base_vector)}"
++            terms.append(term)
++        return " + ".join(terms)
+ 
+     def _sympyrepr(self, printer):
+         index, system = self._id
+-        return printer._print(system) + '.' + system._vector_names[index]
++        return f"{printer._print(system)}.{system._vector_names[index]}"
+ 
+     @property
+     def free_symbols(self):
+2024-07-30 17:16:56,307 - INFO - Grading answer for sympy__sympy-23191...
+2024-07-30 17:16:56,394 - INFO - report: {'sympy__sympy-23191': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_issue_23058']}, 'PASS_TO_PASS': {'success': [], 'failure': ['test_str_printing', 'test_pretty_print_unicode_v', 'test_latex_printing']}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-23191: resolved: False

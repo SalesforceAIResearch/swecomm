@@ -1,0 +1,34 @@
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 7c978c47be..05f252c307 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -278,6 +278,29 @@ def __mul__(self, factor):
+         coords = [simplify(x*factor) for x in self.args]
+         return Point(coords, evaluate=False)
+ 
++    def __rmul__(self, factor):
++        """Right multiplication of a Point by a scalar.
++
++        This method is called if the left operand does not support
++        the multiplication using __mul__, or the left operand is a scalar.
++
++        Parameters
++        ==========
++        factor : scalar
++            The scalar value to multiply the Point by.
++
++        Returns
++        =======
++        Point
++            Returns the result of the scalar multiplication if factor is a scalar,
++            otherwise NotImplemented.
++        """
++        from sympy.core.numbers import Float, Integer
++        from sympy.core.symbol import Symbol
++        if isinstance(factor, (int, float, Float, Integer, Symbol)):
++            return self.__mul__(factor)
++        return NotImplemented
++
+     def __neg__(self):
+         """Negate the point."""
+         coords = [-x for x in self.args]

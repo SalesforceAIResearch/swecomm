@@ -1,0 +1,36 @@
+diff --git a/astropy/io/ascii/core.py b/astropy/io/ascii/core.py
+index 381b5b13db..d4feff02aa 100644
+--- a/astropy/io/ascii/core.py
++++ b/astropy/io/ascii/core.py
+@@ -1812,7 +1812,7 @@ def _get_writer(Writer, fast_writer, **kwargs):
+         return FAST_CLASSES[f"fast_{Writer._format_name}"](**kwargs)
+ 
+     writer_kwargs = {k: v for k, v in kwargs.items() if k not in extra_writer_pars}
+-    writer = Writer(**writer_kwargs)
++    writer = Writer(header_rows=kwargs.get('header_rows'), **writer_kwargs)
+ 
+     if "delimiter" in kwargs:
+         writer.header.splitter.delimiter = kwargs["delimiter"]
+diff --git a/astropy/io/ascii/rst.py b/astropy/io/ascii/rst.py
+index abdeba8efb..0a843268bc 100644
+--- a/astropy/io/ascii/rst.py
++++ b/astropy/io/ascii/rst.py
+@@ -57,10 +57,15 @@ class RST(FixedWidth):
+     data_class = SimpleRSTData
+     header_class = SimpleRSTHeader
+ 
+-    def __init__(self):
+-        super().__init__(delimiter_pad=None, bookend=False)
++    def __init__(self, header_rows=None):
++        super().__init__(delimiter_pad=None, bookend=False, header_rows=header_rows)
++        self.header_rows = header_rows
+ 
+     def write(self, lines):
+         lines = super().write(lines)
+-        lines = [lines[1]] + lines + [lines[1]]
++        if self.header_rows:
++            header_lines = [lines[1]] * len(self.header_rows)
++            lines = header_lines + lines + [lines[1]]
++        else:
++            lines = [lines[1]] + lines + [lines[1]]
+         return lines

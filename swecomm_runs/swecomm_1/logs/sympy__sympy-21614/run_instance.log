@@ -1,0 +1,64 @@
+2024-07-30 17:12:38,943 - INFO - Intermediate patch for sympy__sympy-21614 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:12:39,075 - INFO - >>>>> Applied Patch:
+Checking patch sympy/core/function.py...
+Applied patch sympy/core/function.py cleanly.
+
+2024-07-30 17:12:41,882 - INFO - Git diff before:
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index 69df976b8b..02d9d10feb 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -1705,6 +1705,10 @@ def free_symbols(self):
+         # Add symbolic counts to free_symbols
+         for var, count in self.variable_count:
+             ret.update(count.free_symbols)
++        # Ensure MatrixSymbol instances are included
++        from sympy.matrices.expressions.matexpr import MatrixSymbol
++        if isinstance(self.expr, MatrixSymbol):
++            ret.add(self.expr)
+         return ret
+ 
+     def _eval_subs(self, old, new):
+@@ -1804,7 +1808,9 @@ def _subset(a, b):
+                 return Subs(Derivative(newe, *vc), *zip(*subs))
+ 
+         # everything was ok
+-        return _derivative_dispatch(*newargs)
++        result = _derivative_dispatch(*newargs)
++        result._kind = self._kind  # Propagate the kind attribute
++        return result
+ 
+     def _eval_lseries(self, x, logx, cdir=0):
+         dx = self.variables
+2024-07-30 17:12:41,882 - INFO - Eval script for sympy__sympy-21614 written to /eval.sh
+2024-07-30 17:12:54,940 - INFO - Test runtime: 13.06 seconds
+2024-07-30 17:12:55,101 - INFO - Git diff after:
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index 69df976b8b..02d9d10feb 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -1705,6 +1705,10 @@ def free_symbols(self):
+         # Add symbolic counts to free_symbols
+         for var, count in self.variable_count:
+             ret.update(count.free_symbols)
++        # Ensure MatrixSymbol instances are included
++        from sympy.matrices.expressions.matexpr import MatrixSymbol
++        if isinstance(self.expr, MatrixSymbol):
++            ret.add(self.expr)
+         return ret
+ 
+     def _eval_subs(self, old, new):
+@@ -1804,7 +1808,9 @@ def _subset(a, b):
+                 return Subs(Derivative(newe, *vc), *zip(*subs))
+ 
+         # everything was ok
+-        return _derivative_dispatch(*newargs)
++        result = _derivative_dispatch(*newargs)
++        result._kind = self._kind  # Propagate the kind attribute
++        return result
+ 
+     def _eval_lseries(self, x, logx, cdir=0):
+         dx = self.variables
+2024-07-30 17:12:55,101 - INFO - Grading answer for sympy__sympy-21614...
+2024-07-30 17:12:55,103 - INFO - report: {'sympy__sympy-21614': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_Derivative_kind']}, 'PASS_TO_PASS': {'success': ['test_NumberKind', 'test_Add_kind', 'test_mul_kind', 'test_Symbol_kind', 'test_Integral_kind', 'test_Matrix_kind'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-21614: resolved: False

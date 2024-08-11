@@ -1,0 +1,18 @@
+diff --git a/django/db/migrations/writer.py b/django/db/migrations/writer.py
+index 4918261fb0..93d9a95830 100644
+--- a/django/db/migrations/writer.py
++++ b/django/db/migrations/writer.py
+@@ -143,6 +143,13 @@ class MigrationWriter:
+             operations.append(operation_string)
+         items["operations"] = "\n".join(operations) + "\n" if operations else ""
+ 
++        # Check for custom fields or inherited models
++        needs_models_import = any(
++            'models.' in op for op in operations
++        )
++        if needs_models_import:
++            imports.add("from django.db import models")
++
+         # Format dependencies and write out swappable dependencies right
+         dependencies = []
+         for dependency in self.migration.dependencies:

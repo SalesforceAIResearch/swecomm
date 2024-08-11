@@ -1,0 +1,96 @@
+2024-07-30 17:12:57,913 - INFO - Intermediate patch for django__django-11283 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:12:58,100 - INFO - >>>>> Applied Patch:
+Checking patch django/contrib/auth/migrations/0011_update_proxy_permissions.py...
+Applied patch django/contrib/auth/migrations/0011_update_proxy_permissions.py cleanly.
+
+2024-07-30 17:13:12,570 - INFO - Git diff before:
+diff --git a/django/contrib/auth/migrations/0011_update_proxy_permissions.py b/django/contrib/auth/migrations/0011_update_proxy_permissions.py
+index 0e66649695..0c2ada2da6 100644
+--- a/django/contrib/auth/migrations/0011_update_proxy_permissions.py
++++ b/django/contrib/auth/migrations/0011_update_proxy_permissions.py
+@@ -1,4 +1,4 @@
+-from django.db import migrations
++from django.db import DatabaseError, IntegrityError, migrations
+ from django.db.models import Q
+ 
+ 
+@@ -24,11 +24,26 @@ def update_proxy_model_permissions(apps, schema_editor, reverse=False):
+         proxy_content_type = ContentType.objects.get_for_model(Model, for_concrete_model=False)
+         old_content_type = proxy_content_type if reverse else concrete_content_type
+         new_content_type = concrete_content_type if reverse else proxy_content_type
+-        Permission.objects.filter(
+-            permissions_query,
+-            content_type=old_content_type,
+-        ).update(content_type=new_content_type)
+-
++        if Permission.objects.filter(permissions_query, content_type=new_content_type).exists():
++            # Display a reminder to audit relevant permissions.
++            print(
++                'A problem arose migrating proxy model permissions for '
++                f'{opts.label}. '
++                'Ensure to audit ALL permissions for {opts.label} and '
++                'reassign them to the correct ContentType'
++            )
++        else:
++            try:
++                Permission.objects.filter(
++                    permissions_query,
++                    content_type=old_content_type,
++                ).update(content_type=new_content_type)
++            except DatabaseError:
++                # ContentType for proxy models cannot be removed if referenced
++                # by any object (e.g. logentry). Its stale permissions also
++                # cannot be removed because removing ContentType isn't
++                # possible.
++                pass
+ 
+ def revert_proxy_model_permissions(apps, schema_editor):
+     """
+2024-07-30 17:13:12,570 - INFO - Eval script for django__django-11283 written to /eval.sh
+2024-07-30 17:14:37,581 - INFO - Test runtime: 85.01 seconds
+2024-07-30 17:14:38,168 - INFO - Git diff after:
+diff --git a/django/contrib/auth/migrations/0011_update_proxy_permissions.py b/django/contrib/auth/migrations/0011_update_proxy_permissions.py
+index 0e66649695..0c2ada2da6 100644
+--- a/django/contrib/auth/migrations/0011_update_proxy_permissions.py
++++ b/django/contrib/auth/migrations/0011_update_proxy_permissions.py
+@@ -1,4 +1,4 @@
+-from django.db import migrations
++from django.db import DatabaseError, IntegrityError, migrations
+ from django.db.models import Q
+ 
+ 
+@@ -24,11 +24,26 @@ def update_proxy_model_permissions(apps, schema_editor, reverse=False):
+         proxy_content_type = ContentType.objects.get_for_model(Model, for_concrete_model=False)
+         old_content_type = proxy_content_type if reverse else concrete_content_type
+         new_content_type = concrete_content_type if reverse else proxy_content_type
+-        Permission.objects.filter(
+-            permissions_query,
+-            content_type=old_content_type,
+-        ).update(content_type=new_content_type)
+-
++        if Permission.objects.filter(permissions_query, content_type=new_content_type).exists():
++            # Display a reminder to audit relevant permissions.
++            print(
++                'A problem arose migrating proxy model permissions for '
++                f'{opts.label}. '
++                'Ensure to audit ALL permissions for {opts.label} and '
++                'reassign them to the correct ContentType'
++            )
++        else:
++            try:
++                Permission.objects.filter(
++                    permissions_query,
++                    content_type=old_content_type,
++                ).update(content_type=new_content_type)
++            except DatabaseError:
++                # ContentType for proxy models cannot be removed if referenced
++                # by any object (e.g. logentry). Its stale permissions also
++                # cannot be removed because removing ContentType isn't
++                # possible.
++                pass
+ 
+ def revert_proxy_model_permissions(apps, schema_editor):
+     """
+2024-07-30 17:14:38,168 - INFO - Grading answer for django__django-11283...
+2024-07-30 17:14:38,193 - INFO - report: {'django__django-11283': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_migrate_with_existing_target_permission (auth_tests.test_migrations.ProxyModelWithSameAppLabelTests)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_migrate_backwards (auth_tests.test_migrations.ProxyModelWithDifferentAppLabelTests)', 'test_proxy_model_permissions_contenttype (auth_tests.test_migrations.ProxyModelWithDifferentAppLabelTests)', 'test_user_has_now_proxy_model_permissions (auth_tests.test_migrations.ProxyModelWithDifferentAppLabelTests)', 'test_user_keeps_same_permissions_after_migrating_backward (auth_tests.test_migrations.ProxyModelWithDifferentAppLabelTests)', 'test_migrate_backwards (auth_tests.test_migrations.ProxyModelWithSameAppLabelTests)', 'test_proxy_model_permissions_contenttype (auth_tests.test_migrations.ProxyModelWithSameAppLabelTests)', 'test_user_keeps_same_permissions_after_migrating_backward (auth_tests.test_migrations.ProxyModelWithSameAppLabelTests)', 'test_user_still_has_proxy_model_permissions (auth_tests.test_migrations.ProxyModelWithSameAppLabelTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-11283: resolved: True

@@ -1,0 +1,182 @@
+2024-07-30 17:13:13,093 - INFO - Intermediate patch for sympy__sympy-12481 written to /shared/patch.diff, now applying to container...
+2024-07-30 17:13:13,656 - INFO - >>>>> Applied Patch:
+Checking patch sympy/combinatorics/permutations.py...
+Applied patch sympy/combinatorics/permutations.py cleanly.
+
+2024-07-30 17:13:17,863 - INFO - Git diff before:
+diff --git a/sympy/combinatorics/permutations.py b/sympy/combinatorics/permutations.py
+index 136ed5a478..ed304394ca 100644
+--- a/sympy/combinatorics/permutations.py
++++ b/sympy/combinatorics/permutations.py
+@@ -878,7 +878,6 @@ def __new__(cls, *args, **kwargs):
+             raise ValueError("Permutation argument must be a list of ints, "
+                              "a list of lists, Permutation or Cycle.")
+ 
+-
+         # safe to assume args are valid; this also makes a copy
+         # of the args
+         args = list(args[0])
+@@ -897,26 +896,30 @@ def __new__(cls, *args, **kwargs):
+         temp = flatten(args)
+         if has_dups(temp):
+             if is_cycle:
+-                raise ValueError('there were repeated elements; to resolve '
+-                'cycles use Cycle%s.' % ''.join([str(tuple(c)) for c in args]))
++                # Apply non-disjoint cycles in left-to-right order
++                c = Cycle()
++                for ci in args:
++                    c = c(*ci)
++                aform = c.list()
+             else:
+                 raise ValueError('there were repeated elements.')
+-        temp = set(temp)
+-
+-        if not is_cycle and \
+-                any(i not in temp for i in range(len(temp))):
+-            raise ValueError("Integers 0 through %s must be present." %
+-                             max(temp))
+-
+-        if is_cycle:
+-            # it's not necessarily canonical so we won't store
+-            # it -- use the array form instead
+-            c = Cycle()
+-            for ci in args:
+-                c = c(*ci)
+-            aform = c.list()
+         else:
+-            aform = list(args)
++            temp = set(temp)
++            if not is_cycle and \
++                    any(i not in temp for i in range(len(temp))):
++                raise ValueError("Integers 0 through %s must be present." %
++                                 max(temp))
++
++            if is_cycle:
++                # it's not necessarily canonical so we won't store
++                # it -- use the array form instead
++                c = Cycle()
++                for ci in args:
++                    c = c(*ci)
++                aform = c.list()
++            else:
++                aform = list(args)
++
+         if size and size > len(aform):
+             # don't allow for truncation of permutation which
+             # might split a cycle and lead to an invalid aform
+@@ -927,6 +930,24 @@ def __new__(cls, *args, **kwargs):
+         obj._array_form = aform
+         obj._size = size
+         return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
+ 
+     @staticmethod
+     def _af_new(perm):
+2024-07-30 17:13:17,863 - INFO - Eval script for sympy__sympy-12481 written to /eval.sh
+2024-07-30 17:13:44,218 - INFO - Test runtime: 26.33 seconds
+2024-07-30 17:13:44,771 - INFO - Git diff after:
+diff --git a/sympy/combinatorics/permutations.py b/sympy/combinatorics/permutations.py
+index 136ed5a478..ed304394ca 100644
+--- a/sympy/combinatorics/permutations.py
++++ b/sympy/combinatorics/permutations.py
+@@ -878,7 +878,6 @@ def __new__(cls, *args, **kwargs):
+             raise ValueError("Permutation argument must be a list of ints, "
+                              "a list of lists, Permutation or Cycle.")
+ 
+-
+         # safe to assume args are valid; this also makes a copy
+         # of the args
+         args = list(args[0])
+@@ -897,26 +896,30 @@ def __new__(cls, *args, **kwargs):
+         temp = flatten(args)
+         if has_dups(temp):
+             if is_cycle:
+-                raise ValueError('there were repeated elements; to resolve '
+-                'cycles use Cycle%s.' % ''.join([str(tuple(c)) for c in args]))
++                # Apply non-disjoint cycles in left-to-right order
++                c = Cycle()
++                for ci in args:
++                    c = c(*ci)
++                aform = c.list()
+             else:
+                 raise ValueError('there were repeated elements.')
+-        temp = set(temp)
+-
+-        if not is_cycle and \
+-                any(i not in temp for i in range(len(temp))):
+-            raise ValueError("Integers 0 through %s must be present." %
+-                             max(temp))
+-
+-        if is_cycle:
+-            # it's not necessarily canonical so we won't store
+-            # it -- use the array form instead
+-            c = Cycle()
+-            for ci in args:
+-                c = c(*ci)
+-            aform = c.list()
+         else:
+-            aform = list(args)
++            temp = set(temp)
++            if not is_cycle and \
++                    any(i not in temp for i in range(len(temp))):
++                raise ValueError("Integers 0 through %s must be present." %
++                                 max(temp))
++
++            if is_cycle:
++                # it's not necessarily canonical so we won't store
++                # it -- use the array form instead
++                c = Cycle()
++                for ci in args:
++                    c = c(*ci)
++                aform = c.list()
++            else:
++                aform = list(args)
++
+         if size and size > len(aform):
+             # don't allow for truncation of permutation which
+             # might split a cycle and lead to an invalid aform
+@@ -927,6 +930,24 @@ def __new__(cls, *args, **kwargs):
+         obj._array_form = aform
+         obj._size = size
+         return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
++        obj._array_form = aform
++        obj._size = size
++        return obj
+ 
+     @staticmethod
+     def _af_new(perm):
+2024-07-30 17:13:44,771 - INFO - Grading answer for sympy__sympy-12481...
+2024-07-30 17:13:44,791 - INFO - report: {'sympy__sympy-12481': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_args'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_Permutation', 'test_josephus', 'test_ranking', 'test_mul', 'test_Cycle', 'test_from_sequence', 'test_printing_cyclic'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-12481: resolved: True

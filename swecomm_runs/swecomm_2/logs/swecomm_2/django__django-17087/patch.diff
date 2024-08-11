@@ -1,0 +1,25 @@
+
+diff --git a/django/db/migrations/serializer.py b/django/db/migrations/serializer.py
+index d88cda6e20..09739a16e9 100644
+--- a/django/db/migrations/serializer.py
++++ b/django/db/migrations/serializer.py
+@@ -168,9 +168,16 @@ class FunctionTypeSerializer(BaseSerializer):
+         ):
+             klass = self.value.__self__
+             module = klass.__module__
+-            return "%s.%s.%s" % (module, klass.__name__, self.value.__name__), {
+-                "import %s" % module
+-            }
++            # Check if the class is nested and include the full path in the serialization
++            if klass.__qualname__ != klass.__name__:
++                klass_path = klass.__qualname__
++                return "%s.%s.%s" % (module, klass_path, self.value.__name__), {
++                    "import %s" % module
++                }
++            else:
++                return "%s.%s.%s" % (module, klass.__name__, self.value.__name__), {
++                    "import %s" % module
++                }
+         # Further error checking
+         if self.value.__name__ == "<lambda>":
+             raise ValueError("Cannot serialize function: lambda")

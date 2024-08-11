@@ -1,0 +1,30 @@
+diff --git a/sphinx/util/typing.py b/sphinx/util/typing.py
+index 2d4f67bba..34f3b5a68 100644
+--- a/sphinx/util/typing.py
++++ b/sphinx/util/typing.py
+@@ -13,6 +13,7 @@ import typing
+ from typing import Any, Callable, Dict, Generator, List, Optional, Tuple, TypeVar, Union
+ 
+ from docutils import nodes
++import struct
+ from docutils.parsers.rst.states import Inliner
+ 
+ if sys.version_info > (3, 7):
+@@ -94,6 +95,8 @@ def restify(cls: Optional["Type"]) -> str:
+         return ':obj:`None`'
+     elif cls is Ellipsis:
+         return '...'
++    elif cls is struct.Struct:
++        return ':class:`struct.Struct`'
+     elif inspect.isNewType(cls):
+         return ':class:`%s`' % cls.__name__
+     elif cls.__module__ in ('__builtin__', 'builtins'):
+@@ -305,6 +308,8 @@ def stringify(annotation: Any) -> str:
+         return annotation.__qualname__
+     elif annotation is Ellipsis:
+         return '...'
++    elif annotation is struct.Struct:
++        return ':class:`struct.Struct`'
+ 
+     if sys.version_info >= (3, 7):  # py37+
+         return _stringify_py37(annotation)

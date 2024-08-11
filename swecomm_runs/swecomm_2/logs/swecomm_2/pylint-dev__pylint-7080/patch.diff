@@ -1,0 +1,13 @@
+--- a/pylint/lint/expand_modules.py
++++ b/pylint/lint/expand_modules.py
+@@ -108,6 +108,10 @@
+                 errors.append({"key": "fatal", "mod": modname, "ex": ex})
+                 continue
+         filepath = os.path.normpath(filepath)
++        if _is_ignored_file(
++            filepath, ignore_list, ignore_list_re, ignore_list_paths_re
++        ):
++            continue
+         modparts = (modname or something).split(".")
+         try:
+             spec = modutils.file_info_from_modpath(

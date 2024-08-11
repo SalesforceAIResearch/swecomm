@@ -1,0 +1,41 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 0c64748ccd..4806a35696 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -1661,9 +1661,12 @@ class EmailField(CharField):
+ class FilePathField(Field):
+     description = _("File path")
+ 
++    # Modification to allow dynamic resolution of file paths
+     def __init__(self, verbose_name=None, name=None, path='', match=None,
+                  recursive=False, allow_files=True, allow_folders=False, **kwargs):
+-        self.path, self.match, self.recursive = path, match, recursive
++        # Check if path is a callable and store accordingly
++        self.path = path if callable(path) else path
++        self.match, self.recursive = match, recursive
+         self.allow_files, self.allow_folders = allow_files, allow_folders
+         kwargs.setdefault('max_length', 100)
+         super().__init__(verbose_name, name, **kwargs)
+@@ -1701,15 +1704,20 @@ class FilePathField(Field):
+             del kwargs["max_length"]
+         return name, path, args, kwargs
+ 
++    # Ensure dynamic path resolution in methods accessing self.path
+     def get_prep_value(self, value):
++        # Resolve path dynamically if callable
++        path = self.path() if callable(self.path) else self.path
+         value = super().get_prep_value(value)
+         if value is None:
+             return None
+-        return str(value)
++        return str(path)
+ 
+     def formfield(self, **kwargs):
++        # Resolve path dynamically if callable for formfield usage
++        path = self.path() if callable(self.path) else self.path
+         return super().formfield(**{
+-            'path': self.path,
++            'path': path,
+             'match': self.match,
+             'recursive': self.recursive,
+             'form_class': forms.FilePathField,

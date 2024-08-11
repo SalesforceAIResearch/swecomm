@@ -1,0 +1,22 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 0f53d9c30b..f8b2db3c56 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -2518,13 +2518,15 @@ class AutoFieldMeta(type):
+ 
+     @property
+     def _subclasses(self):
+-        return (BigAutoField, SmallAutoField)
++        return BigAutoField, SmallAutoField
+ 
+     def __instancecheck__(self, instance):
+         return isinstance(instance, self._subclasses) or super().__instancecheck__(instance)
+ 
+     def __subclasscheck__(self, subclass):
+-        return subclass in self._subclasses or super().__subclasscheck__(subclass)
++        if subclass in self._subclasses or any(issubclass(subclass, s) for s in self._subclasses):
++            return True
++        return super().__subclasscheck__(subclass)
+ 
+ 
+ class AutoField(AutoFieldMixin, IntegerField, metaclass=AutoFieldMeta):

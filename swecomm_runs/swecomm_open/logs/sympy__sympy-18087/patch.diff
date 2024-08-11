@@ -1,0 +1,22 @@
+diff --git a/sympy/simplify/trigsimp.py b/sympy/simplify/trigsimp.py
+index 7ca05f0304..07e8a47e01 100644
+--- a/sympy/simplify/trigsimp.py
++++ b/sympy/simplify/trigsimp.py
+@@ -505,7 +505,16 @@ def traverse(e):
+         'old': lambda x: trigsimp_old(x, **opts),
+                    }[method]
+ 
+-    return trigsimpfunc(expr)
++    result = trigsimpfunc(expr)
++
++    # Check if the expression contains complex arguments
++    if result.has(I):
++        # If it does, don't simplify sqrt(sin(x)**2) to sin(x)
++        if (result.has(sin) or result.has(cos)) and result.has(sqrt):
++            result = result.replace(lambda x: x.is_Pow and x.exp == S.Half and x.base.is_Pow and x.base.exp == 2,
++                                    lambda x: x)
++
++    return result
+ 
+ 
+ def exptrigsimp(expr):

@@ -1,0 +1,95 @@
+2024-08-04 16:47:14,329 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14016
+Building instance image sweb.eval.x86_64.django__django-14016:latest for django__django-14016
+2024-08-04 16:47:14,332 - INFO - Image sweb.eval.x86_64.django__django-14016:latest already exists, skipping build.
+2024-08-04 16:47:14,332 - INFO - Creating container for django__django-14016...
+2024-08-04 16:47:14,362 - INFO - Container for django__django-14016 created: 49d891420245c440728f5db05c4bcd5b8b1b0bc88e4f1194c61d193fc7f85538
+2024-08-04 16:47:14,636 - INFO - Container for django__django-14016 started: 49d891420245c440728f5db05c4bcd5b8b1b0bc88e4f1194c61d193fc7f85538
+2024-08-04 16:47:14,636 - INFO - Intermediate patch for django__django-14016 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-14016/patch.diff, now applying to container...
+2024-08-04 16:47:14,797 - INFO - Failed to apply patch to container, trying again...
+2024-08-04 16:47:14,838 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query_utils.py
+patching file django/utils/tree.py
+
+2024-08-04 16:47:17,221 - INFO - Git diff before:
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index c2623f099f..ca4f7b38a0 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -13,6 +13,7 @@ from collections import namedtuple
+ from django.core.exceptions import FieldError
+ from django.db.models.constants import LOOKUP_SEP
+ from django.utils import tree
++from django.utils.hashable import make_hashable
+ 
+ # PathInfo is used when converting lookups (fk__somecol). The contents
+ # describe the relation in Model terms (model Options and Fields for both
+@@ -38,7 +39,9 @@ class Q(tree.Node):
+     conditional = True
+ 
+     def __init__(self, *args, _connector=None, _negated=False, **kwargs):
+-        super().__init__(children=[*args, *sorted(kwargs.items())], connector=_connector, negated=_negated)
++        hashable_args = tuple(make_hashable(arg) for arg in args)
++        hashable_kwargs = tuple((k, make_hashable(v)) for k, v in sorted(kwargs.items()))
++        super().__init__(children=[*hashable_args, *hashable_kwargs], connector=_connector, negated=_negated)
+ 
+     def _combine(self, other, conn):
+         if not isinstance(other, Q):
+diff --git a/django/utils/tree.py b/django/utils/tree.py
+index 302cd37d5f..fbf1879acf 100644
+--- a/django/utils/tree.py
++++ b/django/utils/tree.py
+@@ -73,7 +73,7 @@ class Node:
+         )
+ 
+     def __hash__(self):
+-        return hash((self.__class__, self.connector, self.negated, *make_hashable(self.children)))
++        return hash((self.__class__, self.connector, self.negated, *map(make_hashable, self.children)))
+ 
+     def add(self, data, conn_type, squash=True):
+         """
+2024-08-04 16:47:17,222 - INFO - Eval script for django__django-14016 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-14016/eval.sh; copying to container...
+2024-08-04 16:47:24,597 - INFO - Test runtime: 7.24 seconds
+2024-08-04 16:47:24,597 - INFO - Test output for django__django-14016 written to logs/run_evaluation/swecomm_open/swecomm_open/django__django-14016/test_output.txt
+2024-08-04 16:47:24,648 - INFO - Git diff after:
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index c2623f099f..ca4f7b38a0 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -13,6 +13,7 @@ from collections import namedtuple
+ from django.core.exceptions import FieldError
+ from django.db.models.constants import LOOKUP_SEP
+ from django.utils import tree
++from django.utils.hashable import make_hashable
+ 
+ # PathInfo is used when converting lookups (fk__somecol). The contents
+ # describe the relation in Model terms (model Options and Fields for both
+@@ -38,7 +39,9 @@ class Q(tree.Node):
+     conditional = True
+ 
+     def __init__(self, *args, _connector=None, _negated=False, **kwargs):
+-        super().__init__(children=[*args, *sorted(kwargs.items())], connector=_connector, negated=_negated)
++        hashable_args = tuple(make_hashable(arg) for arg in args)
++        hashable_kwargs = tuple((k, make_hashable(v)) for k, v in sorted(kwargs.items()))
++        super().__init__(children=[*hashable_args, *hashable_kwargs], connector=_connector, negated=_negated)
+ 
+     def _combine(self, other, conn):
+         if not isinstance(other, Q):
+diff --git a/django/utils/tree.py b/django/utils/tree.py
+index 302cd37d5f..fbf1879acf 100644
+--- a/django/utils/tree.py
++++ b/django/utils/tree.py
+@@ -73,7 +73,7 @@ class Node:
+         )
+ 
+     def __hash__(self):
+-        return hash((self.__class__, self.connector, self.negated, *make_hashable(self.children)))
++        return hash((self.__class__, self.connector, self.negated, *map(make_hashable, self.children)))
+ 
+     def add(self, data, conn_type, squash=True):
+         """
+2024-08-04 16:47:24,648 - INFO - Grading answer for django__django-14016...
+2024-08-04 16:47:24,650 - INFO - report: {'django__django-14016': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_combine_and_empty (queries.test_q.QTests)', 'test_combine_or_empty (queries.test_q.QTests)'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_combine_and_both_empty (queries.test_q.QTests)', 'test_combine_not_q_object (queries.test_q.QTests)', 'test_combine_or_both_empty (queries.test_q.QTests)', 'test_deconstruct (queries.test_q.QTests)', 'test_deconstruct_and (queries.test_q.QTests)', 'test_deconstruct_multiple_kwargs (queries.test_q.QTests)', 'test_deconstruct_negated (queries.test_q.QTests)', 'test_deconstruct_nested (queries.test_q.QTests)', 'test_deconstruct_or (queries.test_q.QTests)', 'test_reconstruct (queries.test_q.QTests)', 'test_reconstruct_and (queries.test_q.QTests)', 'test_reconstruct_negated (queries.test_q.QTests)', 'test_reconstruct_or (queries.test_q.QTests)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-14016: resolved: True
+2024-08-04 16:47:24,650 - INFO - Attempting to stop container sweb.eval.django__django-14016.swecomm_open...
+2024-08-04 16:47:40,146 - INFO - Attempting to remove container sweb.eval.django__django-14016.swecomm_open...
+2024-08-04 16:47:40,175 - INFO - Container sweb.eval.django__django-14016.swecomm_open removed.
